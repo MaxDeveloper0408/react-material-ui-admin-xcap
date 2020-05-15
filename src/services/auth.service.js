@@ -1,10 +1,12 @@
+import axios from "axios";
 const dotenv = require('dotenv');
 dotenv.config();
 const { API_URL } = process.env;
-
-import axios from "axios";
-
 const AUTH_URL = `${API_URL}auth/`;
+
+
+
+
 class AuthService {
     login(email, password) {
       return axios

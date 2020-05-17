@@ -1,19 +1,17 @@
 import axios from "axios";
-const dotenv = require('dotenv');
-dotenv.config();
-const { API_URL } = process.env;
-const AUTH_URL = `${API_URL}auth/`;
+// const dotenv = require('dotenv');
+// dotenv.config('/');
+// const { API_URL } = process.env;
+// const AUTH_URL = `${API_URL}auth/`;
 
-
+const AUTH_URL = 'http://localhost:8080/api/auth/';
 
 
 class AuthService {
-    login(email, password) {
+    
+    login(login_data) {
       return axios
-        .post(AUTH_URL + "signin", {
-          email,
-          password
-        })
+        .post(AUTH_URL + "signin", login_data)
         .then(response => {
           if (response.data.accessToken) {
             localStorage.setItem("user", JSON.stringify(response.data));
@@ -27,16 +25,12 @@ class AuthService {
       localStorage.removeItem("user");
     }
   
-    register(full_name, email, password) {
-      return axios.post(AUTH_URL + "signup", {
-        full_name,
-        email,
-        password
-      });
+    register(register_data) {
+      return axios.post(AUTH_URL + "signup", register_data);
     }
   
     getCurrentUser() {
-      return JSON.parse(localStorage.getItem('user'));;
+      return JSON.parse(localStorage.getItem('user'))
     }
   }
   

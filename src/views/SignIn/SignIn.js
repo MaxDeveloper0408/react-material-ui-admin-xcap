@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link as RouterLink, withRouter } from 'react-router-dom';
+import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
@@ -12,6 +12,8 @@ import {
   Typography
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import AuthService from "../../services/auth.service";
+import SweetAlert from 'sweetalert2-react';
 
 import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
 
@@ -32,6 +34,9 @@ const schema = {
 };
 
 const useStyles = makeStyles(theme => ({
+  signupLink: {
+    color: 'white!important'
+  },
   root: {
     backgroundColor: theme.palette.background.default,
     height: '100%'
@@ -127,9 +132,9 @@ const useStyles = makeStyles(theme => ({
 
 const SignIn = props => {
   const { history } = props;
-
   const classes = useStyles();
-
+  const [status, setStatus] = useState(false)
+  const [message, setMessage] = useState('')
   const [formState, setFormState] = useState({
     isValid: false,
     values: {},
@@ -171,9 +176,24 @@ const SignIn = props => {
   };
 
   const handleSignIn = event => {
-    console.log(this.formState)
-    //event.preventDefault();
-   // history.push('/');
+    if(formState.isValid) {
+      AuthService.login(formState.values).then(
+        () => {
+          history.push("/dashboard");
+          window.location.reload("/dashboard");
+        },
+        error => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+            setStatus(true)
+            setMessage(resMessage)
+        }
+      );
+    }
   };
 
   const hasError = field =>
@@ -230,7 +250,7 @@ const SignIn = props => {
             <div className={classes.contentBody}>
               <form
                 className={classes.form}
-                onSubmit={handleSignIn}
+                // onSubmit={handleSignIn}
               >
                 <Typography
                   className={classes.title}
@@ -313,7 +333,8 @@ const SignIn = props => {
                   disabled={!formState.isValid}
                   fullWidth
                   size="large"
-                  type="submit"
+                  type="button"
+                  onClick={handleSignIn}
                   variant="contained"
                 >
                   Confirmar
@@ -324,6 +345,7 @@ const SignIn = props => {
                 >
                   Não possui uma conta?{' '}
                   <Link
+                    className={classes.signupLink}
                     component={RouterLink}
                     to="/sign-up"
                     variant="h6"
@@ -336,6 +358,15 @@ const SignIn = props => {
           </div>
         </Grid>
       </Grid>
+      <SweetAlert
+        show={status}
+        title="Fail"
+        text={message}
+        type='error'
+        onConfirm={() => {
+          setStatus(false)
+        }}
+        />
     </div>
   );
 };

@@ -12,19 +12,20 @@ const Confirm = ({
   handleNext,
   handleBack,
   handleChange,
+  submit,
   values: { street, number, complement, neighborhood, city, state, investment},
   filedError,
   isError
 }) => {
   // Check if all values are not empty
-  const isEmpty = city.length > 3 
-                  && street.length > 3
-                  && number.length > 3
-                  && complement.length > 3
-                  && neighborhood.length > 3
-                  && city.length > 3
-                  && state.length > 3
-                  && investment.length > 3
+  const isEmpty = city.length > 0 
+                  && street.length > 0
+                  && number.length > 0
+                  && complement.length > 0
+                  && neighborhood.length > 0
+                  && city.length > 0
+                  && state.length > 0
+                  && investment.length > 0
   return (
     <Fragment>
       <Grid container spacing={2}>
@@ -53,20 +54,6 @@ const Confirm = ({
             margin="normal"
             error={filedError.number !== ""}
             helperText={filedError.number !== "" ? `${filedError.number}` : ""}
-            required
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="Complement"
-            name="complement"
-            placeholder="Enter your complement"
-            defaultValue={complement}
-            onChange={handleChange("complement")}
-            margin="normal"
-            error={filedError.complement !== ""}
-            helperText={filedError.complement !== "" ? `${filedError.complement}` : ""}
             required
           />
         </Grid>
@@ -153,7 +140,7 @@ const Confirm = ({
           variant="contained"
           disabled={!isEmpty || isError}
           color="primary"
-          onClick={handleNext}
+          onClick={submit}
         >
           Confirm
         </Button>

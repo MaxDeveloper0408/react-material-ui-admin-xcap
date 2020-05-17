@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { useMediaQuery } from '@material-ui/core';
 
 import { Sidebar, Topbar, Footer } from './components';
-
+import AuthService from "../../services/auth.service";
 const useStyles = makeStyles(theme => ({
   root: {
     paddingTop: 56,
@@ -40,7 +41,12 @@ const Main = props => {
   const handleSidebarClose = () => {
     setOpenSidebar(false);
   };
-
+  const history = useHistory();
+  const handleLogout = () => {
+    AuthService.logout();
+    history.push('/sign-in');
+    window.location.reload('/sign-in');
+  }
   const shouldOpenSidebar = isDesktop ? true : openSidebar;
 
   return (
@@ -50,7 +56,7 @@ const Main = props => {
         [classes.shiftContent]: isDesktop
       })}
     >
-      <Topbar onSidebarOpen={handleSidebarOpen} />
+      <Topbar onSidebarOpen={handleSidebarOpen} logOut={handleLogout} />
       <Sidebar
         onClose={handleSidebarClose}
         open={shouldOpenSidebar}

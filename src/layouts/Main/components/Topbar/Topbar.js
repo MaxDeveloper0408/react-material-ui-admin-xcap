@@ -10,6 +10,7 @@ import InputIcon from '@material-ui/icons/Input';
 
 import { SearchInput } from 'components';
 
+
 const useStyles = makeStyles(theme => ({
   root: {
     boxShadow: 'none'
@@ -18,17 +19,18 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
   },
   signOutButton: {
-    marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(1),
+    color: 'white'
   }
 }));
 
+
+
+
 const Topbar = props => {
-  const { className, onSidebarOpen, ...rest } = props;
-
+  const { className, onSidebarOpen,logOut, ...rest } = props;
   const classes = useStyles();
-
   const [notifications] = useState([]);
-
   return (
     <AppBar
       {...rest}
@@ -62,6 +64,7 @@ const Topbar = props => {
           <IconButton
             className={classes.signOutButton}
             color="#939499"
+            onClick={logOut}
           >
             <InputIcon />
           </IconButton>
@@ -81,7 +84,8 @@ const Topbar = props => {
 
 Topbar.propTypes = {
   className: PropTypes.string,
-  onSidebarOpen: PropTypes.func
+  onSidebarOpen: PropTypes.func,
+  logOut: PropTypes.func
 };
 
 export default Topbar;

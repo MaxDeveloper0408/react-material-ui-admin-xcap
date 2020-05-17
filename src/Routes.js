@@ -26,10 +26,11 @@ class Routes extends Component {
     this.logOut = this.logOut.bind(this);
 
     this.state = {
-      showModeratorBoard: false,
+      showUserBoard: false,
       showAdminBoard: false,
       currentUser: undefined
     };
+    
   }
 
   componentDidMount() {
@@ -38,7 +39,8 @@ class Routes extends Component {
     if (user) {
       this.setState({
         currentUser: AuthService.getCurrentUser(),
-        showAdminBoard: user.roles.includes("ROLE_ADMIN")
+        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+        showUserBoard: user.roles.includes("ROLE_USER")
       });
     }
   }
@@ -48,10 +50,11 @@ class Routes extends Component {
   }
 
   render() {
-    const { currentUser, showAdminBoard } = this.state;
+    const { currentUser, showAdminBoard, showUserBoard } = this.state;
+    console.log(showUserBoard)
     return (
       <Switch>
-        {!currentUser && (
+        {!AuthService.getCurrentUser() && (
           <Redirect
           exact
           from="/"
@@ -59,15 +62,23 @@ class Routes extends Component {
         />
         )}
 
-        {(showAdminBoard || currentUser) && (
-          <Redirect
+        {AuthService.getCurrentUser() && (
+        <Redirect
           exact
           from="/"
           to="/dashboard"
         />
         )}
         
-        {(showAdminBoard || currentUser) && (
+        {AuthService.getCurrentUser() && (
+        <RouteWithLayout
+          component={DashboardView}
+          exact
+          layout={MainLayout}
+          path="/dashboard"
+        />
+        )}
+        {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
         <RouteWithLayout
           component={UserListView}
           exact
@@ -123,12 +134,14 @@ class Routes extends Component {
           path="/sign-up"
         />
         
+        {!AuthService.getCurrentUser() && (
         <RouteWithLayout
           component={SignInView}
           exact
           layout={MinimalLayout}
           path="/sign-in"
         />
+        )}
 
         <RouteWithLayout
           component={NotFoundView}
@@ -136,7 +149,7 @@ class Routes extends Component {
           layout={MinimalLayout}
           path="/not-found"
         />
-        <Redirect to="/not-found" />
+        {/* <Redirect to="/not-found" /> */}
       </Switch>
     );
   }

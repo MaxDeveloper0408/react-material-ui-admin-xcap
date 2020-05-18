@@ -16,10 +16,18 @@ import {
   TableHead,
   TableRow,
   Typography,
-  TablePagination
+  TablePagination,
+  Button
 } from '@material-ui/core';
 
 import { getInitials } from 'helpers';
+import userService from 'services/user.service';
+
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
+
+
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -43,16 +51,18 @@ const useStyles = makeStyles(theme => ({
 
 const UsersTable = props => {
   const { className, users, ...rest } = props;
-
   const classes = useStyles();
 
+  const [message, setMessage] = useState('');
+  const [hactive_status, setHactive_status] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
 
   const handleSelectAll = event => {
+    
     const { users } = props;
-
+    
     let selectedUsers;
 
     if (event.target.checked) {
@@ -92,6 +102,20 @@ const UsersTable = props => {
     setRowsPerPage(event.target.value);
   };
 
+  const handleActive = (userId, active) => {
+    userService.setActive(userId, active).then(
+      response => {
+        MySwal.fire({
+          title: 'Success',
+          text: response.message
+        })
+        window.location.reload();
+      },
+      error => {
+        console.log(error)
+      }
+    );
+  }
   return (
     <Card
       {...rest}
@@ -114,11 +138,12 @@ const UsersTable = props => {
                       onChange={handleSelectAll}
                     />
                   </TableCell>
-                  <TableCell>Name</TableCell>
+                  <TableCell>Full Name</TableCell>
                   <TableCell>Email</TableCell>
                   <TableCell>Location</TableCell>
                   <TableCell>Phone</TableCell>
                   <TableCell>Registration date</TableCell>
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -139,23 +164,33 @@ const UsersTable = props => {
                     </TableCell>
                     <TableCell>
                       <div className={classes.nameContainer}>
-                        <Avatar
+                        {/* <Avatar
                           className={classes.avatar}
                           src={user.avatarUrl}
                         >
                           {getInitials(user.name)}
-                        </Avatar>
-                        <Typography variant="body1">{user.name}</Typography>
+                        </Avatar> */}
+                        <Typography variant="body1">{user.full_name}</Typography>
                       </div>
                     </TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell>
-                      {user.address.city}, {user.address.state},{' '}
-                      {user.address.country}
+                      {user.city}, {user.state}
                     </TableCell>
-                    <TableCell>{user.phone}</TableCell>
+                    <TableCell>{user.cellphone}</TableCell>
                     <TableCell>
                       {moment(user.createdAt).format('DD/MM/YYYY')}
+                    </TableCell>
+                    <TableCell>
+                      {user.active == 'NO' ? (
+                        <Button variant="contained" color="primary" onClick={handleActive.bind(this, user.id, 'YES')}>
+                          Active
+                        </Button>
+                      ):(
+                        <Button variant="contained" color="secondary" onClick={handleActive.bind(this, user.id, 'NO')}>
+                          Deactive
+                        </Button>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}

@@ -1,22 +1,26 @@
-const dotenv = require('dotenv');
-dotenv.config();
-const { API_URL } = process.env;
-const AUTH_URL = `${API_URL}test/`;
-
 import axios from 'axios';
 import authHeader from './auth-header';
-
-
+const URL = 'http://localhost:8080/api/user/';
 
 class UserService {
-  getPublicContent() {
-    return axios.get(AUTH_URL + 'all');
+  // getPublicContent() {
+  //   return axios.get(AUTH_URL + 'all');
+  // }
+  // getUserBoard() {
+  //   return axios.get(AUTH_URL + 'user', { headers: authHeader() });
+  // }
+  // getAdminBoard() {
+  //   return axios.get(AUTH_URL + 'admin', { headers: authHeader() });
+  // }
+  getAllUsers() {
+    return axios.get(URL + 'all', {headers: authHeader()});
   }
-  getUserBoard() {
-    return axios.get(AUTH_URL + 'user', { headers: authHeader() });
-  }
-  getAdminBoard() {
-    return axios.get(AUTH_URL + 'admin', { headers: authHeader() });
+  setActive(userId, active) {
+    return axios
+      .post(URL + "setActive", {id: userId, active: active}, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+      });
   }
 }
 

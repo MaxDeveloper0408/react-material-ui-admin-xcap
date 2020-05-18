@@ -16,11 +16,16 @@ class AuthService {
           if (response.data.accessToken) {
             localStorage.setItem("user", JSON.stringify(response.data));
           }
-  
           return response.data;
         });
     }
-  
+    get_zipcode(zipcode) {
+      return axios
+        .get('https://viacep.com.br/ws/'+zipcode+'/json')
+        .then(response => {
+          return response.data;
+        });
+    }
     logout() {
       localStorage.removeItem("user");
     }

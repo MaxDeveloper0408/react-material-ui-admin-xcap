@@ -20,7 +20,7 @@ const SecondStep = ({
   const isEmpty = birthdate.length > 0
                    && zipcode.length > 0
                    && gender.length > 0
-
+    
   return (
     <Fragment>
       <Grid container spacing={2}>

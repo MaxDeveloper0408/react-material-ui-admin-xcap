@@ -160,6 +160,7 @@ const SignUp = () => {
   const handleBack = () => setSteps(steps - 1)
 
   // Handle fields change
+  // const handleBlur = inpurt =? ({tartget:})
   const handleChange = input => ({ target: { value } }) => {
     // Set values to the fields
     setFields({
@@ -169,8 +170,41 @@ const SignUp = () => {
 
     // Handle errors
     const formErrors = { ...filedError }
-    const lengthValidate = value.length > 0 && value.length < 3
+    const lengthValidate = value.length >= 0 && value.length < 3
 
+    let cep = '';
+    let cepformatValidate = true;
+    if(input == "zipcode") {
+      cep = value.replace(/\D/g, '');
+      var validate = /^[0-9]{8}$/;
+      cepformatValidate = cep == '';
+      if(cep != '') {
+          if (validate.test(cep)) {
+            fetch("https://viacep.com.br/ws/"+cep+"/json")
+              .then(res => res.json())
+              .then(
+                (result) => { 
+                  setFields({
+                    ...fields,
+                    street: result.logradouro,
+                    neighborhood: result.bairro,
+                    city: result.localidade,
+                    state: result.uf,
+                    number: result.ibge
+                  })
+                  cepformatValidate = false;
+                },
+                (error) => {
+                  cepformatValidate = true;
+                }
+            )
+          }else {
+            cepformatValidate = true;
+          }
+      } else {
+        cepformatValidate = true;
+      }
+    }
     switch (input) {
       case "full_name":
         formErrors.full_name = lengthValidate
@@ -201,8 +235,8 @@ const SignUp = () => {
           : ""
       break
       case "zipcode":
-        formErrors.zipcode = lengthValidate
-          ? "Minimum 3 characaters required"
+        formErrors.zipcode = value.length == 0 || cepformatValidate
+          ? "Formato de CEP inválido."
           : ""
       break
       case "birthdate":
@@ -241,8 +275,8 @@ const SignUp = () => {
           : ""
       break
       case "state":
-        formErrors.state = lengthValidate
-          ? "Minimum 3 characaters required"
+        formErrors.state = value.length == 0
+          ? "Minimum 1 characater required"
           : ""
       break
       case "investment":
@@ -270,6 +304,49 @@ const SignUp = () => {
     setFieldError({
       ...formErrors
     })
+  }
+  const handleBlur = input => ({ target: { value } }) => {
+    if(input == "zipcode") {
+      const formErrors = { ...filedError }
+      var cep = value.replace(/\D/g, '');
+      const cepformatValidate = cep == '';
+      formErrors.zipcode = cepformatValidate
+          ? "Formato de CEP inválido."
+          : ""
+      if(cep != '') {
+          fetch("https://viacep.com.br/ws/"+cep+"/json")
+            .then(res => res.json())
+            .then(
+              (result) => {
+                setFields({
+                  street:result.logradouro,
+                  neighborhood: result.bairro,
+                  city: result.localidade,
+                  state: result.uf,
+                  number: result.ibge 
+                })
+                formErrors.zipcode = ""
+                setFieldError({
+                  ...formErrors
+                })
+              },
+              (error) => {
+                formErrors.zipcode = "Formato de CEP inválido."
+                setFieldError({
+                  ...formErrors
+                })
+              }
+          )
+      } else {
+        formErrors.zipcode = "Formato de CEP inválido."
+        setFieldError({
+          ...formErrors
+        })
+      }
+      setFieldError({
+        ...formErrors
+      })
+    }
   }
   const gotoSignIn = () => {
     history.push("/sign-in");

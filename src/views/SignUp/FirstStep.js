@@ -78,7 +78,7 @@ const FirstStep = ({
             label="Phone number"
             name="cellphone"
             placeholder="i.e: +55 (99) 9999-9999"
-            defaultValue={cellphone}
+            defaultValue={"+55" + cellphone.replace("+55", "")}
             onChange={handleChange("cellphone")}
             margin="normal"
             error={filedError.cellphone !== ""}

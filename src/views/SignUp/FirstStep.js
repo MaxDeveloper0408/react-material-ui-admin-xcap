@@ -46,7 +46,7 @@ const FirstStep = ({
             fullWidth
             label="CPF"
             name="cpf"
-            placeholder="Your cpf"
+            placeholder="format: 532.820.857-96"
             defaultValue={cpf}
             onChange={handleChange("cpf")}
             margin="normal"
@@ -77,7 +77,7 @@ const FirstStep = ({
             fullWidth
             label="Phone number"
             name="cellphone"
-            placeholder="i.e: xxx-xxx-xxxx"
+            placeholder="i.e: +55 (99) 9999-9999"
             defaultValue={cellphone}
             onChange={handleChange("cellphone")}
             margin="normal"
@@ -91,6 +91,7 @@ const FirstStep = ({
             fullWidth
             label="Password"
             name="password"
+            type="password"
             placeholder="Your password"
             defaultValue={password}
             onChange={handleChange("password")}
@@ -107,6 +108,7 @@ const FirstStep = ({
             fullWidth
             label="Confirm Password"
             name="confirm"
+            type="password"
             placeholder="Your confirm"
             defaultValue={confirm}
             onChange={handleChange("confirm")}

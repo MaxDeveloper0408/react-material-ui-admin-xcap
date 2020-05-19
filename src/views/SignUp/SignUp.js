@@ -8,6 +8,7 @@ import SecondStep from "./SecondStep"
 import Confirm from "./Confirm"
 import AuthService from "../../services/auth.service";
 import SweetAlert from 'sweetalert2-react';
+import CPF from "cpf_cnpj";
 import {
   Grid,
   IconButton,
@@ -116,6 +117,9 @@ const useStyles = makeStyles(theme => ({
   },
   contentForm: {
     padding: 50
+  },
+  colorWhite: {
+    color: 'white!important'
   }
 }));
 
@@ -171,7 +175,8 @@ const SignUp = () => {
     // Handle errors
     const formErrors = { ...filedError }
     const lengthValidate = value.length >= 0 && value.length < 3
-
+    const numberValidate = /^[0-9]{0,255}$/;
+    const phoneValidate = /^([+][0-9]{2})?([ ]\([0-9]{2})\)[ ]([0-9]{3}|[0-9]{4})-[0-9]{4}$/;
     let cep = '';
     let cepformatValidate = true;
     if(input == "zipcode") {
@@ -189,8 +194,7 @@ const SignUp = () => {
                     street: result.logradouro,
                     neighborhood: result.bairro,
                     city: result.localidade,
-                    state: result.uf,
-                    number: result.ibge
+                    state: result.uf
                   })
                   cepformatValidate = false;
                 },
@@ -215,14 +219,14 @@ const SignUp = () => {
         formErrors.email = emailRegex.test(value) ? "" : "Invalid email address"
       break
       case "cpf":
-        formErrors.cpf = lengthValidate
-          ? "Minimum 3 characaters required"
+        formErrors.cpf = !CPF.CPF.isValid(value)
+          ? "invalid CPF. i.e. 532.820.857-96"
           : ""
       break
       case "cellphone":
-        formErrors.cellphone = phoneRegex.test(value)
+        formErrors.cellphone = phoneValidate.test(value)
           ? ""
-          : "Please enter a valid phone number. i.e: xxx-xxx-xxxx"
+          : "Please enter a valid phone number. i.e: +55 (99) 9999-9999"
       break
       case "password":
         formErrors.password = lengthValidate
@@ -255,14 +259,12 @@ const SignUp = () => {
           : ""
       break
       case "number":
-        formErrors.number = lengthValidate
-          ? "Minimum 3 characaters required"
+        formErrors.number = !numberValidate.test(value) || value.length < 2 || value.length > 5
+          ? "Minimum 2 and Maxmum 5 numbers required"
           : ""
       break
       case "complement":
-        formErrors.complement = lengthValidate
-          ? "Minimum 3 characaters required"
-          : ""
+        formErrors.complement = ""
       break
       case "neighborhood":
         formErrors.neighborhood = lengthValidate
@@ -270,8 +272,8 @@ const SignUp = () => {
           : ""
       break
       case "city":
-        formErrors.city = lengthValidate
-          ? "Minimum 3 characaters required"
+        formErrors.city = value.length == 0
+          ? "Minimum 1 characaters required"
           : ""
       break
       case "state":
@@ -304,6 +306,7 @@ const SignUp = () => {
     setFieldError({
       ...formErrors
     })
+    console.log(formErrors)
   }
   const handleBlur = input => ({ target: { value } }) => {
     if(input == "zipcode") {
@@ -377,6 +380,7 @@ const SignUp = () => {
       case 2:
         return (
           <Confirm
+            classes={classes}
             handleNext={handleNext}
             handleBack={handleBack}
             handleChange={handleChange}

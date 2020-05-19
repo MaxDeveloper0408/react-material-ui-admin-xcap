@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button"
 
 // Destructure props
 const Confirm = ({
+  classes,
   handleNext,
   handleBack,
   handleChange,
@@ -21,7 +22,7 @@ const Confirm = ({
   const isEmpty = city.length > 0 
                   && street.length > 0
                   && number.length > 0
-                  && complement.length > 0
+                  && complement.length >= 0
                   && neighborhood.length > 0
                   && city.length > 0
                   && state.length > 0
@@ -68,7 +69,6 @@ const Confirm = ({
             margin="normal"
             error={filedError.complement !== ""}
             helperText={filedError.complement !== "" ? `${filedError.complement}` : ""}
-            required
           />
         </Grid>
         <Grid item xs={12}>
@@ -87,6 +87,12 @@ const Confirm = ({
         </Grid>
         <Grid item xs={12}>
           <TextField
+            InputProps={{
+              className: classes.colorWhite
+            }}
+            InputLabelProps={{
+              className: classes.colorWhite
+            }}
             fullWidth
             label="City"
             name="city"
@@ -96,11 +102,18 @@ const Confirm = ({
             margin="normal"
             error={filedError.city !== ""}
             helperText={filedError.city !== "" ? `${filedError.city}` : ""}
+            disabled
             required
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
+            InputProps={{
+              className: classes.colorWhite
+            }}
+            InputLabelProps={{
+              className: classes.colorWhite
+            }}
             fullWidth
             label="Sate"
             name="state"
@@ -110,6 +123,7 @@ const Confirm = ({
             margin="normal"
             error={filedError.state !== ""}
             helperText={filedError.state !== "" ? `${filedError.state}` : ""}
+            disabled
             required
           />
         </Grid>

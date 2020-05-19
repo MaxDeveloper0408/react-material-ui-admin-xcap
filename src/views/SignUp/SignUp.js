@@ -181,10 +181,10 @@ const SignUp = () => {
     let cepformatValidate = true;
     if(input == "zipcode") {
       cep = value.replace(/\D/g, '');
-      var validate = /^[0-9]{8}$/;
+      var validate = /^[0-9]{5}-[0-9]{3}$/;
       cepformatValidate = cep == '';
-      if(cep != '') {
-          if (validate.test(cep)) {
+      // if(cep != '') {
+          if (validate.test(value)) {
             fetch("https://viacep.com.br/ws/"+cep+"/json")
               .then(res => res.json())
               .then(
@@ -198,6 +198,7 @@ const SignUp = () => {
                       city: '',
                       state: ''
                     })
+                    setIsError(true)
                   } else {
                     setFields({
                       ...fields,
@@ -216,9 +217,9 @@ const SignUp = () => {
           }else {
             cepformatValidate = true;
           }
-      } else {
-        cepformatValidate = true;
-      }
+      // } else {
+      //   cepformatValidate = true;
+      // }
     }
     switch (input) {
       case "full_name":

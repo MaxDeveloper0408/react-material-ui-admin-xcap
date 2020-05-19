@@ -33,8 +33,10 @@ const SecondStep = ({
             defaultValue={zipcode}
             onChange={handleChange("zipcode")}
             margin="normal"
-            error={filedError.zipcode !== ""}
-            helperText={filedError.zipcode !== "" ? `${filedError.zipcode}` : ""}
+            // error={filedError.zipcode !== ""}
+            // helperText={filedError.zipcode !== "" ? `${filedError.zipcode}` : ""}
+            error={isError}
+            helperText={isError ? "Formato de CEP inválido." : ""}
             required
           />
         </Grid>

@@ -11,7 +11,7 @@
  Target Server Version : 100138
  File Encoding         : 65001
 
- Date: 19/05/2020 22:44:56
+ Date: 17/05/2020 22:28:46
 */
 
 SET NAMES utf8mb4;
@@ -64,33 +64,37 @@ DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles`  (
   `id` int(11) NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `createdAt` datetime(0) NULL DEFAULT NULL,
-  `updatedAt` datetime(0) NULL DEFAULT NULL,
+  `createdAt` datetime(0) NOT NULL,
+  `updatedAt` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of roles
 -- ----------------------------
-INSERT INTO `roles` VALUES (1, 'user', NULL, NULL);
-INSERT INTO `roles` VALUES (2, 'admin', NULL, NULL);
+INSERT INTO `roles` VALUES (1, 'user', '2020-05-17 01:00:35', '2020-05-17 01:00:35');
+INSERT INTO `roles` VALUES (2, 'admin', '2020-05-17 01:00:35', '2020-05-17 01:00:35');
 
 -- ----------------------------
 -- Table structure for user_roles
 -- ----------------------------
 DROP TABLE IF EXISTS `user_roles`;
 CREATE TABLE `user_roles`  (
-  `createdAt` datetime(0) NULL DEFAULT NULL,
-  `updatedAt` datetime(0) NULL DEFAULT NULL,
-  `userId` int(11) NOT NULL,
+  `createdAt` datetime(0) NOT NULL,
+  `updatedAt` datetime(0) NOT NULL,
   `roleId` int(11) NOT NULL,
-  PRIMARY KEY (`userId`, `roleId`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Fixed;
+  `userId` int(11) NOT NULL,
+  PRIMARY KEY (`roleId`, `userId`) USING BTREE,
+  INDEX `userId`(`userId`) USING BTREE,
+  CONSTRAINT `user_roles_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_roles_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of user_roles
 -- ----------------------------
-INSERT INTO `user_roles` VALUES ('2020-05-19 13:41:06', '2020-05-19 13:41:06', 10, 2);
+INSERT INTO `user_roles` VALUES ('2020-05-17 13:16:57', '2020-05-17 13:16:57', 1, 6);
+INSERT INTO `user_roles` VALUES ('2020-05-17 08:36:08', '2020-05-17 08:36:08', 2, 1);
 
 -- ----------------------------
 -- Table structure for users
@@ -122,11 +126,12 @@ CREATE TABLE `users`  (
   `client_type` enum('CLIENTE','ESPECIAL','DEMO','ADMIN') CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `active` enum('YES','NO') CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT 'YES',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (10, '1231231', '', '2020-05-07', 'FEMININO', '532.820.857-96', '+55 (99) 9999-9999', 13010, 'Rua General Osório', 1232, '123123', 'Centro', 'Campinas', 'SP', 'test@test.com', '5.000-15.000', '$2a$08$Bs4yY5zALKJOKQpwATe0G.BuFcFD8VqtveVPs4ovAQfwh5U2nLLjq', '', '1', NULL, '2020-05-19 13:41:06', '2020-05-19 13:41:06', '', 'YES');
+INSERT INTO `users` VALUES (1, '123413', '', '2020-05-06', 'FEMININO', '123123', '12311111111', 123, '123', 123, '123', '131', '123', '123', 'test@test.com', '5.000-15.000', '$2a$08$8qzld8m1inzDw6Jiccpwp.o5AAad1CWYHDKRVQcsw6FuqaTu6Tv/2', '', '1', NULL, '2020-05-17 08:36:08', '2020-05-17 08:36:08', '', 'YES');
+INSERT INTO `users` VALUES (6, 'dfadf', '', '2020-05-06', 'MASCULINO', 'sdfasf', '123213213123', 123, '12312', 3123123, '123123', '123123123', '123123', '123213', 'denuniver1@gmail.com', '5.000-15.000', '$2a$08$3sPIB8S8Y0DEShxg7AQZ2ezJmzQACzJfJlC/cIrAMyEyx0IKKj/72', '', '0', NULL, '2020-05-17 13:16:57', '2020-05-17 13:16:57', '', 'YES');
 
 SET FOREIGN_KEY_CHECKS = 1;

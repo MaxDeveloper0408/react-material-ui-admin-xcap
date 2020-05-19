@@ -188,15 +188,26 @@ const SignUp = () => {
             fetch("https://viacep.com.br/ws/"+cep+"/json")
               .then(res => res.json())
               .then(
-                (result) => { 
-                  setFields({
-                    ...fields,
-                    street: result.logradouro,
-                    neighborhood: result.bairro,
-                    city: result.localidade,
-                    state: result.uf
-                  })
-                  cepformatValidate = false;
+                (result) => {
+                  if(result.erro) {
+                    cepformatValidate = true;
+                    setFields({
+                      ...fields,
+                      street: '',
+                      neighborhood: '',
+                      city: '',
+                      state: ''
+                    })
+                  } else {
+                    setFields({
+                      ...fields,
+                      street: result.logradouro,
+                      neighborhood: result.bairro,
+                      city: result.localidade,
+                      state: result.uf
+                    })
+                    cepformatValidate = false;
+                  }
                 },
                 (error) => {
                   cepformatValidate = true;

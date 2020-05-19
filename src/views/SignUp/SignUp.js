@@ -21,6 +21,7 @@ import { makeStyles } from '@material-ui/styles';
 
 const emailRegex = RegExp(/^[^@]+@[^@]+\.[^@]+$/)
 const phoneRegex = RegExp(/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4,6})$/)
+const cpfRegex = RegExp(/[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}/)
 // Step titles
 const labels = ["First Step", "Second Step", "Confirmation"]
 
@@ -231,7 +232,7 @@ const SignUp = () => {
         formErrors.email = emailRegex.test(value) ? "" : "Invalid email address"
       break
       case "cpf":
-        formErrors.cpf = !CPF.CPF.isValid(value)
+        formErrors.cpf = !CPF.CPF.isValid(value) || !cpfRegex.test(value)
           ? "invalid CPF. i.e. 532.820.857-96"
           : ""
       break

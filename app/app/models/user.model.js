@@ -51,9 +51,6 @@ module.exports = (sequelize, Sequelize) => {
       password: {
         type: Sequelize.STRING
       },
-      salt: {
-        type: Sequelize.STRING
-      },
       admin: {
         type: Sequelize.ENUM,
         values: ['0', '1']

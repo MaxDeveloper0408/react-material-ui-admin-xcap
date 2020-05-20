@@ -160,7 +160,6 @@ const SignUp = () => {
     state: "",
     investment: "",
     password: "",
-    salt: "",
     client_type: "",
   })
   // Copy fields as they all have the same name

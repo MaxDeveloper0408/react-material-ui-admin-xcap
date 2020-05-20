@@ -14,6 +14,23 @@
       rel="stylesheet"
     />
     <title>React Material Dashboard</title>
+    <style>
+      .save_loading {
+        width: 140px;
+        height: 140px;
+        margin: 0 auto;
+        animation-duration: 0.5s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-name: ro;
+        transform-origin: 50% 50%;
+      }
+      @keyframes ro {
+        100% {
+          transform: rotate(-360deg) translate(0,0);
+        }
+      }
+    </style>
   </head>
   <body style="height: 100%!important;">
     <noscript>You need to enable JavaScript to run this app.</noscript>

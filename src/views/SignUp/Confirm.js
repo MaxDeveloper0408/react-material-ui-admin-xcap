@@ -14,7 +14,7 @@ const Confirm = ({
   handleBack,
   handleChange,
   submit,
-  values: { street, number, complement, neighborhood, city, state, investment},
+  values: { street, number, complement, neighborhood, city, state},
   filedError,
   isError
 }) => {
@@ -26,7 +26,6 @@ const Confirm = ({
                   && neighborhood.length > 0
                   && city.length > 0
                   && state.length > 0
-                  && investment.length > 0
   const isNumber = number.length > 1 && number.length < 6;                  
   return (
     <Fragment>
@@ -127,17 +126,6 @@ const Confirm = ({
             disabled
             required
           />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <FormControl fullWidth required margin="normal">
-            <InputLabel htmlFor="investment">Investment</InputLabel>
-            <Select value={investment} onChange={handleChange("investment")}>
-              <MenuItem value={"5.000-10.000"}>5.000-10.000</MenuItem>
-              <MenuItem value={"5.000-15.000"}>5.000-15.000</MenuItem>
-              <MenuItem value={"5.000-15.000"}>5.000-15.000</MenuItem>
-              <MenuItem value={"5.000-15.000"}>5.000-15.000</MenuItem>
-            </Select>
-          </FormControl>
         </Grid>
       </Grid>
       <div

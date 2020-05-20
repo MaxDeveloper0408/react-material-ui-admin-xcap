@@ -13,7 +13,7 @@ const SecondStep = ({
   handleNext,
   handleBack,
   handleChange,
-  values: { zipcode, birthdate, gender},
+  values: { zipcode, birthdate, gender,investment_type,investment},
   filedError,
   isError,
   isZipcode
@@ -22,7 +22,8 @@ const SecondStep = ({
   const isEmpty = birthdate.length > 0
                    && zipcode.length > 0
                    && gender.length > 0
-  
+                   && investment_type.length > 0
+                   && investment.length > 0
   return (
     <Fragment>
       <Grid container spacing={2}>
@@ -70,6 +71,26 @@ const SecondStep = ({
               <MenuItem value={"FEMININO"}>FEMININO</MenuItem>
               <MenuItem value={"TRANSGÊNERO"}>TRANSGÊNERO</MenuItem>
               <MenuItem value={"OTHER"}>OTHER</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <FormControl fullWidth required margin="normal">
+            <InputLabel htmlFor="investment_type">Investment Type</InputLabel>
+            <Select value={investment_type} onChange={handleChange("investment_type")}>
+              <MenuItem value={"FLEXIVEL"}>FLEXIVEL</MenuItem>
+              <MenuItem value={"CRESCIMENTO"}>CRESCIMENTO</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <FormControl fullWidth required margin="normal">
+            <InputLabel htmlFor="investment">Investment</InputLabel>
+            <Select value={investment} onChange={handleChange("investment")}>
+              <MenuItem value={"5.000-10.000"}>5.000-10.000</MenuItem>
+              <MenuItem value={"5.000-15.000"}>5.000-15.000</MenuItem>
+              <MenuItem value={"5.000-15.000"}>5.000-15.000</MenuItem>
+              <MenuItem value={"5.000-15.000"}>5.000-15.000</MenuItem>
             </Select>
           </FormControl>
         </Grid>

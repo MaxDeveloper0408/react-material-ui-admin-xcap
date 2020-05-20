@@ -174,6 +174,7 @@ const SignUp = () => {
   const [isZipcode, setIsZipcode] = useState(false)
   const [statusFail, setStatusFail] = useState(false)
   const [status, setStatus] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   // Proceed to next step
   const handleNext = () => setSteps(steps + 1)
@@ -322,6 +323,11 @@ const SignUp = () => {
           ? "Minimum 3 characaters required"
           : ""
       break
+      case "investment_type":
+        formErrors.investment_type = lengthValidate
+          ? "Minimum 3 characaters required"
+          : ""
+      break
       default:
         break
     }
@@ -435,10 +441,12 @@ const SignUp = () => {
 
   const submit = () => {
     if(!isError) {
+      setLoading(true);
       AuthService.register(
         fields
       ).then(
         response => {
+          setLoading(false);
           setStatusFail(false);
           setStatus(true);
           setMessage(response.data.message);
@@ -450,6 +458,7 @@ const SignUp = () => {
               error.response.data.message) ||
             error.message ||
             error.toString();
+          setLoading(false);
           setStatusFail(true);
           setStatus(false);
           setMessage(resMessage);
@@ -548,6 +557,16 @@ const SignUp = () => {
           setStatus(false)      
           history.push("/sign-in");    
         }}
+        
+        />
+        <SweetAlert
+        show={loading}
+        title="Loading"
+        text={"Just a seconds"}
+        html={'<div class="save_loading"><svg viewBox="0 0 140 140" width="140" height="140"><g class="outline"><path d="m 70 28 a 1 1 0 0 0 0 84 a 1 1 0 0 0 0 -84" stroke="rgba(0,0,0,0.1)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></g><g class="circle"><path d="m 70 28 a 1 1 0 0 0 0 84 a 1 1 0 0 0 0 -84" stroke="#71BBFF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dashoffset="200" stroke-dasharray="300"></path></g></svg></div><div><h4>Save in progress...</h4></div>'}
+        type='success'
+        showConfirmButton= {false}
+				allowOutsideClick= {false}       
         />
         <SweetAlert
         show={statusFail}

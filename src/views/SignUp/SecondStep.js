@@ -15,7 +15,8 @@ const SecondStep = ({
   handleChange,
   values: { zipcode, birthdate, gender},
   filedError,
-  isError
+  isError,
+  isZipcode
 }) => {
   // Check if all values are not empty
   const isEmpty = birthdate.length > 0
@@ -38,8 +39,8 @@ const SecondStep = ({
                     name="zipcode"
                     placeholder="Enter your zipcode"
                     margin="normal"
-                    error={isError}
-                    helperText={isError ? "Formato de CEP inválido." : ""}
+                    error={!isZipcode}
+                    helperText={isZipcode ? "" : "Formato de CEP inválido."}
                     required
                   />
             }
@@ -86,7 +87,7 @@ const SecondStep = ({
         </Button>
         <Button
           variant="contained"
-          disabled={!isEmpty || isError}
+          disabled={!isEmpty || isError || !isZipcode}
           color="primary"
           onClick={handleNext}
           className={classes.disableButton}

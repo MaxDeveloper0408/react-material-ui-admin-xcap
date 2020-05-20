@@ -169,6 +169,9 @@ const SignUp = () => {
   })
 
   const [isError, setIsError] = useState(false)
+  const [firstIsError, setFirstIsError] = useState(false)
+  const [secondIsError, setSecondIsError] = useState(false)
+  const [isZipcode, setIsZipcode] = useState(false)
   const [statusFail, setStatusFail] = useState(false)
   const [status, setStatus] = useState(false)
   const [message, setMessage] = useState('')
@@ -193,6 +196,8 @@ const SignUp = () => {
     const phoneValidate = /^([+][0-9]{2})?([ ]\([0-9]{2})\)[ ]([0-9]{3}|[0-9]{4})-[0-9]{4}$/;
     let cep = '';
     let cepformatValidate = true;
+
+
     if(input == "zipcode") {
       console.log('***zipcoe***');
       console.log(input);
@@ -201,7 +206,6 @@ const SignUp = () => {
       let val_cep = value;
       var validate = /[0-9]{5}[-][0-9]{3}/;
       cepformatValidate = cep == '';
-      // if(cep != '') {
           if (validate.test(val_cep)) {
             fetch("https://viacep.com.br/ws/"+cep+"/json")
               .then(res => res.json())
@@ -216,7 +220,8 @@ const SignUp = () => {
                       city: '',
                       state: ''
                     })
-                    setIsError(true)
+                    setIsZipcode(false)
+                    // console.log(isZipcode)
                   } else {
                     setFields({
                       ...fields,
@@ -227,18 +232,18 @@ const SignUp = () => {
                       state: result.uf
                     })
                     cepformatValidate = false;
+                    setIsZipcode(true)
                   }
                 },
                 (error) => {
+                  setIsZipcode(false)
                   cepformatValidate = true;
                 }
             )
           }else {
+            setIsZipcode(false)
             cepformatValidate = true;
           }
-      // } else {
-      //   cepformatValidate = true;
-      // }
     }
     switch (input) {
       case "full_name":
@@ -260,13 +265,13 @@ const SignUp = () => {
           : "Please enter a valid phone number. i.e: +55 (99) 9999-9999"
       break
       case "password":
-        formErrors.password = lengthValidate
-          ? "Minimum 3 characaters required"
+        formErrors.password = value.length >= 0 && value.length < 6
+          ? "Minimum 6 characaters required"
           : ""
       break
       case "confirm":
         formErrors.confirm = lengthValidate
-          ? "Minimum 3 characaters required"
+          ? "Minimum 6 characaters required"
           : ""
       break
       case "zipcode":
@@ -322,7 +327,7 @@ const SignUp = () => {
     }
     // set error hook
     let error_count = 0;
-    Object.values(formErrors).forEach(error => {
+    Object.values(formErrors).forEach((error,val,array) => {
       if (error.length > 0) {
         error_count = error_count + 1;
         return;
@@ -406,6 +411,7 @@ const SignUp = () => {
             handleChange={handleChange}
             values={fields}
             isError={isError}
+            isZipcode={isZipcode}
             filedError={filedError}
           />
         )

@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button"
 import InputMask from "react-input-mask";
 // Destructure props
 const SecondStep = ({
+  classes,
   handleNext,
   handleBack,
   handleChange,
@@ -88,6 +89,7 @@ const SecondStep = ({
           disabled={!isEmpty || isError}
           color="primary"
           onClick={handleNext}
+          className={classes.disableButton}
         >
           Next
         </Button>

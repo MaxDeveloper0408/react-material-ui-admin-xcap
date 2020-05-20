@@ -155,6 +155,7 @@ const Confirm = ({
           disabled={!isEmpty || isError}
           color="primary"
           onClick={submit}
+          className={classes.disableButton}
         >
           Confirm
         </Button>

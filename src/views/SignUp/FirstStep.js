@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button"
 import InputMask from "react-input-mask";
 // Destructure props
 const FirstStep = ({
+  classes,
   handleNext,
   handleChange,
   values: { full_name, cpf, email, cellphone, password, confirm },
@@ -140,6 +141,7 @@ const FirstStep = ({
           disabled={!isEmpty || isError}
           color="primary"
           onClick={handleNext}
+          className={classes.disableButton}
         >
           Next
         </Button>

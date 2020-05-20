@@ -26,6 +26,9 @@ const cpfRegex = RegExp(/[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}/)
 const labels = ["First Step", "Second Step", "Confirmation"]
 
 const useStyles = makeStyles(theme => ({
+  completed: {
+    color: "#1361ff!important"
+  },
   root: {
     backgroundColor: theme.palette.background.default,
     height: '100%'
@@ -121,6 +124,16 @@ const useStyles = makeStyles(theme => ({
   },
   colorWhite: {
     color: 'white!important'
+  },
+  disableButton: {
+      "&:disabled": {
+        color: 'rgb(206, 191, 191)!important',
+        backgroundColor: 'rgb(107, 110, 128)!important'
+      }
+  },
+  stepDone: {
+    backgroundColor:'#1a237e',
+    color: 'white'
   }
 }));
 
@@ -181,11 +194,15 @@ const SignUp = () => {
     let cep = '';
     let cepformatValidate = true;
     if(input == "zipcode") {
-      cep = value.replace(/\D/g, '');
-      var validate = /^[0-9]{5}-[0-9]{3}$/;
+      console.log('***zipcoe***');
+      console.log(input);
+      cep = value;
+      cep = cep.replace(/\D/g, '')
+      let val_cep = value;
+      var validate = /[0-9]{5}[-][0-9]{3}/;
       cepformatValidate = cep == '';
       // if(cep != '') {
-          if (validate.test(value)) {
+          if (validate.test(val_cep)) {
             fetch("https://viacep.com.br/ws/"+cep+"/json")
               .then(res => res.json())
               .then(
@@ -203,6 +220,7 @@ const SignUp = () => {
                   } else {
                     setFields({
                       ...fields,
+                      zipcode: value,
                       street: result.logradouro,
                       neighborhood: result.bairro,
                       city: result.localidade,
@@ -319,51 +337,50 @@ const SignUp = () => {
     setFieldError({
       ...formErrors
     })
-    console.log(formErrors)
   }
-  const handleBlur = input => ({ target: { value } }) => {
-    if(input == "zipcode") {
-      const formErrors = { ...filedError }
-      var cep = value.replace(/\D/g, '');
-      const cepformatValidate = cep == '';
-      formErrors.zipcode = cepformatValidate
-          ? "Formato de CEP inválido."
-          : ""
-      if(cep != '') {
-          fetch("https://viacep.com.br/ws/"+cep+"/json")
-            .then(res => res.json())
-            .then(
-              (result) => {
-                setFields({
-                  street:result.logradouro,
-                  neighborhood: result.bairro,
-                  city: result.localidade,
-                  state: result.uf,
-                  number: result.ibge 
-                })
-                formErrors.zipcode = ""
-                setFieldError({
-                  ...formErrors
-                })
-              },
-              (error) => {
-                formErrors.zipcode = "Formato de CEP inválido."
-                setFieldError({
-                  ...formErrors
-                })
-              }
-          )
-      } else {
-        formErrors.zipcode = "Formato de CEP inválido."
-        setFieldError({
-          ...formErrors
-        })
-      }
-      setFieldError({
-        ...formErrors
-      })
-    }
-  }
+  // const handleBlur = input => ({ target: { value } }) => {
+  //   if(input == "zipcode") {
+  //     const formErrors = { ...filedError }
+  //     var cep = value.replace(/\D/g, '');
+  //     const cepformatValidate = cep == '';
+  //     formErrors.zipcode = cepformatValidate
+  //         ? "Formato de CEP inválido."
+  //         : ""
+  //     if(cep != '') {
+  //         fetch("https://viacep.com.br/ws/"+cep+"/json")
+  //           .then(res => res.json())
+  //           .then(
+  //             (result) => {
+  //               setFields({
+  //                 street:result.logradouro,
+  //                 neighborhood: result.bairro,
+  //                 city: result.localidade,
+  //                 state: result.uf,
+  //                 number: result.ibge 
+  //               })
+  //               formErrors.zipcode = ""
+  //               setFieldError({
+  //                 ...formErrors
+  //               })
+  //             },
+  //             (error) => {
+  //               formErrors.zipcode = "Formato de CEP inválido."
+  //               setFieldError({
+  //                 ...formErrors
+  //               })
+  //             }
+  //         )
+  //     } else {
+  //       formErrors.zipcode = "Formato de CEP inválido."
+  //       setFieldError({
+  //         ...formErrors
+  //       })
+  //     }
+  //     setFieldError({
+  //       ...formErrors
+  //     })
+  //   }
+  // }
   const gotoSignIn = () => {
     history.push("/sign-in");
   }
@@ -372,6 +389,7 @@ const SignUp = () => {
       case 0:
         return (
           <FirstStep
+            classes={classes}
             handleNext={handleNext}
             handleChange={handleChange}
             values={fields}
@@ -382,6 +400,7 @@ const SignUp = () => {
       case 1:
         return (
           <SecondStep
+            classes={classes}
             handleNext={handleNext}
             handleBack={handleBack}
             handleChange={handleChange}
@@ -499,7 +518,11 @@ const SignUp = () => {
                         >
                           {labels.map(label => (
                             <Step key={label}>
-                              <StepLabel>{label}</StepLabel>
+                              <StepLabel StepIconProps={{
+                                  classes: { root: classes.completed }
+                                }}>
+                                  {label}
+                              </StepLabel>
                             </Step>
                           ))}
                         </Stepper>

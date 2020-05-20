@@ -126,7 +126,11 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2)
   },
   signInButton: {
-    margin: theme.spacing(2, 0)
+    margin: theme.spacing(2, 0),
+    "&:disabled": {
+      color: 'rgb(206, 191, 191)!important',
+      backgroundColor: 'rgb(107, 110, 128)!important'
+    }
   }
 }));
 

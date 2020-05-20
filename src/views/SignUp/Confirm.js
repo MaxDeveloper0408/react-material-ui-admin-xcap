@@ -27,6 +27,7 @@ const Confirm = ({
                   && city.length > 0
                   && state.length > 0
                   && investment.length > 0
+  const isNumber = number.length > 1 && number.length < 6;                  
   return (
     <Fragment>
       <Grid container spacing={2}>
@@ -53,8 +54,8 @@ const Confirm = ({
             defaultValue={number}
             onChange={handleChange("number")}
             margin="normal"
-            error={filedError.number !== ""}
-            helperText={filedError.number !== "" ? `${filedError.number}` : ""}
+            error={filedError.number !== "" || !isNumber}
+            helperText={filedError.number !== "" || !isNumber ? "Minimum 2 and Maxmum 5 numbers required" : ""}
             required
           />
         </Grid>

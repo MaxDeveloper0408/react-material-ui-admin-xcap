@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 import Grid from "@material-ui/core/Grid"
 import TextField from "@material-ui/core/TextField"
 import Button from "@material-ui/core/Button"
-
+import InputMask from "react-input-mask";
 // Destructure props
 const FirstStep = ({
   handleNext,
@@ -42,20 +42,26 @@ const FirstStep = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="CPF"
-            name="cpf"
-            placeholder="format: 532.820.857-96"
+          <InputMask
+            mask="999.999.999-99"
+            maskChar=" "
             defaultValue={cpf}
             onChange={handleChange("cpf")}
-            margin="normal"
-            error={filedError.cpf !== ""}
-            helperText={
-              filedError.cpf !== "" ? `${filedError.cpf}` : ""
+          >
+            {() => <TextField
+                    fullWidth
+                    label="CPF"
+                    name="cpf"
+                    placeholder="format: 532.820.857-96"
+                    margin="normal"
+                    error={filedError.cpf !== ""}
+                    helperText={
+                      filedError.cpf !== "" ? `${filedError.cpf}` : ""
+                    }
+                    required
+                  />
             }
-            required
-          />
+            </InputMask>
         </Grid>
         <Grid item xs={12}>
           <TextField
@@ -73,17 +79,22 @@ const FirstStep = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="Phone number"
-            name="cellphone"
-            placeholder="i.e: +55 (99) 9999-9999"
-            defaultValue={"+55" + cellphone.replace("+55", "")}
-            onChange={handleChange("cellphone")}
-            margin="normal"
-            error={filedError.cellphone !== ""}
-            helperText={filedError.cellphone !== "" ? `${filedError.cellphone}` : ""}
-          />
+          <InputMask
+              mask="+55 (99) 9999-9999"
+              maskChar=" "
+              defaultValue={cellphone}
+              onChange={handleChange("cellphone")}
+            >
+              {() => <TextField 
+                      fullWidth
+                      label="Phone number"
+                      name="cellphone"
+                      placeholder="i.e: +55 (99) 9999-9999"
+                      margin="normal"
+                      error={filedError.cellphone !== ""}
+                      helperText={filedError.cellphone !== "" ? `${filedError.cellphone}` : ""}
+              />}
+          </InputMask>
         </Grid>
 
         <Grid item xs={12}>

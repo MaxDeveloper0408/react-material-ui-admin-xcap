@@ -6,7 +6,7 @@ import Select from "@material-ui/core/Select"
 import InputLabel from "@material-ui/core/InputLabel"
 import MenuItem from "@material-ui/core/MenuItem"
 import Button from "@material-ui/core/Button"
-
+import InputMask from "react-input-mask";
 // Destructure props
 const SecondStep = ({
   handleNext,
@@ -25,20 +25,25 @@ const SecondStep = ({
     <Fragment>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="Zipcode"
-            name="zipcode"
-            placeholder="Enter your zipcode"
+          <InputMask
+            mask="99999-999"
+            maskChar=" "
             defaultValue={zipcode}
             onChange={handleChange("zipcode")}
-            margin="normal"
-            // error={filedError.zipcode !== ""}
-            // helperText={filedError.zipcode !== "" ? `${filedError.zipcode}` : ""}
-            error={isError}
-            helperText={isError ? "Formato de CEP inválido." : ""}
-            required
-          />
+          >
+            {() => <TextField
+                    fullWidth
+                    label="Zipcode"
+                    name="zipcode"
+                    placeholder="Enter your zipcode"
+                    margin="normal"
+                    error={isError}
+                    helperText={isError ? "Formato de CEP inválido." : ""}
+                    required
+                  />
+            }
+            </InputMask>
+          
         </Grid>
         <Grid item xs={12}>
           <TextField

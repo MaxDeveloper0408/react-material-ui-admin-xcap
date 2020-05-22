@@ -261,7 +261,7 @@ const SignUp = () => {
       case "cellphone":
         formErrors.cellphone = phoneValidate.test(value)
           ? ""
-          : "Por favor insira um número de telefone válido. i.e: +55 (99) 9999-9999"
+          : "Por favor insira um número de telefone válido. i.e: +55 (99) 99999-9999"
       break
       case "password":
         formErrors.password = value.length >= 0 && value.length < 6

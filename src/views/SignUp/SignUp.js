@@ -20,7 +20,7 @@ import { makeStyles } from '@material-ui/styles';
 //import Success from "./Success"
 
 const emailRegex = RegExp(/^[^@]+@[^@]+\.[^@]+$/)
-const phoneRegex = RegExp(/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4,6})$/)
+const phoneRegex = RegExp(/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{5,6})$/)
 const cpfRegex = RegExp(/[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}/)
 // Step titles
 const labels = ["Passo 1", "Passo 2", "Passo 3"]
@@ -192,7 +192,7 @@ const SignUp = () => {
     const formErrors = { ...filedError }
     const lengthValidate = value.length >= 0 && value.length < 3
     const numberValidate = /^[0-9]{0,255}$/;
-    const phoneValidate = /^([+][0-9]{3})?([ ]\([0-9]{3})\)[ ]([0-9]{3}|[0-9]{4})-[0-9]{4}$/;
+    const phoneValidate = /^([+][0-9]{2})?([ ]\([0-9]{2})\)[ ]([0-9]{3}|[0-9]{4})-[0-9]{4}$/;
     let cep = '';
     let cepformatValidate = true;
 

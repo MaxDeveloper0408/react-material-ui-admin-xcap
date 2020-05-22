@@ -14,14 +14,14 @@ const FirstStep = ({
 }) => {
   // Check if all values are not empty
   const isEmpty = full_name.length > 0
-                  && cpf.length > 0  
-                  && email.length > 0  
-                  && cellphone.length > 0  
-                  && password.length > 0  
-                  && confirm.length > 0 
+                  && cpf.length > 0
+                  && email.length > 0
+                  && cellphone.length > 0
+                  && password.length > 0
+                  && confirm.length > 0
                   && password === confirm
   if(confirm !== password) {
-      filedError.confirm = 'Confirm password must like password';
+      filedError.confirm = 'Confirmar Senha e Senha devem ser iguais.';
   }
   return (
     <Fragment>
@@ -29,9 +29,9 @@ const FirstStep = ({
         <Grid item xs={12}>
           <TextField
             fullWidth
-            label="Full Name"
+            label="Nome Completo"
             name="full_name"
-            placeholder="Your Full Name"
+            placeholder="Nome Completo"
             defaultValue={full_name}
             onChange={handleChange("full_name")}
             margin="normal"
@@ -67,9 +67,9 @@ const FirstStep = ({
         <Grid item xs={12}>
           <TextField
             fullWidth
-            label="Email"
+            label="E-mail"
             name="email"
-            placeholder="Your email address"
+            placeholder="meu@email.com.br"
             type="email"
             defaultValue={email}
             onChange={handleChange("email")}
@@ -86,9 +86,9 @@ const FirstStep = ({
               defaultValue={cellphone}
               onChange={handleChange("cellphone")}
             >
-              {() => <TextField 
+              {() => <TextField
                       fullWidth
-                      label="Phone number"
+                      label="Celular"
                       name="cellphone"
                       placeholder="i.e: +55 (99) 9999-9999"
                       margin="normal"
@@ -101,10 +101,10 @@ const FirstStep = ({
         <Grid item xs={12}>
           <TextField
             fullWidth
-            label="Password"
+            label="Senha"
             name="password"
             type="password"
-            placeholder="Your password"
+            placeholder="Senha"
             defaultValue={password}
             onChange={handleChange("password")}
             margin="normal"
@@ -118,10 +118,10 @@ const FirstStep = ({
         <Grid item xs={12}>
           <TextField
             fullWidth
-            label="Confirm Password"
+            label="Confirmar Senha"
             name="confirm"
             type="password"
-            placeholder="Your confirm"
+            placeholder="Confirmar Senha"
             defaultValue={confirm}
             onChange={handleChange("confirm")}
             margin="normal"
@@ -131,7 +131,7 @@ const FirstStep = ({
             }
             required
           />
-        </Grid>     
+        </Grid>
       </Grid>
       <div
         style={{ display: "flex", marginTop: 50, justifyContent: "flex-end" }}
@@ -143,7 +143,7 @@ const FirstStep = ({
           onClick={handleNext}
           className={classes.disableButton}
         >
-          Next
+          Avançar
         </Button>
       </div>
     </Fragment>

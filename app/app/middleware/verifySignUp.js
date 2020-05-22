@@ -6,12 +6,12 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
   // Username
   User.findOne({
     where: {
-      full_name: req.body.full_name
+      cpf: req.body.cpf
     }
   }).then(user => {
     if (user) {
       res.status(400).send({
-        message: "Failed! Username is already in use!"
+        message: "Este CPF já foi utilizado, volte ao passo 1 e utilize outro."
       });
       return;
     }
@@ -24,7 +24,7 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
     }).then(user => {
       if (user) {
         res.status(400).send({
-          message: "Failed! Email is already in use!"
+          message: "Este e-mail já foi utilizado, volte ao passo 1 e utilize outro."
         });
         return;
       }
@@ -39,13 +39,13 @@ checkRolesExisted = (req, res, next) => {
     for (let i = 0; i < req.body.roles.length; i++) {
       if (!ROLES.includes(req.body.roles[i])) {
         res.status(400).send({
-          message: "Failed! Role does not exist = " + req.body.roles[i]
+          message: "Falha! A função não existe = " + req.body.roles[i]
         });
         return;
       }
     }
   }
-  
+
   next();
 };
 

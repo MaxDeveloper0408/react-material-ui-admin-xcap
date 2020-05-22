@@ -364,7 +364,7 @@ const SignIn = props => {
       </Grid>
       <SweetAlert
         show={status}
-        title="Fail"
+        title="Erro"
         text={message}
         type='error'
         onConfirm={() => {

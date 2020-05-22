@@ -23,7 +23,7 @@ const emailRegex = RegExp(/^[^@]+@[^@]+\.[^@]+$/)
 const phoneRegex = RegExp(/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4,6})$/)
 const cpfRegex = RegExp(/[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}/)
 // Step titles
-const labels = ["First Step", "Second Step", "Confirmation"]
+const labels = ["Passo 1", "Passo 2", "Passo 3"]
 
 const useStyles = makeStyles(theme => ({
   completed: {
@@ -247,30 +247,30 @@ const SignUp = () => {
     switch (input) {
       case "full_name":
         formErrors.full_name = lengthValidate
-          ? "Minimum 3 characaters required"
+          ? "Necessário mínimo de 3 caracteres."
           : ""
         break
       case "email":
-        formErrors.email = emailRegex.test(value) ? "" : "Invalid email address"
+        formErrors.email = emailRegex.test(value) ? "" : "Endereço de email inválido."
       break
       case "cpf":
         formErrors.cpf = !CPF.CPF.isValid(value) || !cpfRegex.test(value)
-          ? "invalid CPF. i.e. 532.820.857-96"
+          ? "CPF inválido. i.e. 532.820.857-96"
           : ""
       break
       case "cellphone":
         formErrors.cellphone = phoneValidate.test(value)
           ? ""
-          : "Please enter a valid phone number. i.e: +55 (99) 9999-9999"
+          : "Por favor insira um número de telefone válido. i.e: +55 (99) 9999-9999"
       break
       case "password":
         formErrors.password = value.length >= 0 && value.length < 6
-          ? "Minimum 6 characaters required"
+          ? "Necessário mínimo de 6 caracteres."
           : ""
       break
       case "confirm":
         formErrors.confirm = lengthValidate
-          ? "Minimum 6 characaters required"
+          ? "Necessário mínimo de 6 caracteres."
           : ""
       break
       case "zipcode":
@@ -280,22 +280,22 @@ const SignUp = () => {
       break
       case "birthdate":
         formErrors.birthdate = lengthValidate
-          ? "Minimum 3 characaters required"
+          ? "Necessário mínimo de 3 caracteres."
           : ""
       break
       case "gender":
         formErrors.gender = lengthValidate
-          ? "Minimum 3 characaters required"
+          ? "Necessário mínimo de 3 caracteres."
           : ""
       break
       case "street":
         formErrors.street = lengthValidate
-          ? "Minimum 3 characaters required"
+          ? "Necessário mínimo de 3 caracteres."
           : ""
       break
       case "number":
         formErrors.number = !numberValidate.test(value) || value.length < 2 || value.length > 5
-          ? "Minimum 2 and Maxmum 5 numbers required"
+          ? "Números mínimos 2 e 5 máximos necessários."
           : ""
       break
       case "complement":
@@ -303,27 +303,27 @@ const SignUp = () => {
       break
       case "neighborhood":
         formErrors.neighborhood = lengthValidate
-          ? "Minimum 3 characaters required"
+          ? "Necessário mínimo de 3 caracteres."
           : ""
       break
       case "city":
         formErrors.city = value.length == 0
-          ? "Minimum 1 characaters required"
+          ? "Necessário mínimo de 1 caractere."
           : ""
       break
       case "state":
         formErrors.state = value.length == 0
-          ? "Minimum 1 characater required"
+          ? "Necessário mínimo de 1 caractere."
           : ""
       break
       case "investment":
         formErrors.investment = lengthValidate
-          ? "Minimum 3 characaters required"
+          ? "Necessário mínimo de 2 caracteres."
           : ""
       break
       case "investment_type":
         formErrors.investment_type = lengthValidate
-          ? "Minimum 3 characaters required"
+          ? "Necessário mínimo de 3 caracteres."
           : ""
       break
       default:
@@ -365,7 +365,7 @@ const SignUp = () => {
   //                 neighborhood: result.bairro,
   //                 city: result.localidade,
   //                 state: result.uf,
-  //                 number: result.ibge 
+  //                 number: result.ibge
   //               })
   //               formErrors.zipcode = ""
   //               setFieldError({
@@ -464,7 +464,7 @@ const SignUp = () => {
         }
       );
     }
-  } 
+  }
   // Handle components
   return (
 
@@ -548,27 +548,27 @@ const SignUp = () => {
       </Grid>
         <SweetAlert
         show={status}
-        title="Success"
+        title="Sucesso"
         text={message}
         type='success'
         onConfirm={() => {
-          setStatus(false)      
-          history.push("/sign-in");    
+          setStatus(false)
+          history.push("/sign-in");
         }}
-        
+
         />
         <SweetAlert
         show={loading}
-        title="Loading"
-        text={"Just a seconds"}
-        html={'<div class="save_loading"><svg viewBox="0 0 140 140" width="140" height="140"><g class="outline"><path d="m 70 28 a 1 1 0 0 0 0 84 a 1 1 0 0 0 0 -84" stroke="rgba(0,0,0,0.1)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></g><g class="circle"><path d="m 70 28 a 1 1 0 0 0 0 84 a 1 1 0 0 0 0 -84" stroke="#71BBFF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dashoffset="200" stroke-dasharray="300"></path></g></svg></div><div><h4>Save in progress...</h4></div>'}
+        title="Enviando"
+        text={"Isso pode levar alguns segundos."}
+        html={'<div class="save_loading"><svg viewBox="0 0 140 140" width="140" height="140"><g class="outline"><path d="m 70 28 a 1 1 0 0 0 0 84 a 1 1 0 0 0 0 -84" stroke="rgba(0,0,0,0.1)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></g><g class="circle"><path d="m 70 28 a 1 1 0 0 0 0 84 a 1 1 0 0 0 0 -84" stroke="#71BBFF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dashoffset="200" stroke-dasharray="300"></path></g></svg></div>'}
         type='success'
         showConfirmButton= {false}
-				allowOutsideClick= {false}       
+				allowOutsideClick= {false}
         />
         <SweetAlert
         show={statusFail}
-        title="Fail"
+        title="Erro"
         text={message}
         type='error'
         onConfirm={() => {

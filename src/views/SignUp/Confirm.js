@@ -19,23 +19,23 @@ const Confirm = ({
   isError
 }) => {
   // Check if all values are not empty
-  const isEmpty = city.length > 0 
+  const isEmpty = city.length > 0
                   && street.length > 0
                   && number.length > 0
                   && complement.length >= 0
                   && neighborhood.length > 0
                   && city.length > 0
                   && state.length > 0
-  const isNumber = number.length > 1 && number.length < 6;                  
+  const isNumber = number.length > 1 && number.length < 6;
   return (
     <Fragment>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
             fullWidth
-            label="Street"
+            label="Logradouro"
             name="street"
-            placeholder="Enter your street"
+            placeholder="Digite sua rua/logradouro."
             defaultValue={street}
             onChange={handleChange("street")}
             margin="normal"
@@ -47,23 +47,23 @@ const Confirm = ({
         <Grid item xs={12}>
           <TextField
             fullWidth
-            label="Number"
+            label="Número"
             name="number"
-            placeholder="Enter your number"
+            placeholder="Digite o número da residência."
             defaultValue={number}
             onChange={handleChange("number")}
             margin="normal"
             error={filedError.number !== "" || !isNumber}
-            helperText={filedError.number !== "" || !isNumber ? "Minimum 2 and Maxmum 5 numbers required" : ""}
+            helperText={filedError.number !== "" || !isNumber ? "Números de 2 a 5 necessários." : ""}
             required
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
             fullWidth
-            label="Complement"
+            label="Complemento"
             name="complement"
-            placeholder="Enter your complement"
+            placeholder="Digite um complemento. i.e: apartamento 10"
             defaultValue={complement}
             onChange={handleChange("complement")}
             margin="normal"
@@ -74,9 +74,9 @@ const Confirm = ({
         <Grid item xs={12}>
           <TextField
             fullWidth
-            label="Neighbor"
+            label="Bairro"
             name="neighborhood"
-            placeholder="Enter your neighborhood"
+            placeholder="Digite o bairro da residência."
             defaultValue={neighborhood}
             onChange={handleChange("neighborhood")}
             margin="normal"
@@ -94,9 +94,9 @@ const Confirm = ({
               className: classes.colorWhite
             }}
             fullWidth
-            label="City"
+            label="Cidade"
             name="city"
-            placeholder="Enter your city"
+            placeholder="Digite o nome da cidade."
             defaultValue={city}
             onChange={handleChange("city")}
             margin="normal"
@@ -115,9 +115,9 @@ const Confirm = ({
               className: classes.colorWhite
             }}
             fullWidth
-            label="Sate"
+            label="Estado"
             name="state"
-            placeholder="Enter your state"
+            placeholder="Digite o nome do estado."
             defaultValue={state}
             onChange={handleChange("state")}
             margin="normal"
@@ -137,7 +137,7 @@ const Confirm = ({
           onClick={handleBack}
           style={{ marginRight: 20 }}
         >
-          Back
+          Voltar
         </Button>
         <Button
           variant="contained"
@@ -146,7 +146,7 @@ const Confirm = ({
           onClick={submit}
           className={classes.disableButton}
         >
-          Confirm
+          Finalizar
         </Button>
       </div>
     </Fragment>

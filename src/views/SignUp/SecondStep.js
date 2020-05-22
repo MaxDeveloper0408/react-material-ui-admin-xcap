@@ -36,7 +36,7 @@ const SecondStep = ({
           >
             {() => <TextField
                     fullWidth
-                    label="Zipcode"
+                    label="CEP"
                     name="zipcode"
                     placeholder="Enter your zipcode"
                     margin="normal"
@@ -46,7 +46,7 @@ const SecondStep = ({
                   />
             }
             </InputMask>
-          
+
         </Grid>
         <Grid item xs={12}>
           <TextField
@@ -54,7 +54,7 @@ const SecondStep = ({
             InputLabelProps={{
               shrink: true
             }}
-            label="Date of birthdate"
+            label="Nascimento"
             name="birthdate"
             type="date"
             defaultValue={birthdate}
@@ -65,32 +65,32 @@ const SecondStep = ({
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth required margin="normal">
-            <InputLabel htmlFor="gender">Gender</InputLabel>
+            <InputLabel htmlFor="gender">Gênero</InputLabel>
             <Select value={gender} onChange={handleChange("gender")}>
               <MenuItem value={"MASCULINO"}>MASCULINO</MenuItem>
               <MenuItem value={"FEMININO"}>FEMININO</MenuItem>
               <MenuItem value={"TRANSGÊNERO"}>TRANSGÊNERO</MenuItem>
-              <MenuItem value={"OTHER"}>OTHER</MenuItem>
+              <MenuItem value={"OUTRO"}>OUTRO</MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth required margin="normal">
-            <InputLabel htmlFor="investment_type">Investment Type</InputLabel>
+            <InputLabel htmlFor="investment_type">Plano</InputLabel>
             <Select value={investment_type} onChange={handleChange("investment_type")}>
-              <MenuItem value={"FLEXIVEL"}>FLEXIVEL</MenuItem>
+              <MenuItem value={"FLEXIVEL"}>FLEXÍVEL</MenuItem>
               <MenuItem value={"CRESCIMENTO"}>CRESCIMENTO</MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth required margin="normal">
-            <InputLabel htmlFor="investment">Investment</InputLabel>
+            <InputLabel htmlFor="investment">Investimento</InputLabel>
             <Select value={investment} onChange={handleChange("investment")}>
-              <MenuItem value={"5.000-10.000"}>5.000-10.000</MenuItem>
               <MenuItem value={"5.000-15.000"}>5.000-15.000</MenuItem>
-              <MenuItem value={"5.000-15.000"}>5.000-15.000</MenuItem>
-              <MenuItem value={"5.000-15.000"}>5.000-15.000</MenuItem>
+              <MenuItem value={"20.000-50.000"}>20.000-50.000</MenuItem>
+              <MenuItem value={"55.000-80.000"}>55.000-80.000</MenuItem>
+              <MenuItem value={"100.000+"}>100.000+</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -104,7 +104,7 @@ const SecondStep = ({
           onClick={handleBack}
           style={{ marginRight: 20 }}
         >
-          Back
+          Voltar
         </Button>
         <Button
           variant="contained"
@@ -113,7 +113,7 @@ const SecondStep = ({
           onClick={handleNext}
           className={classes.disableButton}
         >
-          Next
+         Avançar
         </Button>
       </div>
     </Fragment>

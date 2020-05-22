@@ -1,5 +1,5 @@
 module.exports = {
-    HOST: "qn66usrj1lwdk1cc.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    HOST: "localhost",
     USER: "xhfa5u8xtozcyxub",
     PASSWORD: "pfgh342fi1yii626",
     DB: "jsqwhof9f0zvw2op",

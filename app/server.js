@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
- Access-Control-Allow-Origin: "https://xcapitalsc.herokuapp.com"
+  origin: "http://localhost:3000"
 };
 
 app.use(cors(corsOptions));

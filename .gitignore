@@ -5,7 +5,7 @@
 /.pnp
 node_modules/
 .pnp.js
-
+.sql
 # testing
 /coverage
 

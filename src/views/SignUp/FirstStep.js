@@ -81,7 +81,7 @@ const FirstStep = ({
         </Grid>
         <Grid item xs={12}>
           <InputMask
-              mask="+55 (99) 9999-9999"
+              mask="+55 (99) 99999-9999"
               maskChar=" "
               defaultValue={cellphone}
               onChange={handleChange("cellphone")}
@@ -90,7 +90,7 @@ const FirstStep = ({
                       fullWidth
                       label="Celular"
                       name="cellphone"
-                      placeholder="i.e: +55 (99) 9999-9999"
+                      placeholder="i.e: +55 (99) 99999-9999"
                       margin="normal"
                       error={filedError.cellphone !== ""}
                       helperText={filedError.cellphone !== "" ? `${filedError.cellphone}` : ""}

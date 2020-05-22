@@ -192,7 +192,7 @@ const SignUp = () => {
     const formErrors = { ...filedError }
     const lengthValidate = value.length >= 0 && value.length < 3
     const numberValidate = /^[0-9]{0,255}$/;
-    const phoneValidate = /^([+][0-9]{2})?([ ]\([0-9]{2})\)[ ]([0-9]{3}|[0-9]{4})-[0-9]{4}$/;
+    const phoneValidate = /^([+][0-9]{2})?([ ]\([0-9]{2})\)[ ]([0-9]{4}|[0-9]{4})-[0-9]{4}$/;
     let cep = '';
     let cepformatValidate = true;
 
@@ -498,7 +498,7 @@ const SignUp = () => {
                   className={classes.bio}
                   variant="body2"
                 >
-                  xcapitalinv.com.br
+                  xcapitalinvestimentos.com.br
                 </Typography>
               </div>
             </div>

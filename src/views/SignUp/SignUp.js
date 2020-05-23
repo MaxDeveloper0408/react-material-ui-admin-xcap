@@ -498,7 +498,7 @@ const SignUp = () => {
                   className={classes.bio}
                   variant="body2"
                 >
-                  xcapitalinvestimentos.com.br
+                  xcapitalinv.com.br
                 </Typography>
               </div>
             </div>

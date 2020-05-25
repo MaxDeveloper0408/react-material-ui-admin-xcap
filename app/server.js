@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
-  origin: "https://xcapitalsc.herokuapp.com"
+  origin: "localhost:3000"
 };
 
 app.use(cors(corsOptions));

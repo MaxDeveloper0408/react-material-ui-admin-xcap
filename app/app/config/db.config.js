@@ -5,7 +5,7 @@ module.exports = {
     DB: "jsqwhof9f0zvw2op",
     dialect: "mysql",
     pool: {
-      max: 15,
+      max: 5,
       min: 0,
       acquire: 30000,
       idle: 10000

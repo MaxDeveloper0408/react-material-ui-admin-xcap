@@ -15,9 +15,29 @@ class UserService {
   getAllUsers() {
     return axios.get(URL + 'all', {headers: authHeader()});
   }
-  setActive(userId, active) {
+  getActiveUsers() {
+    return axios.get(URL + 'activeall', {headers: authHeader()});
+  }
+  getOneUser(userId) {
+    return axios.post(URL + 'one', {id: userId}, {headers: authHeader()});
+  }
+  setActive(userId, active, investment) {
     return axios
-      .post(URL + "setActive", {id: userId, active: active}, {headers: authHeader()})
+      .post(URL + "setActive", {id: userId, active: active, investment:investment}, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+      });
+  }
+  delete(userId) {
+    return axios
+      .post(URL + "delete", {id: userId}, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+      });
+  }
+  update(user) {
+    return axios
+      .post(URL + "update", user, {headers: authHeader()})
       .then(response => {
         return response.data;
       });

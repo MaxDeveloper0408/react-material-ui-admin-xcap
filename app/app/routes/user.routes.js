@@ -29,10 +29,11 @@ module.exports = function(app) {
   //   [authJwt.verifyToken, authJwt.isAdmin],
   //   controller.adminBoard
   // );
-  app.get(
-    "/api/user/all",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.userAll
-  );
+  app.get("/api/user/all",[authJwt.verifyToken, authJwt.isAdmin],controller.userAll);
+  app.get("/api/user/activeall",[authJwt.verifyToken, authJwt.isAdmin],controller.userActiveAll);
+  app.post("/api/user/one",[authJwt.verifyToken, authJwt.isAdmin],controller.userOne);
+  app.post("/api/user/update", [authJwt.verifyToken, authJwt.isAdmin], controller.update);
+  app.post("/api/user/delete", [authJwt.verifyToken, authJwt.isAdmin], controller.delete);
   app.post("/api/user/setActive", [authJwt.verifyToken, authJwt.isAdmin], controller.setActive);
+
 };

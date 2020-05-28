@@ -13,14 +13,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UserList = (props) => {
+const ActiveUserList = (props) => {
   const { history } = props;
   const classes = useStyles();
   const [users, setUsers] = useState([]);
   useEffect(() => {
     const fetchUsers = async () => {
         try {
-            const response = await UserService.getAllUsers();
+            const response = await UserService.getActiveUsers();
             setUsers(response.data);
         } catch (e) {
             setUsers([]);
@@ -40,4 +40,4 @@ const UserList = (props) => {
   );
 };
 
-export default UserList;
+export default ActiveUserList;

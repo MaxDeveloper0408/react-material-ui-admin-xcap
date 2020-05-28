@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
-  root: {}
+  root: {},
 }));
 
 const AccountDetails = props => {

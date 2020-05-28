@@ -182,6 +182,34 @@ const UsersTable = props => {
   const handleEdit = (userId) => {
     history.push("/useredit/" + userId);
   }
+  const handleDelete = (userId) => {
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirm',
+      cancelButtonText: 'Cancel'
+    })
+    .then((result) => {
+      if (result.value) {
+        userService.delete(userId).then(
+          response => {
+            MySwal.fire({
+              title: 'Success',
+              text: response.message
+            })
+            window.location.reload();
+          },
+          error => {
+            console.log(error)
+          }
+        );
+      } else if (result.dismiss === MySwal.DismissReason.cancel) {
+
+      }
+    });
+  }
   return (
     <Card
       {...rest}
@@ -250,15 +278,9 @@ const UsersTable = props => {
                       <Button variant="contained" color="primary" onClick={handleEdit.bind(this, user.id)}>
                           Edit
                       </Button>
-                      {user.active == 'NO' ? (
-                        <Button variant="contained" color="primary" onClick={handleActive.bind(this, user.id, 'YES',user.investment)}>
-                          Approve
-                        </Button>
-                      ):(
-                        <Button variant="contained" color="secondary" onClick={handleActive.bind(this, user.id, 'NO',user.investment)}>
-                          Disapprove
-                        </Button>
-                      )}
+                      <Button variant="contained" color="secondary" onClick={handleDelete.bind(this, user.id)}>
+                          Delete
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}

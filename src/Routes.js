@@ -10,6 +10,8 @@ import {
   Dashboard as DashboardView,
   ProductList as ProductListView,
   UserList as UserListView,
+  ActiveUserList as ActiveUserListView,
+  UserEdit as UserEditView,
   Typography as TypographyView,
   Icons as IconsView,
   Account as AccountView,
@@ -51,7 +53,6 @@ class Routes extends Component {
 
   render() {
     const { currentUser, showAdminBoard, showUserBoard } = this.state;
-    console.log(showUserBoard)
     return (
       <Switch>
         {!AuthService.getCurrentUser() && (
@@ -84,6 +85,22 @@ class Routes extends Component {
           exact
           layout={MainLayout}
           path="/users"
+        />
+        )}
+        {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
+        <RouteWithLayout
+          component={ActiveUserListView}
+          exact
+          layout={MainLayout}
+          path="/active_users"
+        />
+        )}
+        {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
+        <RouteWithLayout
+          component={UserEditView}
+          exact
+          layout={MainLayout}
+          path="/useredit/:userId"
         />
         )}
         {(showAdminBoard || currentUser) && (

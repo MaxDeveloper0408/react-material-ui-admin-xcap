@@ -46,42 +46,61 @@ const Sidebar = props => {
     {
       title: 'Dashboard',
       href: '/dashboard',
-      icon: <DashboardIcon />
+      icon: <DashboardIcon />,
+      
     },
     {
-      title: 'Investir',
-      href: '/users',
-      icon: <RotateIcon />
+      title: 'Solicitações',
+      href: 'users',
+      icon: <AccountBoxIcon />,
+      subpages: [
+        {
+          title: 'Lista de solicitações de não clientes',
+          href: '/users',
+          icon: <RotateIcon />, 
+        },
+        {
+          title: 'Lista de clientes',
+          href: '/active_users',
+          icon: <RotateIcon />, 
+        }
+      ]
     },
     {
       title: 'Transferir',
       href: '/products',
-      icon: <Rotate90DegreesCcwIcon />
+      icon: <Rotate90DegreesCcwIcon />,
+      
     },
     {
       title: 'Extrato',
       href: '/sign-in',
-      icon: <PageViewIcon />
+      icon: <PageViewIcon />,
+      
     },
     {
       title: 'Contrato',
       href: '/typography',
-      icon: <InsertDriveFileIcon />
+      icon: <InsertDriveFileIcon />,
+      
     },
     {
       title: 'Projeção',
       href: '/icons',
-      icon: <InsertChartIcon />
+      icon: <InsertChartIcon />,
+      
     },
     {
       title: 'Minha Conta',
       href: '/account',
-      icon: <AccountBoxIcon />
+      icon: <AccountBoxIcon />,
+      
     },
     {
       title: 'Configuração',
       href: '/settings',
-      icon: <SettingsIcon />
+      icon: <SettingsIcon />,
+      
     }
   ];
 

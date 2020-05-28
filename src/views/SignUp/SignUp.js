@@ -17,12 +17,9 @@ import {
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { makeStyles } from '@material-ui/styles';
-//import Success from "./Success"
 
 const emailRegex = RegExp(/^[^@]+@[^@]+\.[^@]+$/)
-const phoneRegex = RegExp(/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4,6})$/)
 const cpfRegex = RegExp(/[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}/)
-// Step titles
 const labels = ["Passo 1", "Passo 2", "Passo 3"]
 
 const useStyles = makeStyles(theme => ({
@@ -159,7 +156,6 @@ const SignUp = () => {
     city: "",
     state: "",
     investment: "",
-    password: "",
   })
   // Copy fields as they all have the same name
   const [filedError, setFieldError] = useState({
@@ -167,8 +163,6 @@ const SignUp = () => {
   })
 
   const [isError, setIsError] = useState(false)
-  const [firstIsError, setFirstIsError] = useState(false)
-  const [secondIsError, setSecondIsError] = useState(false)
   const [isZipcode, setIsZipcode] = useState(false)
   const [statusFail, setStatusFail] = useState(false)
   const [status, setStatus] = useState(false)
@@ -187,7 +181,6 @@ const SignUp = () => {
       ...fields,
       [input]: value
     })
-
     // Handle errors
     const formErrors = { ...filedError }
     const lengthValidate = value.length >= 0 && value.length < 3
@@ -196,10 +189,7 @@ const SignUp = () => {
     let cep = '';
     let cepformatValidate = true;
 
-
     if(input == "zipcode") {
-      console.log('***zipcoe***');
-      console.log(input);
       cep = value;
       cep = cep.replace(/\D/g, '')
       let val_cep = value;
@@ -220,7 +210,6 @@ const SignUp = () => {
                       state: ''
                     })
                     setIsZipcode(false)
-                    // console.log(isZipcode)
                   } else {
                     setFields({
                       ...fields,
@@ -347,49 +336,7 @@ const SignUp = () => {
       ...formErrors
     })
   }
-  // const handleBlur = input => ({ target: { value } }) => {
-  //   if(input == "zipcode") {
-  //     const formErrors = { ...filedError }
-  //     var cep = value.replace(/\D/g, '');
-  //     const cepformatValidate = cep == '';
-  //     formErrors.zipcode = cepformatValidate
-  //         ? "Formato de CEP inválido."
-  //         : ""
-  //     if(cep != '') {
-  //         fetch("https://viacep.com.br/ws/"+cep+"/json")
-  //           .then(res => res.json())
-  //           .then(
-  //             (result) => {
-  //               setFields({
-  //                 street:result.logradouro,
-  //                 neighborhood: result.bairro,
-  //                 city: result.localidade,
-  //                 state: result.uf,
-  //                 number: result.ibge
-  //               })
-  //               formErrors.zipcode = ""
-  //               setFieldError({
-  //                 ...formErrors
-  //               })
-  //             },
-  //             (error) => {
-  //               formErrors.zipcode = "Formato de CEP inválido."
-  //               setFieldError({
-  //                 ...formErrors
-  //               })
-  //             }
-  //         )
-  //     } else {
-  //       formErrors.zipcode = "Formato de CEP inválido."
-  //       setFieldError({
-  //         ...formErrors
-  //       })
-  //     }
-  //     setFieldError({
-  //       ...formErrors
-  //     })
-  //   }
-  // }
+
   const gotoSignIn = () => {
     history.push("/sign-in");
   }

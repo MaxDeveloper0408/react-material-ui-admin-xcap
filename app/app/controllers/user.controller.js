@@ -1,11 +1,13 @@
 const db = require("../models");
 const config = require("../config/auth.config");
+var bcrypt = require("bcryptjs");
 const User = db.user;
+const Bank = db.bank;
 
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
   };
-  
+
 exports.userBoard = (req, res) => {
     res.status(200).send("User Content.");
 };
@@ -63,9 +65,23 @@ exports.update = (req, res) => {
   let id = req.body.id;
   delete user.id;
   delete user.updatedAt;
+  if(user.password)
+    user.password = bcrypt.hashSync(user.password, 8);
   User.update( 
       user,
       {where: {id: id}}
+  )
+  .then(user => {
+      return res.status(200).send({ status:'success', message: "Performed Succesfully!" });
+  })
+  .catch(err => {
+      return res.status(500).send({ status:'fail', message: err.message });
+  });
+}
+exports.updatePassword = (req, res) => {
+  User.update( 
+      {password: bcrypt.hashSync(req.body.password, 8)},
+      {where: {id: req.body.id}}
   )
   .then(user => {
       return res.status(200).send({ status:'success', message: "Performed Succesfully!" });
@@ -101,4 +117,60 @@ exports.setActive = (req, res) => {
     .catch(err => {
         return res.status(500).send({ status:'fail', message: err.message });
     });
+}
+
+
+exports.userBank = (req, res) => {
+  Bank.findOne({
+      where: {
+          user_id: req.body.user_id
+      }
+  })
+  .then(bank => {
+    res.status(200).send(bank)
+  })
+  .catch(err => {
+    res.status(500).send({})
+  });
+}
+
+exports.bankUpdate = (req, res) => {
+  let bank = req.body;
+    
+  Bank.findOne({
+    where: {
+        user_id: req.body.user_id
+    }
+  })
+  .then(res_data => {
+    if(!res_data) {
+      Bank.create( 
+        bank
+      )
+      .then(res_data => {
+          return res.status(200).send({ status:'success', message: "Performed Succesfully!" });
+      })
+      .catch(err => {
+          return res.status(500).send({ status:'fail', message: err.message });
+      });
+    } else {
+      let user_id = req.body.user_id;
+      delete bank.user_id;
+      delete bank.updatedAt;
+      Bank.update( 
+        bank,
+        {where: {user_id: user_id}}
+      )
+      .then(res_data => {
+          return res.status(200).send({ status:'success', message: "Performed Succesfully!" });
+      })
+      .catch(err => {
+          return res.status(500).send({ status:'fail', message: err.message });
+      });
+    }
+  }).catch(err => {
+    return res.status(500).send({ status:'fail', message: err.message });
+  });
+
+
 }

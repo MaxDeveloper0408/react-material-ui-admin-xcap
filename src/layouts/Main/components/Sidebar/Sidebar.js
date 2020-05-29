@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Sidebar = props => {
-  const { open, variant, onClose, className, ...rest } = props;
+  const { open, AuthService, variant, onClose, className, ...rest } = props;
 
   const classes = useStyles();
 
@@ -51,7 +51,7 @@ const Sidebar = props => {
     },
     {
       title: 'Solicitações',
-      href: 'users',
+      href: '/users',
       icon: <AccountBoxIcon />,
       subpages: [
         {
@@ -103,6 +103,36 @@ const Sidebar = props => {
       
     }
   ];
+  const user_pages = [
+    {
+      title: 'Dashboard',
+      href: '/dashboard',
+      icon: <DashboardIcon />,
+      
+    },
+    {
+      title: 'Solicitações',
+      href: '/userpersonal',
+      icon: <AccountBoxIcon />,
+      subpages: [
+        {
+          title: 'Dados pessoais',
+          href: '/userpersonal',
+          icon: <RotateIcon />, 
+        },
+        {
+          title: 'Conta bancária',
+          href: '/userbank',
+          icon: <RotateIcon />, 
+        },
+        {
+          title: 'Alteração de senha',
+          href: '/userpassword',
+          icon: <RotateIcon />, 
+        }
+      ]
+    }
+  ];
 
   return (
     <Drawer
@@ -118,9 +148,10 @@ const Sidebar = props => {
       >
         <Profile />
         <Divider className={classes.divider} />
+
         <SidebarNav
           className={classes.nav}
-          pages={pages}
+          pages={AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") ? pages : user_pages}
         />
       </div>
     </Drawer>

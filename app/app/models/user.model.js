@@ -46,7 +46,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       investment: {
         type: Sequelize.ENUM,
-        values: ['5.000-10.000', '5.000-15.000', '20.000-50.000', '100.000+']
+        values: ['5.000-15.000', '55.000-80.000', '20.000-50.000', '100.000+']
       },
       password: {
         type: Sequelize.STRING

@@ -60,6 +60,7 @@ const Main = props => {
       <Sidebar
         onClose={handleSidebarClose}
         open={shouldOpenSidebar}
+        AuthService={AuthService}
         variant={isDesktop ? 'persistent' : 'temporary'}
       />
       <main className={classes.content}>

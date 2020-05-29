@@ -80,7 +80,7 @@ const SidebarNav = props => {
           onClick={handleClick.bind(
             this,
             page.title
-          )}
+          )}  
         >
           <Button
             activeClassName={classes.active}

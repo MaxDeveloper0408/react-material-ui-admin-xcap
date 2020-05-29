@@ -21,6 +21,7 @@ class UserService {
   getOneUser(userId) {
     return axios.post(URL + 'one', {id: userId}, {headers: authHeader()});
   }
+
   setActive(userId, active, investment) {
     return axios
       .post(URL + "setActive", {id: userId, active: active, investment:investment}, {headers: authHeader()})
@@ -38,6 +39,23 @@ class UserService {
   update(user) {
     return axios
       .post(URL + "update", user, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+      });
+  }
+  updatePassword(user) {
+    return axios
+      .post(URL + "updatePassword", user, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+      });
+  }
+  getBank(userId) {
+    return axios.post(URL + 'bank', {user_id: userId}, {headers: authHeader()});
+  }
+  bankUpdate(data) {
+    return axios
+      .post(URL + "bankUpdate", data, {headers: authHeader()})
       .then(response => {
         return response.data;
       });

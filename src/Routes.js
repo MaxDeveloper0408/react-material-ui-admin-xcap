@@ -12,6 +12,9 @@ import {
   UserList as UserListView,
   ActiveUserList as ActiveUserListView,
   UserEdit as UserEditView,
+  UserPersonal as UserPersonalView,
+  UserBank as UserBankView,
+  UserPassword as UserPasswordView,
   Typography as TypographyView,
   Icons as IconsView,
   Account as AccountView,
@@ -101,6 +104,30 @@ class Routes extends Component {
           exact
           layout={MainLayout}
           path="/useredit/:userId"
+        />
+        )}
+        {AuthService.getCurrentUser() && (
+        <RouteWithLayout
+          component={UserPersonalView}
+          exact
+          layout={MainLayout}
+          path="/userpersonal"
+        />
+        )}
+        {AuthService.getCurrentUser() && (
+        <RouteWithLayout
+          component={UserPasswordView}
+          exact
+          layout={MainLayout}
+          path="/userpassword"
+        />
+        )}
+        {AuthService.getCurrentUser() && (
+        <RouteWithLayout
+          component={UserBankView}
+          exact
+          layout={MainLayout}
+          path="/userbank"
         />
         )}
         {(showAdminBoard || currentUser) && (

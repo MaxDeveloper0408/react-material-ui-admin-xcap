@@ -10,3 +10,7 @@ export { default as Typography } from './Typography';
 export { default as UserList } from './UserList';
 export { default as ActiveUserList } from './ActiveUserList';
 export { default as UserEdit } from './UserEdit';
+export { default as UserPersonal } from './UserPersonal';
+export { default as UserBank } from './UserBank';
+export { default as UserPassword } from './UserPassword';
+

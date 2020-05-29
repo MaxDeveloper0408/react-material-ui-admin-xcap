@@ -37,11 +37,10 @@ const useStyles = makeStyles(() => ({
 }));
 
 const UserDetails = props => {
-  const { className, UserService, userId, MySwal, ...rest } = props;
+  const { className, UserService, AuthService, MySwal, ...rest } = props;
   const [user, setUser] = useState({
     full_name: "",
     email: "",
-    password: "",
     investment_type: "",
     birthdate: "",
     gender: "",
@@ -59,7 +58,7 @@ const UserDetails = props => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-          const response = await UserService.getOneUser(userId);
+          const response = await UserService.getOneUser(AuthService.getCurrentUser().id);
           if(response.data.password)
             delete response.data.password
           setUser(response.data);
@@ -74,7 +73,6 @@ const UserDetails = props => {
   const [fields, setFields] = useState({
     full_name: "",
     email: "",
-    password: "",
     investment_type: "",
     birthdate: "",
     gender: "",
@@ -93,7 +91,7 @@ const UserDetails = props => {
   const [filedError, setFieldError] = useState({
     ...fields
   })
-  const [isError, setIsError] = useState(true)
+  const [isError, setIsError] = useState(false)
   const [isZipcode, setIsZipcode] = useState(true)
 
   const handleChange = input => ({ target: { value } }) => {
@@ -322,17 +320,17 @@ const UserDetails = props => {
               />
             </Grid>
             <Grid item xs={4}>
-              <InputMask
-                mask="999.999.999-99"
-                maskChar=" "
-                value={user.cpf}
-                onChange={handleChange("cpf")}
-              >
-                {() => <TextField
+                    <TextField
                         fullWidth
+                        value={user.cpf}
+                        InputProps={{
+                          className: classes.colorWhite
+                        }}
                         InputLabelProps={{
+                          className: classes.colorWhite,
                           shrink: true,
                         }}
+                        disabled
                         label="CPF"
                         name="cpf"
                         placeholder="format: 532.820.857-96"
@@ -343,13 +341,17 @@ const UserDetails = props => {
                         }
                         required
                       />
-                }
-                </InputMask>
+
             </Grid>
             <Grid item xs={4}>
               <TextField
+                disabled
                 fullWidth
+                  InputProps={{
+                  className: classes.colorWhite
+                }}
                 InputLabelProps={{
+                  className: classes.colorWhite,
                   shrink: true,
                 }}
                 label="E-mail"
@@ -365,14 +367,15 @@ const UserDetails = props => {
               />
             </Grid>
             <Grid item xs={4}>
-              <InputMask
-                  mask="+55 (99) 99999-9999"
-                  maskChar=" "
-                  value={user.cellphone}
-                  onChange={handleChange("cellphone")}
-                >
-                  {() => <TextField
+                 <TextField
+                          disabled
+                          value={user.cellphone}
+                          fullWidth
+                            InputProps={{
+                            className: classes.colorWhite
+                          }}
                           InputLabelProps={{
+                            className: classes.colorWhite,
                             shrink: true,
                           }}
                           fullWidth
@@ -382,31 +385,61 @@ const UserDetails = props => {
                           margin="normal"
                           error={filedError.cellphone !== ""}
                           helperText={filedError.cellphone !== "" ? `${filedError.cellphone}` : ""}
-                  />}
-              </InputMask>
+                  />
             </Grid>
 
             <Grid item xs={4}>
               <TextField
+                disabled
+                fullWidth
+                InputProps={{
+                  className: classes.colorWhite
+                }}
                 InputLabelProps={{
+                  className: classes.colorWhite,
                   shrink: true,
                 }}
-                fullWidth
-                label="Senha"
-                name="password"
-                type="password"
-                placeholder="Senha"
-                value={user.password}
-                onChange={handleChange("password")}
+                label="Nascimento"
+                name="birthdate"
+                type="date"
+                value={user.birthdate}
+                onChange={handleChange("birthdate")}
                 margin="normal"
-                error={filedError.password !== ""}
-                helperText={
-                  filedError.password !== "" ? `${filedError.password}` : ""
-                }
                 required
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={4} sm={4}>
+              <FormControl fullWidth required margin="normal">
+                <InputLabel htmlFor="gender">Gênero</InputLabel>
+                <Select className={classes.colorWhite} value={user.gender} onChange={handleChange("gender")} disabled>
+                  <MenuItem value={"MASCULINO"}>MASCULINO</MenuItem>
+                  <MenuItem value={"FEMININO"}>FEMININO</MenuItem>
+                  <MenuItem value={"TRANSGÊNERO"}>TRANSGÊNERO</MenuItem>
+                  <MenuItem value={"OUTRO"}>OUTRO</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={4} sm={4}>
+              <FormControl fullWidth required margin="normal">
+                <InputLabel htmlFor="user_investment_type">Plano</InputLabel>
+                <Select className={classes.colorWhite}  value={user.investment_type} onChange={handleChange("investment_type")} disabled>
+                  <MenuItem value={"FLEXIVEL"}>FLEXÍVEL</MenuItem>
+                  <MenuItem value={"CRESCIMENTO"}>CRESCIMENTO</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={4} sm={4}>
+              <FormControl fullWidth required margin="normal">
+                <InputLabel htmlFor="investment">Investimento</InputLabel>
+                <Select className={classes.colorWhite}  value={user.investment} onChange={handleChange("investment")} disabled>
+                  <MenuItem value={"5.000-15.000"}>5.000-15.000</MenuItem>
+                  <MenuItem value={"20.000-50.000"}>20.000-50.000</MenuItem>
+                  <MenuItem value={"55.000-80.000"}>55.000-80.000</MenuItem>
+                  <MenuItem value={"100.000+"}>100.000+</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
               <InputMask
                 mask="99999-999"
                 maskChar=" "
@@ -429,52 +462,6 @@ const UserDetails = props => {
                 }
                 </InputMask>
 
-            </Grid>
-            <Grid item xs={4}>
-              <TextField
-                fullWidth
-                InputLabelProps={{
-                  shrink: true
-                }}
-                label="Nascimento"
-                name="birthdate"
-                type="date"
-                value={user.birthdate}
-                onChange={handleChange("birthdate")}
-                margin="normal"
-                required
-              />
-            </Grid>
-            <Grid item xs={4} sm={4}>
-              <FormControl fullWidth required margin="normal">
-                <InputLabel htmlFor="gender">Gênero</InputLabel>
-                <Select value={user.gender} onChange={handleChange("gender")}>
-                  <MenuItem value={"MASCULINO"}>MASCULINO</MenuItem>
-                  <MenuItem value={"FEMININO"}>FEMININO</MenuItem>
-                  <MenuItem value={"TRANSGÊNERO"}>TRANSGÊNERO</MenuItem>
-                  <MenuItem value={"OUTRO"}>OUTRO</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={4} sm={4}>
-              <FormControl fullWidth required margin="normal">
-                <InputLabel htmlFor="user_investment_type">Plano</InputLabel>
-                <Select value={user.investment_type} onChange={handleChange("investment_type")}>
-                  <MenuItem value={"FLEXIVEL"}>FLEXÍVEL</MenuItem>
-                  <MenuItem value={"CRESCIMENTO"}>CRESCIMENTO</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={4} sm={4}>
-              <FormControl fullWidth required margin="normal">
-                <InputLabel htmlFor="investment">Investimento</InputLabel>
-                <Select value={user.investment} onChange={handleChange("investment")}>
-                  <MenuItem value={"5.000-15.000"}>5.000-15.000</MenuItem>
-                  <MenuItem value={"20.000-50.000"}>20.000-50.000</MenuItem>
-                  <MenuItem value={"55.000-80.000"}>55.000-80.000</MenuItem>
-                  <MenuItem value={"100.000+"}>100.000+</MenuItem>
-                </Select>
-              </FormControl>
             </Grid>
             <Grid item xs={4}>
                 <TextField

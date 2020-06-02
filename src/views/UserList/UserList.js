@@ -20,7 +20,8 @@ const UserList = (props) => {
   useEffect(() => {
     const fetchUsers = async () => {
         try {
-            const response = await UserService.getAllUsers();
+            const response = await UserService.getDeactiveUsers();
+            // const response = await UserService.getAllUsers();
             setUsers(response.data);
         } catch (e) {
             setUsers([]);

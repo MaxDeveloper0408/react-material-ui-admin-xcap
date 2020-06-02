@@ -303,7 +303,11 @@ const UserDetails = props => {
             <Grid item xs={4}>
               <TextField
                 fullWidth
+                InputProps={{
+                  className: classes.colorWhite
+                }}
                 InputLabelProps={{
+                  className: classes.colorWhite,
                   shrink: true,
                 }}
                 label="Nome Completo"
@@ -316,6 +320,7 @@ const UserDetails = props => {
                 helperText={
                   filedError.full_name !== "" ? `${filedError.full_name}` : ""
                 }
+                disabled
                 required
               />
             </Grid>

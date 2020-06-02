@@ -36,7 +36,8 @@ const UserDetails = props => {
   const classes = useStyles();
   const [fields, setFields] = useState({
     password: "",
-    confirm: ""
+    confirm: "",
+    current_password: ""
   })
   // Copy fields as they all have the same name
   const [filedError, setFieldError] = useState({
@@ -54,6 +55,11 @@ const UserDetails = props => {
     const formErrors = { ...filedError }
 
     switch (input) {
+      case "password":
+        formErrors.current_password = value.length >= 0 && value.length < 6
+          ? "Necessário mínimo de 6 caracteres."
+          : ""
+      break
       case "password":
         formErrors.password = value.length >= 0 && value.length < 6
           ? "Necessário mínimo de 6 caracteres."
@@ -90,7 +96,7 @@ const UserDetails = props => {
   const submit = () => {
     if(!isError) {
       UserService.updatePassword(
-        {id: AuthService.getCurrentUser().id, password: user.password}
+        {id: AuthService.getCurrentUser().id, password: user.password, current_password: user.current_password}
       ).then(
         response => {
           MySwal.fire({
@@ -130,6 +136,23 @@ const UserDetails = props => {
         <Divider />
         <CardContent>
           <Grid container spacing={2} noValidate>
+          <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Senha"
+                name="current_password"
+                type="password"
+                placeholder="Current Password"
+                value={user.current_password}
+                onChange={handleChange("current_password")}
+                margin="normal"
+                error={filedError.current_password !== ""}
+                helperText={
+                  filedError.current_password !== "" ? `${filedError.current_password}` : ""
+                }
+                required
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth

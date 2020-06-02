@@ -47,6 +47,20 @@ exports.userActiveAll = (req, res) => {
     res.status(500).send([])
   });
 }
+exports.userDeactiveAll = (req, res) => {
+  User.findAll({
+      where: {
+          admin: '0',
+          active: 'NO'
+      }
+  })
+  .then(users => {
+    res.status(200).send(users)
+  })
+  .catch(err => {
+    res.status(500).send([])
+  });
+}
 exports.userOne = (req, res) => {
   User.findOne({
       where: {
@@ -79,16 +93,38 @@ exports.update = (req, res) => {
   });
 }
 exports.updatePassword = (req, res) => {
-  User.update( 
+  User.findOne({
+    where: {
+      id: req.body.id
+    }
+  }).then(user => {
+    if (!user) {
+      return res.status(404).send({ message: "Usuário não encontrado." });
+    }
+    var passwordIsValid = bcrypt.compareSync(
+      req.body.current_password,
+      user.password
+    );
+    console.log(passwordIsValid);
+    if (!passwordIsValid) {
+      return res.status(401).send({ status:'fail', message: "Senha inválida!" });
+    }
+
+    User.update( 
       {password: bcrypt.hashSync(req.body.password, 8)},
       {where: {id: req.body.id}}
-  )
-  .then(user => {
-      return res.status(200).send({ status:'success', message: "Performed Succesfully!" });
+    )
+    .then(user => {
+        return res.status(200).send({ status:'success', message: "Performed Succesfully!" });
+    })
+    .catch(err => {
+        return res.status(500).send({ status:'fail', message: err.message });
+    });
   })
   .catch(err => {
-      return res.status(500).send({ status:'fail', message: err.message });
+    res.status(500).send({ message: err.message });
   });
+
 }
 exports.delete = (req, res) => {
   console.log(req.body)

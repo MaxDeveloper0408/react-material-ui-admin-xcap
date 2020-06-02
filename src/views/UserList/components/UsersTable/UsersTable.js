@@ -32,7 +32,11 @@ import withReactContent from 'sweetalert2-react-content'
 const MySwal = withReactContent(Swal)
 
 const useStyles = makeStyles(theme => ({
-  root: {},
+  root: {
+    '&$checked': {
+      color: 'white'
+    }
+  },
   content: {
     padding: 0
   },
@@ -197,6 +201,8 @@ const UsersTable = props => {
                     <Checkbox
                       checked={selectedUsers.length === users.length}
                       color="primary"
+                      labelStyle={{color: 'white'}}
+                      iconStyle={{fill: 'white'}}
                       indeterminate={
                         selectedUsers.length > 0 &&
                         selectedUsers.length < users.length
@@ -225,8 +231,13 @@ const UsersTable = props => {
                       <Checkbox
                         checked={selectedUsers.indexOf(user.id) !== -1}
                         color="primary"
+                        labelStyle={{color: 'white'}}
+                        iconStyle={{fill: 'white'}}
                         onChange={event => handleSelectOne(event, user.id)}
                         value="true"
+                        style ={{
+                          color: "white",
+                        }}
                       />
                     </TableCell>
                     <TableCell>

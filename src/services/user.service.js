@@ -15,6 +15,9 @@ class UserService {
   getAllUsers() {
     return axios.get(URL + 'all', {headers: authHeader()});
   }
+  getDeactiveUsers() {
+    return axios.get(URL + 'deactiveall', {headers: authHeader()});
+  }
   getActiveUsers() {
     return axios.get(URL + 'activeall', {headers: authHeader()});
   }

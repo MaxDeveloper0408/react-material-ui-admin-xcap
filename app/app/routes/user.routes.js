@@ -12,6 +12,7 @@ module.exports = function(app) {
   });
 
   app.get("/api/user/all",[authJwt.verifyToken, authJwt.isAdmin],controller.userAll);
+  app.get("/api/user/deactiveall",[authJwt.verifyToken, authJwt.isAdmin],controller.userDeactiveAll);
   app.get("/api/user/activeall",[authJwt.verifyToken, authJwt.isAdmin],controller.userActiveAll);
   app.post("/api/user/one",[authJwt.verifyToken],controller.userOne);
   app.post("/api/user/update", [authJwt.verifyToken], controller.update);

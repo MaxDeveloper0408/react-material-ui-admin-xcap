@@ -180,7 +180,22 @@ const UsersTable = props => {
   }
 
   const handleEdit = (userId) => {
-    history.push("/useredit/" + userId);
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirm',
+      cancelButtonText: 'Cancel'
+    })
+    .then((result) => {
+      if (result.value) {
+        history.push("/useredit/" + userId);
+      } else if (result.dismiss === MySwal.DismissReason.cancel) {
+        
+      }
+    });
+    
   }
   const handleDelete = (userId) => {
     MySwal.fire({

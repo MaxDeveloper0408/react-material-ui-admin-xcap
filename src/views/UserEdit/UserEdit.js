@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { Link as RouterLink, withRouter, Redirect, useHistory} from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
 import { UserDetails } from './components';
@@ -31,6 +32,7 @@ const UserEdit = ({ match, location }) => {
         >
           <UserDetails 
           MySwal={MySwal}
+          useHistory={useHistory}
           UserService={UserService}
           userId={userId}/>
         </Grid>

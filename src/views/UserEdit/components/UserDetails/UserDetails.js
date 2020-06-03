@@ -10,14 +10,15 @@ import {
   Divider,
   Grid,
   Button,
-  TextField
+  TextField,
+  IconButton
 } from '@material-ui/core';
 import FormControl from "@material-ui/core/FormControl"
 import Select from "@material-ui/core/Select"
 import InputLabel from "@material-ui/core/InputLabel"
 import MenuItem from "@material-ui/core/MenuItem"
 import InputMask from "react-input-mask"
-
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import CPF from "cpf_cnpj";
 const emailRegex = RegExp(/^[^@]+@[^@]+\.[^@]+$/)
@@ -37,7 +38,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const UserDetails = props => {
-  const { className, UserService, userId, MySwal, ...rest } = props;
+  const { className, UserService, userId, MySwal,useHistory, ...rest } = props;
   const [user, setUser] = useState({
     full_name: "",
     email: "",
@@ -258,7 +259,10 @@ const UserDetails = props => {
       ...formErrors
     })
   }
-
+  const history = useHistory();
+  const gotoBack = () => {
+    history.goBack();
+  }
   const submit = () => {
     if(!isError) {
       UserService.update(
@@ -287,10 +291,17 @@ const UserDetails = props => {
     }
   }
   return (
+
+
+
+
     <Card
       {...rest}
       className={clsx(classes.root, className)}
     >
+      <IconButton onClick={gotoBack}>
+        <ArrowBackIcon />
+      </IconButton>
       <form
         autoComplete="off"
         noValidate

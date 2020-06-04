@@ -296,6 +296,9 @@ const UsersTable = props => {
                       <Button variant="contained" color="secondary" onClick={handleDelete.bind(this, user.id)}>
                           Delete
                       </Button>
+                      <Button variant="contained" color="secondary" onClick={handleActive.bind(this, user.id, 'NO',user.investment)}>
+                        Disapprove
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}

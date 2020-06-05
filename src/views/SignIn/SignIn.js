@@ -233,7 +233,7 @@ const SignIn = props => {
                   className={classes.bio}
                   variant="body2"
                 >
-                  novoxcapital.com.br
+                  www.novosite.com.br
                 </Typography>
               </div>
             </div>

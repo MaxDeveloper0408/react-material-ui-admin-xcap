@@ -45,7 +45,7 @@ const UserDetails = props => {
 
       }
     };
-    fetchUser(); 
+    fetchUser();
   }, []);
   const classes = useStyles();
   const [fields, setFields] = useState({
@@ -159,7 +159,7 @@ const UserDetails = props => {
         noValidate
       >
         <CardHeader
-          subheader="You can add your bank account to receive payments in here"
+          subheader="Você pode atualizar os dados bancários para recebimento de saque"
           title="Conta bancária"
         />
         <Divider />

@@ -66,7 +66,7 @@ const UserDetails = props => {
         setUser({});
       }
     };
-    fetchUser(); 
+    fetchUser();
   }, []);
   const user_investment_type = user.investment_type;
   const classes = useStyles();
@@ -107,7 +107,7 @@ const UserDetails = props => {
     const phoneValidate = /^([+][0-9]{2})?([ ]\([0-9]{2})\)[ ]([0-9]{3}|[0-9]{5})-[0-9]{4}$/;
     let cep = '';
     let cepformatValidate = true;
-    
+
     if(input == "zipcode") {
       cep = value;
       cep = cep.replace(/\D/g, '')
@@ -294,8 +294,8 @@ const UserDetails = props => {
         noValidate
       >
         <CardHeader
-          subheader="Atualizar dados da conta"
-          title="Minha Conta"
+          subheader="O endereço pode ser atualizado uma vez a cada 72 horas. Para atualizar dados pessoais como nome ou gênero, entre em contato com o suporte."
+          title="Dados Cadastrais"
         />
         <Divider />
         <CardContent>
@@ -424,26 +424,6 @@ const UserDetails = props => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={4} sm={4}>
-              <FormControl fullWidth required margin="normal">
-                <InputLabel htmlFor="user_investment_type">Plano</InputLabel>
-                <Select className={classes.colorWhite}  value={user.investment_type} onChange={handleChange("investment_type")} disabled>
-                  <MenuItem value={"FLEXIVEL"}>FLEXÍVEL</MenuItem>
-                  <MenuItem value={"CRESCIMENTO"}>CRESCIMENTO</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={4} sm={4}>
-              <FormControl fullWidth required margin="normal">
-                <InputLabel htmlFor="investment">Investimento</InputLabel>
-                <Select className={classes.colorWhite}  value={user.investment} onChange={handleChange("investment")} disabled>
-                  <MenuItem value={"5.000-15.000"}>5.000-15.000</MenuItem>
-                  <MenuItem value={"20.000-50.000"}>20.000-50.000</MenuItem>
-                  <MenuItem value={"55.000-80.000"}>55.000-80.000</MenuItem>
-                  <MenuItem value={"100.000+"}>100.000+</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
             <Grid item xs={12}>
               <InputMask
                 mask="99999-999"
@@ -565,7 +545,7 @@ const UserDetails = props => {
                   required
                 />
             </Grid>
-       
+
           </Grid>
         </CardContent>
         <Divider />

@@ -32,11 +32,7 @@ import withReactContent from 'sweetalert2-react-content'
 const MySwal = withReactContent(Swal)
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    '&$checked': {
-      color: 'white'
-    }
-  },
+  root: {},
   content: {
     padding: 0
   },
@@ -76,9 +72,9 @@ const UsersTable = props => {
   const [page, setPage] = useState(0);
 
   const handleSelectAll = event => {
-    
+
     const { users } = props;
-    
+
     let selectedUsers;
 
     if (event.target.checked) {
@@ -121,12 +117,10 @@ const UsersTable = props => {
   const handleActive = (userId, active, investment) => {
     if(active == "NO") {
       MySwal.fire({
-        title: "Are you sure?",
-        text: "",
         icon: 'warning',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
         showCancelButton: true,
-        confirmButtonText: 'Confirm',
-        cancelButtonText: 'Cancel'
       })
       .then((result) => {
         if (result.value) {
@@ -148,8 +142,8 @@ const UsersTable = props => {
       });
     }else {
       const { value: select_investment } =  MySwal.fire({
-        title: 'Are you going to approve?',
-        text: 'Select investment',
+        title: 'Aprovar a conta do cliente',
+        text: 'Entre com o investimento',
         input: 'select',
         inputOptions: {
           "5.000-15.000": "5.000-15.000",
@@ -159,6 +153,8 @@ const UsersTable = props => {
         },
         inputValue: investment,
         showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
         inputValidator: (value) => {
           return new Promise((resolve) => {
             if (value != null) {
@@ -179,12 +175,55 @@ const UsersTable = props => {
             console.log(error)
           }
         );
-      })  
+      })
     }
   }
 
   const handleEdit = (userId) => {
-    history.push("/useredit/" + userId);
+    MySwal.fire({
+      title: "Ir para edição de dados deste usuário",
+      text: "",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar'
+    })
+    .then((result) => {
+      if (result.value) {
+        history.push("/useredit/" + userId);
+      } else if (result.dismiss === MySwal.DismissReason.cancel) {
+
+      }
+    });
+
+  }
+  const handleDelete = (userId) => {
+    MySwal.fire({
+      title: "Confirma a exclusão permanentemente?",
+      text: "",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar'
+    })
+    .then((result) => {
+      if (result.value) {
+        userService.delete(userId).then(
+          response => {
+            MySwal.fire({
+              title: 'Success',
+              text: response.message
+            })
+            window.location.reload();
+          },
+          error => {
+            console.log(error)
+          }
+        );
+      } else if (result.dismiss === MySwal.DismissReason.cancel) {
+
+      }
+    });
   }
   return (
     <Card
@@ -201,8 +240,6 @@ const UsersTable = props => {
                     <Checkbox
                       checked={selectedUsers.length === users.length}
                       color="primary"
-                      labelStyle={{color: 'white'}}
-                      iconStyle={{fill: 'white'}}
                       indeterminate={
                         selectedUsers.length > 0 &&
                         selectedUsers.length < users.length
@@ -211,7 +248,6 @@ const UsersTable = props => {
                     />
                   </TableCell>
                   <TableCell style={{color: '#212a37'}} className="blackText">Name</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Email</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>CPF</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Celular</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Plano</TableCell>
@@ -231,13 +267,8 @@ const UsersTable = props => {
                       <Checkbox
                         checked={selectedUsers.indexOf(user.id) !== -1}
                         color="primary"
-                        labelStyle={{color: 'white'}}
-                        iconStyle={{fill: 'white'}}
                         onChange={event => handleSelectOne(event, user.id)}
                         value="true"
-                        style ={{
-                          color: "white",
-                        }}
                       />
                     </TableCell>
                     <TableCell>
@@ -245,7 +276,6 @@ const UsersTable = props => {
                         <Typography variant="body1">{user.full_name}</Typography>
                       </div>
                     </TableCell>
-                    <TableCell>{user.email}</TableCell>
                     <TableCell>{user.cpf}</TableCell>
                     <TableCell>{user.cellphone}</TableCell>
                     <TableCell>
@@ -258,18 +288,15 @@ const UsersTable = props => {
                       {moment(user.createdAt).format('DD/MM/YYYY')}
                     </TableCell> */}
                     <TableCell>
-                      <Button variant="contained" color="primary" onClick={handleEdit.bind(this, user.id)}>
-                          Edit
+                      <Button variant="contained" color="secondary" onClick={handleEdit.bind(this, user.id)}>
+                        Editar
                       </Button>
-                      {user.active == 'NO' ? (
-                        <Button variant="contained" color="primary" onClick={handleActive.bind(this, user.id, 'YES',user.investment)}>
-                          Approve
-                        </Button>
-                      ):(
-                        <Button variant="contained" color="secondary" onClick={handleActive.bind(this, user.id, 'NO',user.investment)}>
-                          Disapprove
-                        </Button>
-                      )}
+                      <Button variant="contained" color="secondary" onClick={handleDelete.bind(this, user.id)}>
+                         Deletar
+                      </Button>
+                      <Button variant="contained" color="secondary" onClick={handleActive.bind(this, user.id, 'YES',user.investment)}>
+                         Aprovar
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}

@@ -72,9 +72,9 @@ const UsersTable = props => {
   const [page, setPage] = useState(0);
 
   const handleSelectAll = event => {
-    
+
     const { users } = props;
-    
+
     let selectedUsers;
 
     if (event.target.checked) {
@@ -117,12 +117,12 @@ const UsersTable = props => {
   const handleActive = (userId, active, investment) => {
     if(active == "NO") {
       MySwal.fire({
-        title: "Are you sure?",
+        title: "Desaprovar este usuário?",
         text: "",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Confirm',
-        cancelButtonText: 'Cancel'
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar'
       })
       .then((result) => {
         if (result.value) {
@@ -144,8 +144,8 @@ const UsersTable = props => {
       });
     }else {
       const { value: select_investment } =  MySwal.fire({
-        title: 'Are you going to approve?',
-        text: 'Select investment',
+        title: 'Aprovar este usuário para lista de clientes?',
+        text: 'Entre com o investimento',
         input: 'select',
         inputOptions: {
           "5.000-15.000": "5.000-15.000",
@@ -175,36 +175,17 @@ const UsersTable = props => {
             console.log(error)
           }
         );
-      })  
+      })
     }
-  }
-
-  const handleEdit = (userId) => {
-    MySwal.fire({
-      title: "Are you sure?",
-      text: "",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Confirm',
-      cancelButtonText: 'Cancel'
-    })
-    .then((result) => {
-      if (result.value) {
-        history.push("/useredit/" + userId);
-      } else if (result.dismiss === MySwal.DismissReason.cancel) {
-        
-      }
-    });
-    
   }
   const handleDelete = (userId) => {
     MySwal.fire({
-      title: "Are you sure?",
+      title: "Confirma a exclusão permanentemente?",
       text: "",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Confirm',
-      cancelButtonText: 'Cancel'
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar'
     })
     .then((result) => {
       if (result.value) {
@@ -225,6 +206,24 @@ const UsersTable = props => {
       }
     });
   }
+  const handleEdit = (userId) => {
+    MySwal.fire({
+      title: "Ir para edição de dados deste usuário",
+      text: "",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar'
+    })
+    .then((result) => {
+      if (result.value) {
+        history.push("/useredit/" + userId);
+      } else if (result.dismiss === MySwal.DismissReason.cancel) {
+
+      }
+    });
+  }
+
   return (
     <Card
       {...rest}
@@ -247,8 +246,7 @@ const UsersTable = props => {
                       onChange={handleSelectAll}
                     />
                   </TableCell>
-                  <TableCell style={{color: '#212a37'}} className="blackText">Name</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Email</TableCell>
+                  <TableCell style={{color: '#212a37'}} className="blackText">Nome</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>CPF</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Celular</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Plano</TableCell>
@@ -277,7 +275,6 @@ const UsersTable = props => {
                         <Typography variant="body1">{user.full_name}</Typography>
                       </div>
                     </TableCell>
-                    <TableCell>{user.email}</TableCell>
                     <TableCell>{user.cpf}</TableCell>
                     <TableCell>{user.cellphone}</TableCell>
                     <TableCell>
@@ -290,14 +287,11 @@ const UsersTable = props => {
                       {moment(user.createdAt).format('DD/MM/YYYY')}
                     </TableCell> */}
                     <TableCell>
-                      <Button variant="contained" color="primary" onClick={handleEdit.bind(this, user.id)}>
-                          Edit
+                      <Button variant="contained" color="secondary" onClick={handleEdit.bind(this, user.id)}>
+                          Editar
                       </Button>
                       <Button variant="contained" color="secondary" onClick={handleDelete.bind(this, user.id)}>
-                          Delete
-                      </Button>
-                      <Button variant="contained" color="secondary" onClick={handleActive.bind(this, user.id, 'NO',user.investment)}>
-                        Disapprove
+                          Deletar
                       </Button>
                     </TableCell>
                   </TableRow>

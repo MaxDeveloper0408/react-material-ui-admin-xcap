@@ -81,12 +81,12 @@ exports.update = (req, res) => {
   delete user.updatedAt;
   if(user.password)
     user.password = bcrypt.hashSync(user.password, 8);
-  User.update( 
+  User.update(
       user,
       {where: {id: id}}
   )
   .then(user => {
-      return res.status(200).send({ status:'success', message: "Performed Succesfully!" });
+      return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
   })
   .catch(err => {
       return res.status(500).send({ status:'fail', message: err.message });
@@ -110,12 +110,12 @@ exports.updatePassword = (req, res) => {
       return res.status(401).send({ status:'fail', message: "Senha inválida!" });
     }
 
-    User.update( 
+    User.update(
       {password: bcrypt.hashSync(req.body.password, 8)},
       {where: {id: req.body.id}}
     )
     .then(user => {
-        return res.status(200).send({ status:'success', message: "Performed Succesfully!" });
+        return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
     })
     .catch(err => {
         return res.status(500).send({ status:'fail', message: err.message });
@@ -128,11 +128,11 @@ exports.updatePassword = (req, res) => {
 }
 exports.delete = (req, res) => {
   console.log(req.body)
-    User.destroy( 
+    User.destroy(
         {where: {id: req.body.id}}
     )
     .then(user => {
-        return res.status(200).send({ status:'success', message: "Performed Succesfully!" });
+        return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
     })
     .catch(err => {
         return res.status(500).send({ status:'fail', message: err.message });
@@ -140,7 +140,7 @@ exports.delete = (req, res) => {
 }
 exports.setActive = (req, res) => {
   console.log(req.body)
-    User.update( 
+    User.update(
         {
           active: req.body.active,
           investment: req.body.investment
@@ -148,7 +148,7 @@ exports.setActive = (req, res) => {
         {where: {id: req.body.id}}
     )
     .then(user => {
-        return res.status(200).send({ status:'success', message: "Performed Succesfully!" });
+        return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
     })
     .catch(err => {
         return res.status(500).send({ status:'fail', message: err.message });
@@ -172,7 +172,7 @@ exports.userBank = (req, res) => {
 
 exports.bankUpdate = (req, res) => {
   let bank = req.body;
-    
+
   Bank.findOne({
     where: {
         user_id: req.body.user_id
@@ -180,11 +180,11 @@ exports.bankUpdate = (req, res) => {
   })
   .then(res_data => {
     if(!res_data) {
-      Bank.create( 
+      Bank.create(
         bank
       )
       .then(res_data => {
-          return res.status(200).send({ status:'success', message: "Performed Succesfully!" });
+          return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
       })
       .catch(err => {
           return res.status(500).send({ status:'fail', message: err.message });
@@ -193,12 +193,12 @@ exports.bankUpdate = (req, res) => {
       let user_id = req.body.user_id;
       delete bank.user_id;
       delete bank.updatedAt;
-      Bank.update( 
+      Bank.update(
         bank,
         {where: {user_id: user_id}}
       )
       .then(res_data => {
-          return res.status(200).send({ status:'success', message: "Performed Succesfully!" });
+          return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
       })
       .catch(err => {
           return res.status(500).send({ status:'fail', message: err.message });

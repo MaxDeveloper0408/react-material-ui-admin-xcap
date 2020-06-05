@@ -40,7 +40,7 @@ const AccountProfile = props => {
   const classes = useStyles();
 
   const user = {
-    name: 'Jean Campos',
+    name: 'Nome na Conta',
     city: 'Los Angeles',
     country: 'USA',
     timezone: 'GTM-7',

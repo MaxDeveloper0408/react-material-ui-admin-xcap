@@ -47,7 +47,7 @@ const Sidebar = props => {
       title: 'Dashboard',
       href: '/dashboard',
       icon: <DashboardIcon />,
-      
+
     },
     {
       title: 'Solicitações',
@@ -57,12 +57,12 @@ const Sidebar = props => {
         {
           title: 'Lista de solicitações de não clientes',
           href: '/users',
-          icon: <RotateIcon />, 
+          icon: <RotateIcon />,
         },
         {
           title: 'Lista de clientes',
           href: '/active_users',
-          icon: <RotateIcon />, 
+          icon: <RotateIcon />,
         }
       ]
     },
@@ -70,37 +70,37 @@ const Sidebar = props => {
       title: 'Transferir',
       href: '/products',
       icon: <Rotate90DegreesCcwIcon />,
-      
+
     },
     {
       title: 'Extrato',
       href: '/sign-in',
       icon: <PageViewIcon />,
-      
+
     },
     {
       title: 'Contrato',
       href: '/typography',
       icon: <InsertDriveFileIcon />,
-      
+
     },
     {
       title: 'Projeção',
       href: '/icons',
       icon: <InsertChartIcon />,
-      
+
     },
     {
       title: 'Minha Conta',
       href: '/account',
       icon: <AccountBoxIcon />,
-      
+
     },
     {
       title: 'Configuração',
       href: '/settings',
       icon: <SettingsIcon />,
-      
+
     }
   ];
   const user_pages = [
@@ -108,7 +108,7 @@ const Sidebar = props => {
       title: 'Dashboard',
       href: '/dashboard',
       icon: <DashboardIcon />,
-      
+
     },
     {
       title: 'Solicitações',
@@ -116,19 +116,19 @@ const Sidebar = props => {
       icon: <AccountBoxIcon />,
       subpages: [
         {
-          title: 'Dados pessoais',
+          title: 'Dados cadastrais',
           href: '/userpersonal',
-          icon: <RotateIcon />, 
+          icon: <RotateIcon />,
         },
         {
           title: 'Conta bancária',
           href: '/userbank',
-          icon: <RotateIcon />, 
+          icon: <RotateIcon />,
         },
         {
           title: 'Alteração de senha',
           href: '/userpassword',
-          icon: <RotateIcon />, 
+          icon: <RotateIcon />,
         }
       ]
     }

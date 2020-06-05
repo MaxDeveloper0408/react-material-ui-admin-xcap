@@ -57,7 +57,7 @@ const UserDetails = props => {
     switch (input) {
       case "password":
         formErrors.current_password = value.length >= 0 && value.length < 6
-          ? "Necessário mínimo de 6 caracteres."
+          ? "Digite a senha atual."
           : ""
       break
       case "password":
@@ -66,8 +66,8 @@ const UserDetails = props => {
           : ""
       break
       case "confirm":
-        formErrors.confirm = value.length >= 0 && value.length < 6 || user.password != value 
-          ? "Necessário mínimo de 6 caracteres and should same with password"
+        formErrors.confirm = value.length >= 0 && value.length < 6 || user.password != value
+          ? "Necessário mínimo de 6 caracteres."
           : ""
       break
       default:
@@ -130,8 +130,8 @@ const UserDetails = props => {
         noValidate
       >
         <CardHeader
-          subheader="Atualizar dados da conta"
-          title="Minha Conta"
+          subheader="Preencha os campos abaixo para alterar a senha"
+          title="Alterar Senha"
         />
         <Divider />
         <CardContent>
@@ -139,7 +139,7 @@ const UserDetails = props => {
           <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Senha"
+                label="Senha Atual"
                 name="current_password"
                 type="password"
                 placeholder="Current Password"
@@ -156,7 +156,7 @@ const UserDetails = props => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Senha"
+                label="Nova Senha"
                 name="password"
                 type="password"
                 placeholder="Senha"

@@ -416,7 +416,6 @@ const SignUp = () => {
   return (
 
     <div className={classes.root}>
-
       <Grid
         className={classes.grid}
         container
@@ -445,7 +444,7 @@ const SignUp = () => {
                   className={classes.bio}
                   variant="body2"
                 >
-                  novoxcapital.com.br
+                  www.novosite.com.br
                 </Typography>
               </div>
             </div>

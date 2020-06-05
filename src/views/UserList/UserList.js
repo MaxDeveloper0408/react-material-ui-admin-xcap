@@ -20,8 +20,9 @@ const UserList = (props) => {
   useEffect(() => {
     const fetchUsers = async () => {
         try {
-            // const response = await UserService.getDeactiveUsers();
-            const response = await UserService.getAllUsers();
+          const response = await UserService.getDeactiveUsers();
+          // const response = await UserService.getAllUsers();
+
             setUsers(response.data);
         } catch (e) {
             setUsers([]);
@@ -33,7 +34,7 @@ const UserList = (props) => {
     <div className={classes.root}>
       <UsersToolbar />
       <div className={classes.content}>
-        <UsersTable 
+        <UsersTable
         history={history}
         users={users} />
       </div>

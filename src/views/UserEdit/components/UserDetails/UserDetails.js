@@ -68,7 +68,7 @@ const UserDetails = props => {
         setUser({});
       }
     };
-    fetchUser(); 
+    fetchUser();
   }, []);
   const user_investment_type = user.investment_type;
   const classes = useStyles();
@@ -110,7 +110,7 @@ const UserDetails = props => {
     const phoneValidate = /^([+][0-9]{2})?([ ]\([0-9]{2})\)[ ]([0-9]{3}|[0-9]{5})-[0-9]{4}$/;
     let cep = '';
     let cepformatValidate = true;
-    
+
     if(input == "zipcode") {
       cep = value;
       cep = cep.replace(/\D/g, '')
@@ -584,7 +584,7 @@ const UserDetails = props => {
                   required
                 />
             </Grid>
-       
+
           </Grid>
         </CardContent>
         <Divider />

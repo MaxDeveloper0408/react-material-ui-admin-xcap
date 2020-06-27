@@ -14,6 +14,7 @@ import {
   UserEdit as UserEditView,
   UserPersonal as UserPersonalView,
   UserBank as UserBankView,
+  UserPlan as UserPlanView,
   UserPassword as UserPasswordView,
   Typography as TypographyView,
   Icons as IconsView,
@@ -128,6 +129,14 @@ class Routes extends Component {
           exact
           layout={MainLayout}
           path="/userbank"
+        />
+        )}
+        {AuthService.getCurrentUser() && (
+        <RouteWithLayout
+          component={UserPlanView}
+          exact
+          layout={MainLayout}
+          path="/userplan"
         />
         )}
         {(showAdminBoard || currentUser) && (

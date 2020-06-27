@@ -131,7 +131,12 @@ const Sidebar = props => {
           icon: <RotateIcon />,
         }
       ]
-    }
+    },
+    {
+      title: 'Plan',
+      href: '/userplan',
+      icon: <DashboardIcon />,
+    },
   ];
 
   return (

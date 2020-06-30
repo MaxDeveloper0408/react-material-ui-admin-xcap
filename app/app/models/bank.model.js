@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Role = sequelize.define("bank_datas", {
+    const Bank = sequelize.define("bank_datas", {
       user_id: {
         type: Sequelize.INTEGER,
         primaryKey: true
@@ -17,5 +17,5 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING
       }
     });
-    return Role;
+    return Bank;
   };

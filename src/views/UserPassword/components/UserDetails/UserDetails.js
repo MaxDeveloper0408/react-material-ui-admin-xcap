@@ -142,13 +142,13 @@ const UserDetails = props => {
                 label="Senha Atual"
                 name="current_password"
                 type="password"
-                placeholder="Senha Atual"
+                placeholder="Current Password"
                 value={user.current_password}
                 onChange={handleChange("current_password")}
                 margin="normal"
                 error={filedError.current_password !== ""}
                 helperText={
-                  filedError.current_password !== "" ? `${filedError.current_password}` : "Preencha a senha atual."
+                  filedError.current_password !== "" ? `${filedError.current_password}` : ""
                 }
                 required
               />
@@ -159,13 +159,13 @@ const UserDetails = props => {
                 label="Nova Senha"
                 name="password"
                 type="password"
-                placeholder="Nova Senha"
+                placeholder="Senha"
                 value={user.password}
                 onChange={handleChange("password")}
                 margin="normal"
                 error={filedError.password !== ""}
                 helperText={
-                  filedError.password !== "" ? `${filedError.password}` : "Preencha a nova senha."
+                  filedError.password !== "" ? `${filedError.password}` : ""
                 }
                 required
               />
@@ -180,9 +180,9 @@ const UserDetails = props => {
                 value={user.confirm}
                 onChange={handleChange("confirm")}
                 margin="normal"
-                error={user.password != user.confirm || user.confirm.length == 1}
+                error={user.password != user.confirm || user.confirm.length == 0}
                 helperText={
-                  user.password != user.confirm || user.confirm.length == 0 ? "Confirmar senha precisa ser igual ao nova senha." : ""
+                  user.password != user.confirm || user.confirm.length == 0 ? "Necessário mínimo de 6 caracteres and should same with password" : ""
                 }
                 required
               />

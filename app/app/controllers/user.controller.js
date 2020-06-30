@@ -1,8 +1,10 @@
+const moment = require('moment');
 const db = require("../models");
 const config = require("../config/auth.config");
 var bcrypt = require("bcryptjs");
 const User = db.user;
 const Bank = db.bank;
+const Contract = db.contract;
 
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
@@ -139,16 +141,30 @@ exports.delete = (req, res) => {
     });
 }
 exports.setActive = (req, res) => {
-  console.log(req.body)
     User.update(
         {
           active: req.body.active,
-          investment: req.body.investment
+          //investment: req.body.investment
         },
         {where: {id: req.body.id}}
     )
     .then(user => {
-        return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+        let now = moment();
+        Contract.create(
+          {
+            user_id: user.id,
+            open_value: req.body.investment,
+            invest_type: user.investment_type,
+            start_date: now.format("YYYY-MM-DD")
+          }
+        )
+        .then(res_data => {
+            return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+        })
+        .catch(err => {
+            return res.status(500).send({ status:'fail', message: err.message });
+        });
+        
     })
     .catch(err => {
         return res.status(500).send({ status:'fail', message: err.message });

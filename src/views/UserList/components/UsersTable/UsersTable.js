@@ -144,14 +144,8 @@ const UsersTable = props => {
       const { value: select_investment } =  MySwal.fire({
         title: 'Aprovar a conta do cliente',
         text: 'Entre com o investimento',
-        input: 'select',
-        inputOptions: {
-          "5.000-15.000": "5.000-15.000",
-          "20.000-50.000": "20.000-50.000",
-          "55.000-80.000": "55.000-80.000",
-          "100.000+": "100.000+"
-        },
-        inputValue: investment,
+        input: 'text',
+        inputValue: '',
         showCancelButton: true,
         confirmButtonText: 'Confirmar',
         cancelButtonText: 'Cancelar',

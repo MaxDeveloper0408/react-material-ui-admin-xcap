@@ -152,7 +152,7 @@ exports.setActive = (req, res) => {
         let now = moment();
         Contract.create(
           {
-            user_id: user.id,
+            user_id: req.body.id,
             open_value: req.body.investment,
             invest_type: user.investment_type,
             start_date: now.format("YYYY-MM-DD")

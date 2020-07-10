@@ -52,10 +52,10 @@ const Topbar = props => {
             placeholder="Buscar.."
           />
         </div>
-          <IconButton color="#939499">
+          <IconButton style={{color: '#939499'}}>
             <Badge
               badgeContent={notifications.length}
-              color="#93949"
+              style={{color: '#939499'}}
               variant="dot"
             >
               <NotificationsIcon />
@@ -63,7 +63,7 @@ const Topbar = props => {
           </IconButton>
           <IconButton
             className={classes.signOutButton}
-            color="#939499"
+            style={{color: '#939499'}}
             onClick={logOut}
           >
             <InputIcon />
@@ -71,7 +71,7 @@ const Topbar = props => {
         </Hidden>
         <Hidden lgUp>
           <IconButton
-            color="#93949"
+            style={{color: '#939499'}}
             onClick={onSidebarOpen}
           >
             <MenuIcon />

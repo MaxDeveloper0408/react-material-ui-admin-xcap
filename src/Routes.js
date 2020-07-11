@@ -141,7 +141,7 @@ class Routes extends Component {
         )}
         {(showAdminBoard || currentUser) && (
         <RouteWithLayout
-          component={ProductListView}
+          component={ProductListView} 
           exact
           layout={MainLayout}
           path="/products"

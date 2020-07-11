@@ -158,7 +158,7 @@ const UsersTable = props => {
         }
       }).then(function (result) {
         if (result.dismiss === MySwal.DismissReason.cancel) {
-          alert('dd')
+          
         }else {
           userService.setActive(userId, active, result.value).then(
             response => {

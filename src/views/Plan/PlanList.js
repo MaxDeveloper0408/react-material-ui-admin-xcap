@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 
 import { UsersToolbar, UsersTable } from './components';
 import UserService from "../../services/user.service";
+import PlanService from "../../services/plan.service";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,8 +22,6 @@ const PlanList = (props) => {
     const fetchUsers = async () => {
         try {
           const response = await UserService.getDeactiveUsers();
-          // const response = await UserService.getAllUsers();
-
             setUsers(response.data);
         } catch (e) {
             setUsers([]);

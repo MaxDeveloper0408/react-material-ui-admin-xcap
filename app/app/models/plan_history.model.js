@@ -1,11 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
-    const Contract = sequelize.define("contracts", {
+    const Plan_history = sequelize.define("plan_history", {
       user_id: {
         type: Sequelize.INTEGER,
       },
       invest_type: {
-          type:   Sequelize.ENUM,
-          values: ['FLEXIVEL', 'CRESCIMENTO']
+          type:   Sequelize.STRING
       },
       open_value: {
         type: Sequelize.DECIMAL
@@ -20,9 +19,8 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DATEONLY
       },
       status: {
-          type:   Sequelize.ENUM,
-          values: ['pending','processing','exprired']
+          type:   Sequelize.STRING
       },
     });
-    return Contract;
+    return Plan_history;
   };

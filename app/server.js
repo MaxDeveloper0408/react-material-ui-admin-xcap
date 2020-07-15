@@ -2,6 +2,20 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
+const scheduler = require('node-schedule');
+
+var rule = new scheduler.RecurrenceRule();
+rule.hour = 00;
+rule.minute = 00;
+rule.second = 00;
+rule.dayOfWeek = new scheduler.Range(0,6);
+var dailyJob = scheduler.scheduleJob(rule, function(){
+  console.log('update plan and available balance every day 00:00:00');
+  //update expired date of plan
+  
+  //update user's available balance when update expire date and profit balance plan
+
+});
 
 var corsOptions = {
   origin: "http://localhost:3000"

@@ -25,9 +25,10 @@ class UserService {
     return axios.post(URL + 'one', {id: userId}, {headers: authHeader()});
   }
 
-  setActive(userId, active, investment) {
+  setActive(userId, active, investment, investment_type) {
+    console.log(investment_type)
     return axios
-      .post(URL + "setActive", {id: userId, active: active, investment:investment}, {headers: authHeader()})
+      .post(URL + "setActive", {id: userId, active: active, investment:investment, investment_type:investment_type}, {headers: authHeader()})
       .then(response => {
         return response.data;
       });
@@ -62,6 +63,13 @@ class UserService {
       .then(response => {
         return response.data;
       });
+  }
+  getBalance(userId) {
+    return axios
+      .post(URL + "getBalance", {user_id: userId}, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+    });
   }
 }
 

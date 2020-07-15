@@ -22,5 +22,5 @@ module.exports = function(app) {
 
   app.post("/api/user/bank",[authJwt.verifyToken],controller.userBank);
   app.post("/api/user/bankUpdate", [authJwt.verifyToken], controller.bankUpdate);
-
+  app.post("/api/user/getBalance", [authJwt.verifyToken], controller.getBalance);
 };

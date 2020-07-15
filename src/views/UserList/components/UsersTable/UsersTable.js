@@ -114,7 +114,7 @@ const UsersTable = props => {
     setRowsPerPage(event.target.value);
   };
 
-  const handleActive = (userId, active, investment) => {
+  const handleActive = (userId, active, investment, investment_type) => {
     if(active == "NO") {
       MySwal.fire({
         icon: 'warning',
@@ -124,7 +124,7 @@ const UsersTable = props => {
       })
       .then((result) => {
         if (result.value) {
-          userService.setActive(userId, active, investment).then(
+          userService.setActive(userId, active, investment, investment_type).then(
             response => {
               MySwal.fire({
                 title: 'Success',
@@ -160,7 +160,7 @@ const UsersTable = props => {
         if (result.dismiss === MySwal.DismissReason.cancel) {
           
         }else {
-          userService.setActive(userId, active, result.value).then(
+          userService.setActive(userId, active, result.value, investment_type).then(
             response => {
               MySwal.fire({
                 title: 'Success',
@@ -292,7 +292,7 @@ const UsersTable = props => {
                       <Button variant="contained" color="secondary" onClick={handleDelete.bind(this, user.id)}>
                          Deletar
                       </Button>
-                      <Button variant="contained" color="secondary" onClick={handleActive.bind(this, user.id, 'YES',user.investment)}>
+                      <Button variant="contained" color="secondary" onClick={handleActive.bind(this, user.id, 'YES',user.investment, user.investment_type)}>
                          Aprovar
                       </Button>
                     </TableCell>

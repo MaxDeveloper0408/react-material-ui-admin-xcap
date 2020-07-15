@@ -27,7 +27,10 @@ db.sequelize = sequelize;
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.bank = require("../models/bank.model.js")(sequelize, Sequelize);
+db.case = require("../models/case.model.js")(sequelize, Sequelize);
 db.contract = require("../models/contract.model.js")(sequelize, Sequelize);
+db.plan_history = require("../models/plan_history.model.js")(sequelize, Sequelize);
+db.withdraw_history = require("../models/withdraw_history.model.js")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",

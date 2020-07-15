@@ -4,6 +4,7 @@ const config = require("../config/auth.config");
 var bcrypt = require("bcryptjs");
 const User = db.user;
 const Bank = db.bank;
+const Case = db.case;
 const Contract = db.contract;
 
 exports.allAccess = (req, res) => {
@@ -154,8 +155,9 @@ exports.setActive = (req, res) => {
           {
             user_id: req.body.id,
             open_value: req.body.investment,
-            invest_type: user.investment_type,
-            start_date: now.format("YYYY-MM-DD")
+            invest_type: req.body.investment_type,
+            start_date: now.format("YYYY-MM-DD"),
+            end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
           }
         )
         .then(res_data => {
@@ -225,4 +227,18 @@ exports.bankUpdate = (req, res) => {
   });
 
 
+}
+
+exports.getBalance = (req, res) => {
+  Case.findOne({
+      where: {
+          user_id: req.body.user_id
+      }
+  })
+  .then(data => {
+    res.status(200).send(data)
+  })
+  .catch(err => {
+    res.status(500).send({})
+  });
 }

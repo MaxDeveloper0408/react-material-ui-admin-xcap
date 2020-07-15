@@ -22,7 +22,7 @@ import {
   Typography
 } from '@material-ui/core';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
     root: {},
     colorWhite: {
       color: 'white!important'
@@ -32,6 +32,11 @@ const useStyles = makeStyles(() => ({
           color: 'rgb(206, 191, 191)!important',
           backgroundColor: 'rgb(107, 110, 128)!important'
         }
+    },
+    margin: {
+      "& > *": {
+        margin: theme.spacing(1)
+      }
     },
 }));
 
@@ -63,6 +68,59 @@ const PlanList = props => {
   //handle action
   const submit = () => {
   }
+
+  const handleAddPlan = () => {
+    UserService.getBalance(AuthService.getCurrentUser().id).then(
+      response => {
+        if(response.length == 0 || response == null || response == undefined || response.balance < 5000) {
+          MySwal.fire({
+            title: 'Alarm',
+            text: 'You should have available balance more than 5000 to add new plan'
+          })
+        }else if(response.balance >= 5000) {
+          MySwal.fire({
+            title: 'Are you going to add new plan?',
+            text: 'Select investment',
+            html:
+                  '<input id="swal-input1" class="swal2-input">' +
+                  '<input id="swal-input2" class="swal2-input">',
+            input: 'select',
+            inputOptions: {
+              'FLEXIVEL':'FLEXIVEL',
+              'CRESCIMENTO':'CRESCIMENTO'
+            },
+            showCancelButton: true,
+            inputValidator: (value) => {
+              return new Promise((resolve) => {
+                if (value != null) {
+                  resolve()
+                }
+              })
+            }
+          }).then(function (result) {
+            PlanService.addPlan().then(
+              response => {
+                MySwal.fire({
+                  title: 'Success',
+                  text: response.message
+                })
+                window.location.reload();
+              },
+              error => {
+                console.log(error)
+              }
+            );
+          })  
+        }
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
+  const handleWithdraw = () => {
+
+  }
   return (
     <Card
       {...rest}
@@ -80,13 +138,23 @@ const PlanList = props => {
         <CardContent>
           <PerfectScrollbar>
           <div className={classes.inner}>
+          <div className={classes.margin}>
+          <Button variant="outlined" color="inherit" onClick={handleAddPlan.bind()}>
+              Add Plan
+          </Button>
+          <Button variant="outlined" color="inherit" onClick={handleWithdraw.bind()}>
+              Withdraw
+          </Button>
+          </div>
             <Table>
               <TableHead>
                 <TableRow>
                   <TableCell style={{color: '#212a37'}} className="blackText">Start Date</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>End Date</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Open Value</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Profit Value</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Total Value</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Plan Type</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Investimento</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Ações</TableCell>
                 </TableRow>
@@ -104,6 +172,9 @@ const PlanList = props => {
                       </div>
                     </TableCell>
                     <TableCell>{item.end_date}</TableCell>
+                    <TableCell>{item.open_value}</TableCell>
+                    <TableCell>{item.invest_type=='FLEXIVEL' ? item.open_value*10/100 : item.open_value*30/100}</TableCell>
+                    <TableCell>{item.invest_type=='FLEXIVEL' ? (Number(item.open_value) + Number(item.open_value*10/100)) : (Number(item.open_value) + Number(item.open_value*30/100)) }</TableCell>
                     <TableCell>{item.invest_type}</TableCell>
                     <TableCell>
                       {item.status}

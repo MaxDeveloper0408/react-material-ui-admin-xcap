@@ -83,15 +83,17 @@ const PlanList = props => {
             html:
                   '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : ' + response.balance + '</h2>' +
                   '<h2 class="swal2-title" id="swal2-title" style="font-size: 1.3em;font-weight: 400">Insert Desired Value(min 5,000)</h2>' + 
-                  '<input id="swal_open_value" class="swal2-input" placeHolder="5,000">' +
+                  '<input id="swal_open_value" type="number" min="5000" class="swal2-input" style="max-width:100%;" placeHolder="5,000">' +
                   '<h2 class="swal2-title" id="swal2-title" style="font-size: 1.3em;font-weight: 400">Select Plan<h2>' +
                   '<select id="swal_investment_type" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 0.6em;padding: .975em .625em;"><option value="FLEXIVEL">FLEXIVEL</option><option value="CRESCIMENTO">CRESCIMENTO</option></select>',
             showCancelButton: true,
             inputValidator: (value) => {
               return new Promise((resolve) => {
-                console.log(value);
-                if (value != null) {
+                alert(document.getElementById('swal_open_value').value)
+                if (document.getElementById('swal_open_value').value < 5000) {
                   resolve()
+                }else {
+                  return;
                 }
               })
             }
@@ -99,7 +101,11 @@ const PlanList = props => {
             if (result.dismiss === MySwal.DismissReason.cancel) {
               return;
             }else if(result.value){
-              PlanService.addPlan().then(
+              PlanService.addPlan(
+                {
+                  open_value: document.getElementById('swal_open_value').value,
+                  investment_type: document.getElementById('swal_investment_type').value,
+              }).then(
                 response => {
                   MySwal.fire({
                     title: 'Success',

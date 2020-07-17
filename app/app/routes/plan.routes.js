@@ -15,5 +15,6 @@ module.exports = function(app) {
   // app.post("/api/plan/one",[authJwt.verifyToken],controller.one);
 
   app.post("/api/plan/all_by_user",[authJwt.verifyToken],controller.all_by_user);
+  app.post("/api/plan/add_plan",[authJwt.verifyToken],controller.add_plan);
 
 };

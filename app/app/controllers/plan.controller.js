@@ -4,6 +4,8 @@ const config = require("../config/auth.config");
 var bcrypt = require("bcryptjs");
 const User = db.user;
 const Contract = db.contract;
+const Case = db.case;
+const Plan_history = db.plan_history;
 
 exports.all_by_user = (req, res) => {
   Contract.findAll({
@@ -18,7 +20,28 @@ exports.all_by_user = (req, res) => {
     res.status(500).send([])
   });
 }
-
+exports.add_plan = (req, res) => {
+  let now = moment();
+  Contract.create(
+    {
+      user_id: req.userId,
+      open_value: req.body.open_value,
+      invest_type: req.body.investment_type,
+      start_date: now.format("YYYY-MM-DD"),
+      end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
+    }
+  )
+  .then(res_data => {
+      Case.decrement(
+        {balance: req.body.open_value},
+          {where: {user_id: req.userId}}
+      )
+      return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+  })
+  .catch(err => {
+      return res.status(500).send({ status:'fail', message: err.message });
+  });
+}
 exports.userOne = (req, res) => {
   User.findOne({
       where: {

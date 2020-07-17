@@ -9,7 +9,7 @@ rule.hour = 00;
 rule.minute = 00;
 rule.second = 00;
 rule.dayOfWeek = new scheduler.Range(0,6);
-var dailyJob = scheduler.scheduleJob(rule, function(){
+var dailyJob = scheduler.scheduleJob('1 * * * *', function(){
   console.log('update plan and available balance every day 00:00:00');
   //update expired date of plan
   

@@ -3,10 +3,10 @@ module.exports = (sequelize, Sequelize) => {
       user_id: {
         type: Sequelize.INTEGER,
       },
-      withdraw_value: {
+      value: {
         type: Sequelize.DECIMAL
       },
-      remain_value: {
+      case_value: {
         type: Sequelize.DECIMAL
       },
       status: {

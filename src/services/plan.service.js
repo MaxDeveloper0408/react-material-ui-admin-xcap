@@ -6,6 +6,13 @@ class PlanService {
   getPlanByUser(userId) {
     return axios.post(URL + 'all_by_user', {user_id: userId}, {headers: authHeader()});
   }
+  addPlan(add_data) {
+    return axios
+      .post(URL + "add_plan", add_data, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+    });
+  }
 }
 
 export default new PlanService();

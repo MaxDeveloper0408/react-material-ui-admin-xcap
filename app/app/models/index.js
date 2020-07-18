@@ -43,6 +43,11 @@ db.user.belongsToMany(db.role, {
   otherKey: "roleId"
 });
 
+
+
+db.user.hasMany(db.contract, {foreignKey: 'user_id'})
+db.contract.belongsTo(db.user, {foreignKey: 'user_id'})
+
 db.ROLES = ["user", "admin"];
 
 module.exports = db;

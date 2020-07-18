@@ -161,6 +161,13 @@ exports.setActive = (req, res) => {
           }
         )
         .then(res_data => {
+            Case.count({user_id: req.body.id}).then(count => {
+              if(count == 0 ) {
+                Case.create({user_id: req.body.id, balance: 0}).then(create_case => {
+                  console.log(create_case)
+                })
+              }
+            })
             return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
         })
         .catch(err => {

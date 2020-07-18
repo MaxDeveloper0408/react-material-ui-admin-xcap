@@ -67,6 +67,11 @@ const Sidebar = props => {
       ]
     },
     {
+      title: 'Plan',
+      href: '/adminplan',
+      icon: <DashboardIcon />,
+    },
+    {
       title: 'Transferir',
       href: '/products',
       icon: <Rotate90DegreesCcwIcon />,

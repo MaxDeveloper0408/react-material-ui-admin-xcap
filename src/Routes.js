@@ -15,6 +15,7 @@ import {
   UserPersonal as UserPersonalView,
   UserBank as UserBankView,
   UserPlan as UserPlanView,
+  AdminPlan as AdminPlanView,
   UserPassword as UserPasswordView,
   Typography as TypographyView,
   Icons as IconsView,
@@ -89,6 +90,14 @@ class Routes extends Component {
           exact
           layout={MainLayout}
           path="/users"
+        />
+        )}
+        {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
+        <RouteWithLayout
+          component={AdminPlanView}
+          exact
+          layout={MainLayout}
+          path="/adminplan"
         />
         )}
         {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (

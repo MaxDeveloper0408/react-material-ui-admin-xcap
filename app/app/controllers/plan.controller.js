@@ -6,7 +6,28 @@ const User = db.user;
 const Contract = db.contract;
 const Case = db.case;
 const Plan_history = db.plan_history;
-
+exports.all = (req, res) => {
+  Contract.findAll({include: [User]})
+  .then(datas => {
+    console.log(datas)
+    res.status(200).send(datas)
+  })
+  .catch(err => {
+    res.status(500).send([])
+  });
+}
+exports.set_approve = (req, res) => {
+  Contract.update(
+      {status: 'processing'},
+      {where: {id: req.body.id, status: 'pending'}}
+  )
+  .then(user => {
+      return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+  })
+  .catch(err => {
+      return res.status(500).send({ status:'fail', message: err.message });
+  });
+}
 exports.all_by_user = (req, res) => {
   Contract.findAll({
       where: {

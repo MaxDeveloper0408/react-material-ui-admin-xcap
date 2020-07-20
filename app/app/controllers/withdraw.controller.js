@@ -28,6 +28,18 @@ exports.set_approve = (req, res) => {
       return res.status(500).send({ status:'fail', message: err.message });
   });
 }
+exports.delete = (req, res) => {
+  Withdraw.update(
+      {status: 'canceled'},
+      {where: {id: req.body.id, status: 'pending'}}
+  )
+  .then(user => {
+      return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+  })
+  .catch(err => {
+      return res.status(500).send({ status:'fail', message: err.message });
+  });
+}
 exports.all_by_user = (req, res) => {
   Withdraw.findAll({
       where: {

@@ -69,9 +69,38 @@ const WithdrawList = props => {
     setRowsPerPage(event.target.value);
   };
   //handle action
-  const handleApprove = (withdraw_id) => {
+  const handleDelete = (withdraw_id) => {
     MySwal.fire({
       title: 'Confirm',
+      text: 'Please delete',
+      icon: 'warning',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true,
+    })
+    .then((result) => {
+      if (result.value) {
+        WithdrawService.delete(withdraw_id).then(
+          response => {
+            MySwal.fire({
+              title: 'Success',
+              text: response.message
+            })
+            window.location.reload();
+          },
+          error => {
+            console.log(error)
+          }
+        )
+      } else if (result.dismiss === MySwal.DismissReason.cancel) {
+        
+      }
+    });
+  }
+  const handleApprove = (withdraw_id) => {
+    MySwal.fire({
+      title: 'Autorizar Saque',
+      text: 'Deseja aprovar este saque?',
       icon: 'warning',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
@@ -150,9 +179,14 @@ const WithdrawList = props => {
                     <TableCell>
                       {
                       item.status == 'pending' ? (
+                        <div>
                         <Button variant="contained" color="secondary" onClick={handleApprove.bind(this, item.id)}>
                          Approve
-                      </Button>
+                        </Button>
+                        <Button variant="contained" color="secondary" style={{marginLeft: '10px'}} onClick={handleDelete.bind(this, item.id)}>
+                        Delete
+                        </Button>
+                        </div>
                       ) : ('')
                       }
                     </TableCell>

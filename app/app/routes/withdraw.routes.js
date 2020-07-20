@@ -13,7 +13,7 @@ module.exports = function(app) {
 
   app.get("/api/withdraw/all",[authJwt.verifyToken, authJwt.isAdmin],controller.all);
   app.post("/api/withdraw/set_approve",[authJwt.verifyToken, authJwt.isAdmin],controller.set_approve);
-
+  app.post("/api/withdraw/delete",[authJwt.verifyToken, authJwt.isAdmin],controller.delete);
   app.post("/api/withdraw/all_by_user",[authJwt.verifyToken],controller.all_by_user);
   app.post("/api/withdraw/add",[authJwt.verifyToken],controller.add);
   

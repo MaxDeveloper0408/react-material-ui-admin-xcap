@@ -82,7 +82,7 @@ const WithdrawList = props => {
             title: 'Withdraw',
             html:
                   '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : '+currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' })+'</h2>' +
-                  '<input id="swal_withdraw_value" class="swal2-input" placeHolder="5,000">', 
+                  '<input type="number" id="swal_withdraw_value" class="swal2-input" style="max-width: 100%;" placeHolder="5,000">', 
             showCancelButton: true,
             preConfirm: (value) => {
               if( document.getElementById('swal_withdraw_value').value < 0 || document.getElementById('swal_withdraw_value').value == '') {
@@ -146,7 +146,6 @@ const WithdrawList = props => {
                   <TableCell className="blackText" style={{color: '#212a37'}}>Approve Date</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Value</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Ações</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -168,11 +167,6 @@ const WithdrawList = props => {
                     </TableCell>
                     <TableCell>{currencyFormatter.format(item.value, { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>{item.status}</TableCell>
-                    <TableCell>
-                      <Button variant="contained" color="secondary">
-                         Action
-                      </Button>
-                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

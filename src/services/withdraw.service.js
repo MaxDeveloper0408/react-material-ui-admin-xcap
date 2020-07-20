@@ -9,8 +9,8 @@ class WithdrawService {
   setApprove(id) {
     return axios.post(URL + 'set_approve', {id: id}, {headers: authHeader()});
   }
-  delete(id) {
-    return axios.post(URL + 'delete', {id: id}, {headers: authHeader()});
+  delete(id, value) {
+    return axios.post(URL + 'delete', {id: id, withdraw_value: value}, {headers: authHeader()});
   }
   getPlanByUser(userId) {
     return axios.post(URL + 'all_by_user', {user_id: userId}, {headers: authHeader()});

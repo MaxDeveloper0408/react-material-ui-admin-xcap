@@ -69,7 +69,7 @@ const WithdrawList = props => {
     setRowsPerPage(event.target.value);
   };
   //handle action
-  const handleDelete = (withdraw_id) => {
+  const handleDelete = (withdraw_id, withdraw_value) => {
     MySwal.fire({
       title: 'Confirm',
       text: 'Please delete',
@@ -80,7 +80,7 @@ const WithdrawList = props => {
     })
     .then((result) => {
       if (result.value) {
-        WithdrawService.delete(withdraw_id).then(
+        WithdrawService.delete(withdraw_id, withdraw_value).then(
           response => {
             MySwal.fire({
               title: 'Success',
@@ -183,7 +183,7 @@ const WithdrawList = props => {
                         <Button variant="contained" color="secondary" onClick={handleApprove.bind(this, item.id)}>
                          Approve
                         </Button>
-                        <Button variant="contained" color="secondary" style={{marginLeft: '10px'}} onClick={handleDelete.bind(this, item.id)}>
+                        <Button variant="contained" color="secondary" style={{marginLeft: '10px'}} onClick={handleDelete.bind(this, item.id, item.value)}>
                         Delete
                         </Button>
                         </div>

@@ -72,17 +72,17 @@ const WithdrawList = props => {
   const handleWithdraw = () => {
     UserService.getBalance(AuthService.getCurrentUser().id).then(
       response => {
-        if(response.length == 0 || response == null || response == undefined || response.balance < 5000) {
+        if(response.length == 0 || response == null || response == undefined || response.balance < 1000) {
           MySwal.fire({
             title: 'Alarm',
-            text: 'You should have available balance more than 5000 to withraw'
+            text: 'You should have available balance more than 1.000 to withraw'
           })
-        }else if(response.balance >= 5000) {
+        }else if(response.balance >= 1000) {
           MySwal.fire({
             title: 'Withdraw',
             html:
                   '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : '+currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' })+'</h2>' +
-                  '<input type="number" id="swal_withdraw_value" class="swal2-input" style="max-width: 100%;" placeHolder="5,000">', 
+                  '<input type="number" id="swal_withdraw_value" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">', 
             showCancelButton: true,
             preConfirm: (value) => {
               if( document.getElementById('swal_withdraw_value').value < 0 || document.getElementById('swal_withdraw_value').value == '') {

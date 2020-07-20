@@ -34,7 +34,11 @@ exports.delete = (req, res) => {
       {where: {id: req.body.id, status: 'pending'}}
   )
   .then(user => {
-      return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+    Case.increment(
+      {balance: req.body.withdraw_value},
+        {where: {user_id: req.userId}}
+    )
+    return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
   })
   .catch(err => {
       return res.status(500).send({ status:'fail', message: err.message });

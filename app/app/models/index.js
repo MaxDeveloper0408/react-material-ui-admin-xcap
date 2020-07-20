@@ -30,7 +30,7 @@ db.bank = require("../models/bank.model.js")(sequelize, Sequelize);
 db.case = require("../models/case.model.js")(sequelize, Sequelize);
 db.contract = require("../models/contract.model.js")(sequelize, Sequelize);
 db.plan_history = require("../models/plan_history.model.js")(sequelize, Sequelize);
-db.withdraw_history = require("../models/withdraw_history.model.js")(sequelize, Sequelize);
+db.withdraw = require("../models/withdraw.model.js")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",
@@ -43,10 +43,11 @@ db.user.belongsToMany(db.role, {
   otherKey: "roleId"
 });
 
-
-
 db.user.hasMany(db.contract, {foreignKey: 'user_id'})
 db.contract.belongsTo(db.user, {foreignKey: 'user_id'})
+
+db.user.hasMany(db.withdraw, {foreignKey: 'user_id'})
+db.withdraw.belongsTo(db.user, {foreignKey: 'user_id'})
 
 db.ROLES = ["user", "admin"];
 

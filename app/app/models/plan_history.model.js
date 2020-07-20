@@ -9,6 +9,9 @@ module.exports = (sequelize, Sequelize) => {
       open_value: {
         type: Sequelize.DECIMAL
       },
+      case_value: {
+        type: Sequelize.DECIMAL
+      },
       profit_value: {
         type: Sequelize.DECIMAL
       },

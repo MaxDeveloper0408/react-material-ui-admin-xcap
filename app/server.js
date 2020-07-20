@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/plan.routes')(app);
+require('./app/routes/withdraw.routes')(app);
 
 
 var rule = new scheduler.RecurrenceRule();

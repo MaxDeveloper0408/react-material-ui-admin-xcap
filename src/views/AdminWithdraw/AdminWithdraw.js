@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UserWithdraw = ({ match, location }) => {
+const AdminWithdraw = ({ match, location }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -44,4 +44,4 @@ const UserWithdraw = ({ match, location }) => {
   );
 };
 
-export default UserWithdraw;
+export default AdminWithdraw;

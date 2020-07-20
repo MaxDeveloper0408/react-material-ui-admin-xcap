@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Withdraw_history = sequelize.define("withdraw_history", {
+    const Withdraw_history = sequelize.define("withdraws", {
       user_id: {
         type: Sequelize.INTEGER,
       },
@@ -10,7 +10,8 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DECIMAL
       },
       status: {
-          type:   Sequelize.STRING
+        type:   Sequelize.ENUM,
+        values: ['pending','approved']
       },
     });
     return Withdraw_history;

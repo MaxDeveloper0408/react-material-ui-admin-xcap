@@ -68,11 +68,9 @@ const PlanList = props => {
     setRowsPerPage(event.target.value);
   };
   //handle action
-  const submit = () => {
-  }
-
   const handleApprove = (plan_id) => {
     MySwal.fire({
+      title: 'Confirm',
       icon: 'warning',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',

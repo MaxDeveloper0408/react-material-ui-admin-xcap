@@ -15,5 +15,6 @@ export { default as UserBank } from './UserBank';
 export { default as UserPlan } from './UserPlan';
 export { default as UserWithdraw } from './UserWithdraw';
 export { default as AdminPlan } from './AdminPlan';
+export { default as AdminWithdraw } from './AdminWithdraw';
 export { default as UserPassword } from './UserPassword';
 

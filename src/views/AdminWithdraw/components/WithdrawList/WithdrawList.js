@@ -52,7 +52,7 @@ const WithdrawList = props => {
   useEffect(() => {
     const fetchUsers = async () => {
         try {
-          const response = await WithdrawService.getPlanByUser(AuthService.getCurrentUser().id);
+          const response = await WithdrawService.getAll();
           setPlans(response.data);
         } catch (e) {
             setPlans([]);
@@ -69,53 +69,33 @@ const WithdrawList = props => {
     setRowsPerPage(event.target.value);
   };
   //handle action
-  const handleWithdraw = () => {
-    UserService.getBalance(AuthService.getCurrentUser().id).then(
-      response => {
-        if(response.length == 0 || response == null || response == undefined || response.balance < 5000) {
-          MySwal.fire({
-            title: 'Alarm',
-            text: 'You should have available balance more than 5000 to withraw'
-          })
-        }else if(response.balance >= 5000) {
-          MySwal.fire({
-            title: 'Withdraw',
-            html:
-                  '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : '+currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' })+'</h2>' +
-                  '<input id="swal_withdraw_value" class="swal2-input" placeHolder="5,000">', 
-            showCancelButton: true,
-            preConfirm: (value) => {
-              if( document.getElementById('swal_withdraw_value').value < 0 || document.getElementById('swal_withdraw_value').value == '') {
-                MySwal.showValidationMessage('You should put more than 0')
-              }
-            }
-          }).then(function (result) {
-            if (result.dismiss === MySwal.DismissReason.cancel) {
-              return;
-            }else if(result.value){
-              WithdrawService.add({
-                withdraw_value: document.getElementById('swal_withdraw_value').value,
-            }).then(
-                response => {
-                  MySwal.fire({
-                    title: 'Success',
-                    text: response.message
-                  })
-                  window.location.reload();
-                },
-                error => {
-                  console.log(error)
-                }
-              );
-            }
-            
-          })  
-        }
-      },
-      error => {
-        console.log(error)
+  const handleApprove = (withdraw_id) => {
+    MySwal.fire({
+      title: 'Confirm',
+      icon: 'warning',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true,
+    })
+    .then((result) => {
+      if (result.value) {
+        WithdrawService.setApprove(withdraw_id).then(
+          response => {
+            MySwal.fire({
+              title: 'Success',
+              text: response.message
+            })
+            window.location.reload();
+          },
+          error => {
+            console.log(error)
+          }
+        )
+      } else if (result.dismiss === MySwal.DismissReason.cancel) {
+
       }
-    )
+    });
+    
   }
   return (
     <Card
@@ -135,13 +115,11 @@ const WithdrawList = props => {
           <PerfectScrollbar>
           <div className={classes.inner}>
           <div className={classes.margin}>
-          <Button variant="outlined" color="inherit" onClick={handleWithdraw.bind()}>
-              Withdraw
-          </Button>
           </div>
             <Table>
               <TableHead>
                 <TableRow>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Name</TableCell>
                   <TableCell style={{color: '#212a37'}} className="blackText">Request Date</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Approve Date</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Value</TableCell>
@@ -156,6 +134,7 @@ const WithdrawList = props => {
                     hover
                     key={item.id}
                   >
+                    <TableCell>{item.user.full_name}</TableCell>
                     <TableCell>
                       <div className={classes.nameContainer}>
                         <Typography variant="body1">{moment(item.createdAt).format('DD/MM/YYYY')}</Typography>
@@ -169,9 +148,13 @@ const WithdrawList = props => {
                     <TableCell>{currencyFormatter.format(item.value, { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>{item.status}</TableCell>
                     <TableCell>
-                      <Button variant="contained" color="secondary">
-                         Action
+                      {
+                      item.status == 'pending' ? (
+                        <Button variant="contained" color="secondary" onClick={handleApprove.bind(this, item.id)}>
+                         Approve
                       </Button>
+                      ) : ('')
+                      }
                     </TableCell>
                   </TableRow>
                 ))}

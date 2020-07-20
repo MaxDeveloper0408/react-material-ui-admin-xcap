@@ -125,55 +125,6 @@ const PlanList = props => {
       }
     )
   }
-  const handleWithdraw = () => {
-    UserService.getBalance(AuthService.getCurrentUser().id).then(
-      response => {
-        if(response.length == 0 || response == null || response == undefined || response.balance < 5000) {
-          MySwal.fire({
-            title: 'Alarm',
-            text: 'You should have available balance more than 5000 to withraw'
-          })
-        }else if(response.balance >= 5000) {
-          MySwal.fire({
-            title: 'Withdraw',
-            html:
-                  '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : '+response.balance+'</h2>' +
-                  '<input id="swal_withdraw_value" class="swal2-input" placeHolder="5,000">', 
-            showCancelButton: true,
-            inputValidator: (value) => {
-              return new Promise((resolve) => {
-                console.log(value);
-                if (value != null) {
-                  resolve()
-                }
-              })
-            }
-          }).then(function (result) {
-            if (result.dismiss === MySwal.DismissReason.cancel) {
-              return;
-            }else if(result.value){
-              PlanService.withdraw().then(
-                response => {
-                  MySwal.fire({
-                    title: 'Success',
-                    text: response.message
-                  })
-                  window.location.reload();
-                },
-                error => {
-                  console.log(error)
-                }
-              );
-            }
-            
-          })  
-        }
-      },
-      error => {
-        console.log(error)
-      }
-    )
-  }
   return (
     <Card
       {...rest}
@@ -194,9 +145,6 @@ const PlanList = props => {
           <div className={classes.margin}>
           <Button variant="outlined" color="inherit" onClick={handleAddPlan.bind()}>
               Add Plan
-          </Button>
-          <Button variant="outlined" color="inherit" onClick={handleWithdraw.bind()}>
-              Withdraw
           </Button>
           </div>
             <Table>

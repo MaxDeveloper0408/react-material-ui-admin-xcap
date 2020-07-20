@@ -149,6 +149,11 @@ const UsersTable = props => {
         showCancelButton: true,
         confirmButtonText: 'Confirmar',
         cancelButtonText: 'Cancelar',
+        preConfirm: (value) => {
+          if( value < 5000) {
+            MySwal.showValidationMessage('You should put more than 5.000')
+          }
+        },
         inputValidator: (value) => {
           return new Promise((resolve) => {
             if (value != null) {
@@ -158,8 +163,8 @@ const UsersTable = props => {
         }
       }).then(function (result) {
         if (result.dismiss === MySwal.DismissReason.cancel) {
-          
-        }else {
+          return
+        }else if(result.value){
           userService.setActive(userId, active, result.value, investment_type).then(
             response => {
               MySwal.fire({

@@ -72,6 +72,11 @@ const Sidebar = props => {
       icon: <DashboardIcon />,
     },
     {
+      title: 'Withdraw',
+      href: '/adminwithdraw',
+      icon: <DashboardIcon />,
+    },
+    {
       title: 'Transferir',
       href: '/products',
       icon: <Rotate90DegreesCcwIcon />,
@@ -140,6 +145,11 @@ const Sidebar = props => {
     {
       title: 'Plan',
       href: '/userplan',
+      icon: <DashboardIcon />,
+    },
+    {
+      title: 'Withdraw',
+      href: '/userwithdraw',
       icon: <DashboardIcon />,
     },
   ];

@@ -26,7 +26,6 @@ class UserService {
   }
 
   setActive(userId, active, investment, investment_type) {
-    console.log(investment_type)
     return axios
       .post(URL + "setActive", {id: userId, active: active, investment:investment, investment_type:investment_type}, {headers: authHeader()})
       .then(response => {

@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/styles';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import moment from 'moment';
 import currencyFormatter from 'currency-formatter';
+import SimpleMaskMoney from 'simple-mask-money/lib/simple-mask-money'
+
 
 import {
   Card,
@@ -45,6 +47,22 @@ const useStyles = makeStyles(theme => ({
 
 const WithdrawList = props => {
   //basic setting
+
+  // let input = document.getElementsByTagName('input')[0];
+  // if(input) {
+  //   input.oninput = () => {
+  //     input.value = SimpleMaskMoney.format(input.value);
+  //   }
+  
+  //   // Your send method
+  //   input.onkeyup = (e) => {
+  //     if (e.key !== "Enter") return;
+  //     // This method return value of your input in format number to save in your database
+  //     SimpleMaskMoney.formatToNumber(input.value);
+  //   }
+  // }
+  
+
   const classes = useStyles();
   const { className, UserService, AuthService, PlanService,WithdrawService, MySwal, ...rest } = props;
   //handle table
@@ -59,7 +77,22 @@ const WithdrawList = props => {
         }
     };
     fetchUsers();
+  
   }, []);
+
+  const args = {
+    allowNegative: false,
+    negativeSignAfter: false,
+    prefix: '',
+    suffix: '',
+    fixed: true,
+    fractionDigits: 2,
+    decimalSeparator: ',',
+    thousandsSeparator: '.',
+    cursor: 'move'
+  };
+
+
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
   const handlePageChange = (event, page) => {
@@ -82,11 +115,19 @@ const WithdrawList = props => {
             title: 'Withdraw',
             html:
                   '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : '+currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' })+'</h2>' +
-                  '<input type="number" id="swal_withdraw_value" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">', 
+                  '<input type="text" id="swal_withdraw_value" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">', 
             showCancelButton: true,
             preConfirm: (value) => {
-              if( document.getElementById('swal_withdraw_value').value < 0 || document.getElementById('swal_withdraw_value').value == '') {
-                MySwal.showValidationMessage('You should put more than 0')
+              if( document.getElementById('swal_withdraw_value').value < 0 || document.getElementById('swal_withdraw_value').value == '' 
+              || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value) > response.balance) {
+                MySwal.showValidationMessage('You should put correct value')
+              }
+            },
+            onOpen: () => {
+              const input = document.getElementById('swal_withdraw_value')
+              SimpleMaskMoney.setMask(input, args);
+              input.oninput = () => {
+
               }
             }
           }).then(function (result) {
@@ -94,7 +135,7 @@ const WithdrawList = props => {
               return;
             }else if(result.value){
               WithdrawService.add({
-                withdraw_value: document.getElementById('swal_withdraw_value').value,
+                withdraw_value: SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value),
             }).then(
                 response => {
                   MySwal.fire({
@@ -196,3 +237,5 @@ WithdrawList.propTypes = {
 };
 
 export default WithdrawList;
+
+

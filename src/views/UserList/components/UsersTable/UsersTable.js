@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { makeStyles } from '@material-ui/styles';
-
+import SimpleMaskMoney from 'simple-mask-money/lib/simple-mask-money'
 
 
 import {
@@ -150,9 +150,23 @@ const UsersTable = props => {
         confirmButtonText: 'Confirmar',
         cancelButtonText: 'Cancelar',
         preConfirm: (value) => {
-          if( value < 5000) {
+          if( SimpleMaskMoney.formatToNumber(value) < 5000) {
             MySwal.showValidationMessage('You should put more than 5.000')
           }
+        },
+        onOpen: () => {
+          let input_swal = document.getElementsByClassName("swal2-input")[0];
+          SimpleMaskMoney.setMask(input_swal, {
+            allowNegative: false,
+            negativeSignAfter: false,
+            prefix: '',
+            suffix: '',
+            fixed: true,
+            fractionDigits: 2,
+            decimalSeparator: ',',
+            thousandsSeparator: '.',
+            cursor: 'move'
+          });
         },
         inputValidator: (value) => {
           return new Promise((resolve) => {
@@ -165,7 +179,7 @@ const UsersTable = props => {
         if (result.dismiss === MySwal.DismissReason.cancel) {
           return
         }else if(result.value){
-          userService.setActive(userId, active, result.value, investment_type).then(
+          userService.setActive(userId, active, SimpleMaskMoney.formatToNumber(result.value), investment_type).then(
             response => {
               MySwal.fire({
                 title: 'Success',

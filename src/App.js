@@ -12,6 +12,7 @@ import './assets/scss/index.scss';
 import validators from './common/validators';
 import Routes from './Routes';
 
+
 const browserHistory = createBrowserHistory();
 
 Chart.helpers.extend(Chart.elements.Rectangle.prototype, {
@@ -22,8 +23,9 @@ validate.validators = {
   ...validate.validators,
   ...validators
 };
-
+  
 export default class App extends Component {
+
   render() {
     return (
       <ThemeProvider theme={theme}>

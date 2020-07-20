@@ -49,6 +49,7 @@ exports.add_plan = (req, res) => {
       open_value: req.body.open_value,
       invest_type: req.body.investment_type,
       start_date: now.format("YYYY-MM-DD"),
+      status: 'processing',
       end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
     }
   )

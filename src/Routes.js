@@ -15,6 +15,7 @@ import {
   UserPersonal as UserPersonalView,
   UserBank as UserBankView,
   UserPlan as UserPlanView,
+  UserWithdraw as UserWithdrawView,
   AdminPlan as AdminPlanView,
   UserPassword as UserPasswordView,
   Typography as TypographyView,
@@ -23,7 +24,8 @@ import {
   Settings as SettingsView,
   SignUp as SignUpView,
   SignIn as SignInView,
-  NotFound as NotFoundView
+  NotFound as NotFoundView,
+  
 } from './views';
 
 
@@ -102,6 +104,14 @@ class Routes extends Component {
         )}
         {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
         <RouteWithLayout
+          component={AdminPlanView}
+          exact
+          layout={MainLayout}
+          path="/adminwithdraw"
+        />
+        )}
+        {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
+        <RouteWithLayout
           component={ActiveUserListView}
           exact
           layout={MainLayout}
@@ -146,6 +156,14 @@ class Routes extends Component {
           exact
           layout={MainLayout}
           path="/userplan"
+        />
+        )}
+        {AuthService.getCurrentUser() && (
+        <RouteWithLayout
+          component={UserWithdrawView}
+          exact
+          layout={MainLayout}
+          path="/userwithdraw"
         />
         )}
         {(showAdminBoard || currentUser) && (

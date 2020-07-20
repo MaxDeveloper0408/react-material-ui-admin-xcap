@@ -3,6 +3,8 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import moment from 'moment';
+import currencyFormatter from 'currency-formatter';
 import {
   Card,
   CardHeader,
@@ -141,13 +143,14 @@ const PlanList = props => {
                     <TableCell>{item.user.email}</TableCell>
                     <TableCell>
                       <div className={classes.nameContainer}>
-                        <Typography variant="body1">{item.start_date}</Typography>
+                      
+                        <Typography variant="body1">{moment(item.start_date).format('DD/MM/YYYY')}</Typography>
                       </div>
                     </TableCell>
-                    <TableCell>{item.end_date}</TableCell>
-                    <TableCell>{item.open_value}</TableCell>
-                    <TableCell>{item.invest_type=='FLEXIVEL' ? item.open_value*10/100 : item.open_value*30/100}</TableCell>
-                    <TableCell>{item.invest_type=='FLEXIVEL' ? (Number(item.open_value) + Number(item.open_value*10/100)) : (Number(item.open_value) + Number(item.open_value*30/100)) }</TableCell>
+                    <TableCell>{moment(item.end_date).format('DD/MM/YYYY')}</TableCell>
+                    <TableCell>{currencyFormatter.format(item.open_value, { code: 'BRL', symbol: '' })}</TableCell>
+                    <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format(item.open_value*10/100, { code: 'BRL', symbol: '' }) : currencyFormatter.format(item.open_value*30/100, { code: 'BRL', symbol: '' })}</TableCell>
+                    <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format((Number(item.open_value) + Number(item.open_value*10/100)), { code: 'BRL', symbol: '' }) : currencyFormatter.format((Number(item.open_value) + Number(item.open_value*30/100)), { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>{item.invest_type}</TableCell>
                     <TableCell>
                       {item.status}

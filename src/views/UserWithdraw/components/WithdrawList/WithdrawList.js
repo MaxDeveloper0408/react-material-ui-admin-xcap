@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import moment from 'moment';
 import currencyFormatter from 'currency-formatter';
+
 import {
   Card,
   CardHeader,
@@ -42,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const PlanList = props => {
+const WithdrawList = props => {
   //basic setting
   const classes = useStyles();
   const { className, UserService, AuthService, PlanService, MySwal, ...rest } = props;
@@ -262,8 +263,8 @@ const PlanList = props => {
   );
 };
 
-PlanList.propTypes = {
+WithdrawList.propTypes = {
   className: PropTypes.string
 };
 
-export default PlanList;
+export default WithdrawList;

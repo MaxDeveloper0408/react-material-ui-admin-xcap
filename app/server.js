@@ -88,10 +88,10 @@ var monthlyJob = scheduler.scheduleJob('0 0 1 * *', function(){
           {
             user_id: item.user_id,
             open_value: item.balance,
-            invest_type: item.user.investment_type,
+            invest_type: 'FLEXIVEL',
             start_date: now.format("YYYY-MM-DD"),
             status: 'processing',
-            end_date: item.user.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
+            end_date: moment(now.format("YYYY-MM-DD")).add(1, 'M')
           }).then((updated_data) => {
               console.log('create new plan each start day of month')
               Case.decrement(

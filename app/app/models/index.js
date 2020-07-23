@@ -29,8 +29,10 @@ db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.bank = require("../models/bank.model.js")(sequelize, Sequelize);
 db.case = require("../models/case.model.js")(sequelize, Sequelize);
 db.contract = require("../models/contract.model.js")(sequelize, Sequelize);
+db.deposit = require("../models/deposit.model.js")(sequelize, Sequelize);
 db.plan_history = require("../models/plan_history.model.js")(sequelize, Sequelize);
 db.withdraw = require("../models/withdraw.model.js")(sequelize, Sequelize);
+
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",
@@ -43,8 +45,22 @@ db.user.belongsToMany(db.role, {
   otherKey: "roleId"
 });
 
+db.contract.belongsToMany(db.deposit, {
+  through: "deposit_contracts",
+  foreignKey: "contract_id",
+  otherKey: "deposit_id"
+});
+db.deposit.belongsToMany(db.contract, {
+  through: "deposit_contracts",
+  foreignKey: "deposit_id",
+  otherKey: "contract_id"
+});
+
 db.user.hasMany(db.contract, {foreignKey: 'user_id'})
 db.contract.belongsTo(db.user, {foreignKey: 'user_id'})
+
+db.user.hasMany(db.deposit, {foreignKey: 'user_id'})
+db.deposit.belongsTo(db.user, {foreignKey: 'user_id'})
 
 db.user.hasMany(db.withdraw, {foreignKey: 'user_id'})
 db.withdraw.belongsTo(db.user, {foreignKey: 'user_id'})

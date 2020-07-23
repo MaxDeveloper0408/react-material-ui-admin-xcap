@@ -15,8 +15,10 @@ import {
   UserPersonal as UserPersonalView,
   UserBank as UserBankView,
   UserPlan as UserPlanView,
+  UserDeposit as UserDepositView,
   UserWithdraw as UserWithdrawView,
   AdminPlan as AdminPlanView,
+  AdminDeposit as AdminDepositView,
   AdminWithdraw as AdminWithdrawView,
   UserPassword as UserPasswordView,
   Typography as TypographyView,
@@ -105,6 +107,14 @@ class Routes extends Component {
         )}
         {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
         <RouteWithLayout
+          component={AdminDepositView}
+          exact
+          layout={MainLayout}
+          path="/admindeposit"
+        />
+        )}
+        {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
+        <RouteWithLayout
           component={AdminWithdrawView}
           exact
           layout={MainLayout}
@@ -157,6 +167,14 @@ class Routes extends Component {
           exact
           layout={MainLayout}
           path="/userplan"
+        />
+        )}
+        {AuthService.getCurrentUser() && (
+        <RouteWithLayout
+          component={UserDepositView}
+          exact
+          layout={MainLayout}
+          path="/userdeposit"
         />
         )}
         {AuthService.getCurrentUser() && (

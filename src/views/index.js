@@ -13,8 +13,10 @@ export { default as UserEdit } from './UserEdit';
 export { default as UserPersonal } from './UserPersonal';
 export { default as UserBank } from './UserBank';
 export { default as UserPlan } from './UserPlan';
+export { default as UserDeposit } from './UserDeposit';
 export { default as UserWithdraw } from './UserWithdraw';
 export { default as AdminPlan } from './AdminPlan';
+export { default as AdminDeposit } from './AdminDeposit';
 export { default as AdminWithdraw } from './AdminWithdraw';
 export { default as UserPassword } from './UserPassword';
 

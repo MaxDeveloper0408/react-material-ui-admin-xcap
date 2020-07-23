@@ -6,10 +6,11 @@ const User = db.user;
 const Contract = db.contract;
 const Case = db.case;
 
+const Deposit = db.deposit;
+
 exports.all = (req, res) => {
-  Contract.findAll({include: [User]})
+  Deposit.findAll({include: [User]})
   .then(datas => {
-    console.log(datas)
     res.status(200).send(datas)
   })
   .catch(err => {
@@ -18,11 +19,29 @@ exports.all = (req, res) => {
 }
 
 exports.set_approve = (req, res) => {
-  Contract.update(
-      {status: 'processing'},
+  console.log(req.body)
+  Deposit.update(
+      {status: 'approved', admin_value: req.body.admin_value},
       {where: {id: req.body.id, status: 'pending'}}
   )
   .then(user => {
+      let now = moment();
+      Contract.create(
+        {
+          user_id: req.userId,
+          open_value: req.body.admin_value,
+          invest_type: req.body.investment_type,
+          start_date: now.format("YYYY-MM-DD"),
+          status: 'processing',
+          end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
+        }
+      )
+      .then(res_data => {
+          return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+      })
+      .catch(err => {
+          return res.status(500).send({ status:'fail', message: err.message });
+      });
       return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
   })
   .catch(err => {
@@ -30,7 +49,7 @@ exports.set_approve = (req, res) => {
   });
 }
 exports.all_by_user = (req, res) => {
-  Contract.findAll({
+  Deposit.findAll({
       where: {
         user_id: req.body.user_id
       }
@@ -42,23 +61,16 @@ exports.all_by_user = (req, res) => {
     res.status(500).send([])
   });
 }
-exports.add_plan = (req, res) => {
-  let now = moment();
-  Contract.create(
+exports.add = (req, res) => {
+  Deposit.create(
     {
       user_id: req.userId,
-      open_value: req.body.open_value,
+      user_value: req.body.user_value,
       invest_type: req.body.investment_type,
-      start_date: now.format("YYYY-MM-DD"),
-      status: 'processing',
-      end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
+      status: 'pending',
     }
   )
   .then(res_data => {
-      Case.decrement(
-        {balance: req.body.open_value},
-          {where: {user_id: req.userId}}
-      )
       return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
   })
   .catch(err => {

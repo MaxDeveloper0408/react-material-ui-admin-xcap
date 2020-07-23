@@ -72,6 +72,11 @@ const Sidebar = props => {
       icon: <DashboardIcon />,
     },
     {
+      title: 'Deposit',
+      href: '/admindeposit',
+      icon: <DashboardIcon />,
+    },
+    {
       title: 'Withdraw',
       href: '/adminwithdraw',
       icon: <DashboardIcon />,
@@ -145,6 +150,11 @@ const Sidebar = props => {
     {
       title: 'Plan',
       href: '/userplan',
+      icon: <DashboardIcon />,
+    },
+    {
+      title: 'Deposit',
+      href: '/userdeposit',
       icon: <DashboardIcon />,
     },
     {

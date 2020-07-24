@@ -18,6 +18,7 @@ import {
   UserDeposit as UserDepositView,
   UserWithdraw as UserWithdrawView,
   AdminPlan as AdminPlanView,
+  AdminContract as AdminContractView,
   AdminDeposit as AdminDepositView,
   AdminWithdraw as AdminWithdrawView,
   UserPassword as UserPasswordView,
@@ -103,6 +104,14 @@ class Routes extends Component {
           exact
           layout={MainLayout}
           path="/adminplan"
+        />
+        )}
+        {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
+        <RouteWithLayout
+          component={AdminContractView}
+          exact
+          layout={MainLayout}
+          path="/admincontract"
         />
         )}
         {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (

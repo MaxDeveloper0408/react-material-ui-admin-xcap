@@ -6,6 +6,17 @@ const User = db.user;
 const Bank = db.bank;
 const Case = db.case;
 const Contract = db.contract;
+const Contract_pdf = db.contract_pdf;
+
+const multer = require('multer');
+const path = require('path');
+const multerHelper = require('./multer.helper');
+const storage = multer.diskStorage({
+  destination: "./public/uploads/",
+  filename: function(req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
 
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
@@ -142,42 +153,63 @@ exports.delete = (req, res) => {
     });
 }
 exports.setActive = (req, res) => {
-    User.update(
-        {
-          active: req.body.active,
-        },
-        {where: {id: req.body.id}}
-    )
-    .then(user => {
-        let now = moment();
-        Contract.create(
+  let upload = multer({ storage: storage,limits:{fileSize:'10mb'}}).single('admin_pdf');
+    upload(req, res, function(err) {
+        if (req.fileValidationError) {
+            return res.status(200).send({ status:'fail', message: req.fileValidationError });
+        }
+        else if (!req.file) {
+            return res.status(200).send({ status:'fail', message: 'please select file' });
+        }
+        else if (err instanceof multer.MulterError) {
+          return res.status(200).send({ status:'fail', message: err });
+        }
+        else if (err) {
+          return res.status(200).send({ status:'fail', message: err });
+        }
+        
+        Contract_pdf.create({
+          user_id: req.body.userId,
+          admin_pdf: req.file.path
+        })
+
+        User.update(
           {
-            user_id: req.body.id,
-            open_value: req.body.investment,
-            invest_type: req.body.investment_type,
-            start_date: now.format("YYYY-MM-DD"),
-            status: 'processing',
-            end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
-          }
+            active: req.body.active,
+          },
+          {where: {id: req.body.userId}}
         )
-        .then(res_data => {
-            Case.count({user_id: req.body.id}).then(count => {
-              if(count == 0 ) {
-                Case.create({user_id: req.body.id, balance: 0}).then(create_case => {
-                  console.log(create_case)
-                })
+        .then(user => {
+            let now = moment();
+            Contract.create(
+              {
+                user_id: req.body.userId,
+                open_value: req.body.investment,
+                invest_type: req.body.investment_type,
+                start_date: now.format("YYYY-MM-DD"),
+                status: 'processing',
+                end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
               }
+            )
+            .then(res_data => {
+                Case.count({user_id: req.body.userId}).then(count => {
+                  if(count == 0 ) {
+                    Case.create({user_id: req.body.userId, balance: 0}).then(create_case => {
+                      console.log(create_case)
+                    })
+                  }
+                })
+                return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
             })
-            return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+            .catch(err => {
+                return res.status(200).send({ status:'fail', message: err.message });
+            });
         })
         .catch(err => {
-            return res.status(500).send({ status:'fail', message: err.message });
+            return res.status(200).send({ status:'fail', message: err.message });
         });
-        
     })
-    .catch(err => {
-        return res.status(500).send({ status:'fail', message: err.message });
-    });
+    
 }
 
 
@@ -256,5 +288,90 @@ exports.getBalance = (req, res) => {
   }else {
     res.status(200).send({status: 'fail', message: 'You should withdraw 25 day to 30'})
   }
+  
+}
+exports.contract_all = (req, res) => {
+  Contract_pdf.findAll({include: [User]})
+  .then(users => {
+    res.status(200).send(users)
+  })
+  .catch(err => {
+    res.status(500).send([])
+  });
+}
+exports.download_contract = (req, res) => {
+  const filepath = req.body.pdf_path;
+  // const filepath = `public/uploads/admin_pdf-15955772746056.pdf`
+  res.download(filepath, "contract.pdf")
+}
+
+exports.admin_upload_contract = (req, res) => {
+  let upload = multer({ storage: storage,limits:{fileSize:'10mb'}}).single('admin_pdf');
+    upload(req, res, function(err) {
+        if (req.fileValidationError) {
+            return res.status(200).send({ status:'fail', message: req.fileValidationError });
+        }
+        else if (!req.file) {
+            return res.status(200).send({ status:'fail', message: 'please select file' });
+        }
+        else if (err instanceof multer.MulterError) {
+          return res.status(200).send({ status:'fail', message: err });
+        }
+        else if (err) {
+          return res.status(200).send({ status:'fail', message: err });
+        }
+        
+        Contract_pdf.update(
+          {
+            user_id: req.body.userId,
+            admin_pdf: req.file.path
+          },
+          {where: {id: req.body.id}}
+        )
+        .then(res_data => {
+          return res.status(200).send({ status:'success', message: "upload success" });
+        })
+        .catch(err => {
+            return res.status(200).send({ status:'fail', message: "upload fail" });
+        });
+    })
+}
+exports.user_upload_contract = (req, res) => {
+  // let upload = multer({ storage: storage,limits:{fileSize:'10mb'}, fileFilter: multerHelper.pdfFilter }).single
+  let upload = multer({ storage: storage,limits:{fileSize:'10mb'}}).single('user_pdf');
+    upload(req, res, function(err) {
+        if (req.fileValidationError) {
+            return res.status(200).send({ status:'fail', message: req.fileValidationError });
+        }
+        else if (!req.file) {
+            return res.status(200).send({ status:'fail', message: 'please select file' });
+        }
+        else if (err instanceof multer.MulterError) {
+          return res.status(200).send({ status:'fail', message: err });
+        }
+        else if (err) {
+          return res.status(200).send({ status:'fail', message: err });
+        }
+        Contract_pdf.update(
+          {
+            user_pdf: req.file.path
+          },
+          {where: {user_id: req.userId}}
+        )
+        .then(res_data => {
+          return res.status(200).send({ status:'success', message: "upload success" });
+        })
+        .catch(err => {
+            return res.status(200).send({ status:'fail', message: "upload fail" });
+        });
+    })
+}
+exports.download_user_contract = (req, res) => {
+  console.log(req.userId)
+  Contract_pdf.findOne({where: {user_id: req.userId}}).then(data => {
+    console.log(data)
+    const filepath = data.admin_pdf
+    res.download(filepath, "contract.pdf")
+  })
   
 }

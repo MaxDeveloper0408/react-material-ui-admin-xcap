@@ -23,4 +23,11 @@ module.exports = function(app) {
   app.post("/api/user/bank",[authJwt.verifyToken],controller.userBank);
   app.post("/api/user/bankUpdate", [authJwt.verifyToken], controller.bankUpdate);
   app.post("/api/user/getBalance", [authJwt.verifyToken], controller.getBalance);
+
+  app.get("/api/user/contract_all",[authJwt.verifyToken, authJwt.isAdmin],controller.contract_all);
+  app.post("/api/user/uploadAdminContract",[authJwt.verifyToken, authJwt.isAdmin],controller.admin_upload_contract);
+  app.post("/api/user/download_contract", [authJwt.verifyToken], controller.download_contract);
+  app.post("/api/user/uploadUserContract",[authJwt.verifyToken],controller.user_upload_contract);
+  app.post("/api/user/download_user_contract", [authJwt.verifyToken], controller.download_user_contract);
+
 };

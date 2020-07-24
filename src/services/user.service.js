@@ -1,6 +1,10 @@
 import axios from 'axios';
 import authHeader from './auth-header';
+import authMultipartHeader from './auth-multipart-header';
+import download from 'js-file-download';
+
 const URL = 'http://localhost:8080/api/user/';
+
 
 class UserService {
   // getPublicContent() {
@@ -25,9 +29,9 @@ class UserService {
     return axios.post(URL + 'one', {id: userId}, {headers: authHeader()});
   }
 
-  setActive(userId, active, investment, investment_type) {
+  setActive(formData) {
     return axios
-      .post(URL + "setActive", {id: userId, active: active, investment:investment, investment_type:investment_type}, {headers: authHeader()})
+      .post(URL + "setActive", formData, {headers: authHeader()})
       .then(response => {
         return response.data;
       });
@@ -69,6 +73,37 @@ class UserService {
       .then(response => {
         return response.data;
     });
+  }
+  getContractPDFAll() {
+    return axios.get(URL + 'contract_all', {headers: authHeader()});
+  }
+  downloadContract(pdf_path) {
+    return axios.post(URL + "download_contract", {pdf_path: pdf_path}, {headers: authHeader(),responseType: 'blob'})
+     .then(resp => {
+            const content = resp.headers['content-type'];
+            download(resp.data, "contract.pdf", content);
+     });
+  }
+  uploadAdminContract(formData) {
+    return axios
+      .post(URL + "uploadAdminContract", formData, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+      });
+  }
+  uploadUserContract(formData) {
+    return axios
+      .post(URL + "uploadUserContract", formData, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+      });
+  }
+  downloadUserContract() {
+    return axios.post(URL + "download_user_contract", {}, {headers: authHeader(),responseType: 'blob'})
+     .then(resp => {
+            const content = resp.headers['content-type'];
+            download(resp.data, "contract.pdf", content);
+     });
   }
 }
 

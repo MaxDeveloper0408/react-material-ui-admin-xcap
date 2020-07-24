@@ -6,6 +6,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import moment from 'moment';
 import currencyFormatter from 'currency-formatter';
 import SimpleMaskMoney from 'simple-mask-money/lib/simple-mask-money'
+import $ from 'jquery'
 import {
   Card,
   CardHeader,
@@ -69,7 +70,68 @@ const PlanList = props => {
     setRowsPerPage(event.target.value);
   };
   //handle action
-  const submit = () => {
+  const handleUpload = () => {
+    MySwal.fire({
+      title: 'Aprovar a conta do cliente',
+      text: 'Entre com o investimento',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+      html: '<input type="file" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">', 
+      preConfirm: (value) => {
+        if(document.getElementById("swal_admin_cpf").files.length == 0) {
+          MySwal.showValidationMessage('You should upload contract pdf')
+        }
+      },
+      onOpen: () => {
+        $("#swal_admin_cpf").change(function (e) {
+            console.log(e);
+            var reader = new FileReader();
+            reader.readAsDataURL(this.files[0]);
+        });
+      }
+    }).then(function (result) {
+      if (result.dismiss === MySwal.DismissReason.cancel) {
+        return
+      }else if(result.value){
+        var formData = new FormData();
+        var file = $('#swal_admin_cpf')[0].files[0];
+        formData.append("user_pdf", file);
+
+        UserService.uploadUserContract(formData).then(
+          response => {
+            if(response.status == 'success') {
+              MySwal.fire({
+                title: 'Success',
+                text: response.message
+              })
+            }else if(response.status == 'fail') {
+              MySwal.fire({
+                title: 'Fail',
+                icon: 'warning',
+                text: response.message
+              })
+            }
+          },
+          error => {
+            console.log(error)
+          }
+        );
+      }
+    })
+  }
+  const handleDownload = (user_pdf) => {
+    UserService.downloadUserContract().then(
+      response => {
+        MySwal.fire({
+          title: 'Success',
+          text: 'success'
+        })
+      },
+      error => {
+        console.log(error)
+      }
+    );
   }
 
   const handleAddPlan = () => {
@@ -164,6 +226,16 @@ const PlanList = props => {
           {/* <Button variant="outlined" color="inherit" onClick={handleAddPlan.bind()}>
               Add Plan
           </Button> */}
+          {plans.length > 0 ? (
+            <div>
+              <Button variant="outlined" color="inherit" onClick={handleDownload.bind()}>
+                  Download Contract
+              </Button>
+              <Button variant="outlined" color="inherit" onClick={handleUpload.bind()}>
+                  Upload Contract
+              </Button>
+            </div>
+          ):('')}
           </div>
             <Table>
               <TableHead>

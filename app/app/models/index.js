@@ -29,6 +29,7 @@ db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.bank = require("../models/bank.model.js")(sequelize, Sequelize);
 db.case = require("../models/case.model.js")(sequelize, Sequelize);
 db.contract = require("../models/contract.model.js")(sequelize, Sequelize);
+db.contract_pdf = require("../models/contract_pdf.model.js")(sequelize, Sequelize);
 db.deposit = require("../models/deposit.model.js")(sequelize, Sequelize);
 db.plan_history = require("../models/plan_history.model.js")(sequelize, Sequelize);
 db.withdraw = require("../models/withdraw.model.js")(sequelize, Sequelize);
@@ -68,7 +69,9 @@ db.withdraw.belongsTo(db.user, {foreignKey: 'user_id'})
 db.user.hasOne(db.case, {foreignKey: 'user_id'})
 db.case.belongsTo(db.user, {foreignKey: 'user_id'})
 
-console.log('model');
+db.user.hasOne(db.contract_pdf, {foreignKey: 'user_id'})
+db.contract_pdf.belongsTo(db.user, {foreignKey: 'user_id'})
+
 db.ROLES = ["user", "admin"];
 
 module.exports = db;

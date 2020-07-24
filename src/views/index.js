@@ -18,5 +18,6 @@ export { default as UserWithdraw } from './UserWithdraw';
 export { default as AdminPlan } from './AdminPlan';
 export { default as AdminDeposit } from './AdminDeposit';
 export { default as AdminWithdraw } from './AdminWithdraw';
+export { default as AdminContract } from './AdminContract';
 export { default as UserPassword } from './UserPassword';
 

@@ -6,7 +6,7 @@ import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { makeStyles } from '@material-ui/styles';
 import SimpleMaskMoney from 'simple-mask-money/lib/simple-mask-money'
-
+import $ from 'jquery'
 
 import {
   Card,
@@ -144,18 +144,25 @@ const UsersTable = props => {
       const { value: select_investment } =  MySwal.fire({
         title: 'Aprovar a conta do cliente',
         text: 'Entre com o investimento',
-        input: 'text',
-        inputValue: '',
         showCancelButton: true,
         confirmButtonText: 'Confirmar',
         cancelButtonText: 'Cancelar',
+        html: '<input type="text" id="swal_plan_value" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">' + 
+              '<input type="file" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">', 
         preConfirm: (value) => {
-          if( SimpleMaskMoney.formatToNumber(value) < 5000) {
+          if( SimpleMaskMoney.formatToNumber(document.getElementById("swal_plan_value").value) < 5000) {
             MySwal.showValidationMessage('You should put more than 5.000')
+          }else if(document.getElementById("swal_admin_cpf").files.length == 0) {
+            MySwal.showValidationMessage('You should upload contract pdf')
           }
         },
         onOpen: () => {
-          let input_swal = document.getElementsByClassName("swal2-input")[0];
+          $("#swal_admin_cpf").change(function (e) {
+              console.log(e);
+              var reader = new FileReader();
+              reader.readAsDataURL(this.files[0]);
+          });
+          let input_swal = document.getElementById("swal_plan_value");
           SimpleMaskMoney.setMask(input_swal, {
             allowNegative: false,
             negativeSignAfter: false,
@@ -167,25 +174,35 @@ const UsersTable = props => {
             thousandsSeparator: '.',
             cursor: 'move'
           });
-        },
-        inputValidator: (value) => {
-          return new Promise((resolve) => {
-            if (value != null) {
-              resolve()
-            }
-          })
         }
       }).then(function (result) {
         if (result.dismiss === MySwal.DismissReason.cancel) {
           return
         }else if(result.value){
-          userService.setActive(userId, active, SimpleMaskMoney.formatToNumber(result.value), investment_type).then(
+          var formData = new FormData();
+          var file = $('#swal_admin_cpf')[0].files[0];
+          console.log(file)
+          formData.append("userId", userId);
+          formData.append("admin_pdf", file);
+          formData.append("investment_type", investment_type);
+          formData.append("investment", SimpleMaskMoney.formatToNumber(document.getElementById("swal_plan_value").value));
+          formData.append("active", active);
+
+          userService.setActive(formData).then(
             response => {
-              MySwal.fire({
-                title: 'Success',
-                text: response.message
-              })
-              window.location.reload();
+              if(response.status == 'success') {
+                MySwal.fire({
+                  title: 'Success',
+                  text: response.message
+                })
+                window.location.reload();
+              }else if(response.status == 'fail') {
+                MySwal.fire({
+                  title: 'Fail',
+                  icon: 'warning',
+                  text: response.message
+                })
+              }
             },
             error => {
               console.log(error)

@@ -6,6 +6,9 @@ module.exports = (sequelize, Sequelize) => {
       value: {
         type: Sequelize.DECIMAL
       },
+      cpf: {
+        type: Sequelize.STRING
+      },
       case_value: {
         type: Sequelize.DECIMAL
       },

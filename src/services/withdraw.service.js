@@ -22,6 +22,13 @@ class WithdrawService {
         return response.data;
     });
   }
+  transfer(add_data) {
+    return axios
+      .post(URL + "transfer", add_data, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+    });
+  }
 }
 
 export default new WithdrawService();

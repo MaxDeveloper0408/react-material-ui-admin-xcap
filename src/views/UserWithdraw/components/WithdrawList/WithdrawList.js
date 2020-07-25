@@ -6,6 +6,9 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import moment from 'moment';
 import currencyFormatter from 'currency-formatter';
 import SimpleMaskMoney from 'simple-mask-money/lib/simple-mask-money'
+import $ from 'jquery';
+import 'jquery-mask-plugin/dist/jquery.mask.min'; 
+
 
 
 import {
@@ -126,7 +129,8 @@ const WithdrawList = props => {
                     '<input type="text" id="swal_withdraw_value" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">', 
               showCancelButton: true,
               preConfirm: (value) => {
-                if( document.getElementById('swal_withdraw_value').value < 0 || document.getElementById('swal_withdraw_value').value == '' 
+                if( SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value) < 0 
+                || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value) == '' 
                 || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value) > response.balance) {
                   MySwal.showValidationMessage('You should put correct value')
                 }
@@ -144,6 +148,79 @@ const WithdrawList = props => {
               }else if(result.value){
                 WithdrawService.add({
                   withdraw_value: SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value),
+              }).then(
+                  response => {
+                    MySwal.fire({
+                      title: 'Success',
+                      text: response.message
+                    })
+                    window.location.reload();
+                  },
+                  error => {
+                    console.log(error)
+                  }
+                );
+              }
+              
+            })  
+          }
+        }
+       
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
+  
+  const handleThrought = () => {
+    UserService.getBalance(AuthService.getCurrentUser().id).then(
+      response => {
+        if(response.status == 'fail') {
+          MySwal.fire({
+            title: 'Alarm',
+            icon: 'warning',
+            text: response.message
+          })
+        } else {
+          if(response.length == 0 || response == null || response == undefined || response.balance < 1000) {
+            MySwal.fire({
+              title: 'Alarm',
+              icon: 'warning',
+              text: 'You should have available balance more than 1.000 to withraw'
+            })
+          }else if(response.balance >= 1000) {
+            MySwal.fire({
+              title: 'Withdraw',
+              html:
+                    '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : '+currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' })+'</h2>' +
+                    '<input type="text" id="swal_withdraw_value1" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">' + 
+                    '<input type="text" id="swal_withdraw_cpf" value="" class="swal2-input" style="max-width: 100%;" placeHolder="">', 
+              showCancelButton: true,
+              preConfirm: (value) => {
+                
+                const cpfRegex = RegExp(/[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}/)
+                if( SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) < 0 
+                || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) == '' 
+                || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) > response.balance) {
+                  MySwal.showValidationMessage('You should put correct value')
+                }else if(!cpfRegex.test(document.getElementById('swal_withdraw_cpf').value)){
+                  MySwal.showValidationMessage('You should put correct cpf')
+                }
+              },
+              onOpen: (el) => {
+                const input = document.getElementById('swal_withdraw_value1')
+                const cpf_input = document.getElementById('swal_withdraw_cpf')
+                SimpleMaskMoney.setMask(input, args)
+                $('#swal_withdraw_cpf').mask('000.000.000-00')
+              }
+            }).then(function (result) {
+              if (result.dismiss === MySwal.DismissReason.cancel) {
+                return;
+              }else if(result.value){
+                WithdrawService.transfer({
+                  cpf: document.getElementById('swal_withdraw_cpf').value,
+                  withdraw_value: SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value),
               }).then(
                   response => {
                     MySwal.fire({
@@ -189,6 +266,9 @@ const WithdrawList = props => {
           <Button variant="outlined" color="inherit" onClick={handleWithdraw.bind()}>
               Withdraw
           </Button>
+          <Button variant="outlined" color="inherit" onClick={handleThrought.bind()}>
+              Throught Accounts
+          </Button>
           </div>
             <Table>
               <TableHead>
@@ -196,6 +276,7 @@ const WithdrawList = props => {
                   <TableCell style={{color: '#212a37'}} className="blackText">Request Date</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Approve Date</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Value</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>CPF</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                 </TableRow>
               </TableHead>
@@ -217,6 +298,7 @@ const WithdrawList = props => {
                       </div>
                     </TableCell>
                     <TableCell>{currencyFormatter.format(item.value, { code: 'BRL', symbol: '' })}</TableCell>
+                    <TableCell>{item.cpf}</TableCell>
                     <TableCell>{item.status}</TableCell>
                   </TableRow>
                 ))}

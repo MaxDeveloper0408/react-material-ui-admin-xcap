@@ -16,6 +16,7 @@ module.exports = function(app) {
   app.post("/api/withdraw/delete",[authJwt.verifyToken, authJwt.isAdmin],controller.delete);
   app.post("/api/withdraw/all_by_user",[authJwt.verifyToken],controller.all_by_user);
   app.post("/api/withdraw/add",[authJwt.verifyToken],controller.add);
+  app.post("/api/withdraw/transfer",[authJwt.verifyToken],controller.transfer);
   
 
 };

@@ -77,5 +77,26 @@ exports.add = (req, res) => {
       return res.status(500).send({ status:'fail', message: err.message });
   });
 }
+exports.transfer = (req, res) => {
+  let now = moment();
+  Withdraw.create(
+    {
+      user_id: req.userId,
+      value: req.body.withdraw_value,
+      cpf: req.body.cpf,
+      status: 'pending'
+    }
+  )
+  .then(res_data => {
+      Case.decrement(
+        {balance: req.body.withdraw_value},
+          {where: {user_id: req.userId}}
+      )
+      return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+  })
+  .catch(err => {
+      return res.status(500).send({ status:'fail', message: err.message });
+  });
+}
 
 

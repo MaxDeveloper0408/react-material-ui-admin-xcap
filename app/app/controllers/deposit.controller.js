@@ -28,7 +28,7 @@ exports.set_approve = (req, res) => {
       let now = moment();
       Contract.create(
         {
-          user_id: req.userId,
+          user_id: req.body.user_id,
           open_value: req.body.admin_value,
           invest_type: req.body.investment_type,
           start_date: now.format("YYYY-MM-DD"),

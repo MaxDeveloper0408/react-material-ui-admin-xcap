@@ -141,16 +141,6 @@ const Sidebar = props => {
           href: '/userpersonal',
           icon: <RotateIcon />,
         },
-        {
-          title: 'Conta bancária',
-          href: '/userbank',
-          icon: <RotateIcon />,
-        },
-        {
-          title: 'Alteração de senha',
-          href: '/userpassword',
-          icon: <RotateIcon />,
-        }
       ]
     },
     {
@@ -167,6 +157,23 @@ const Sidebar = props => {
       title: 'Withdraw',
       href: '/userwithdraw',
       icon: <DashboardIcon />,
+    },
+    {
+      title: 'Configuração',
+      href: '/userbank',
+      icon: <AccountBoxIcon />,
+      subpages: [
+        {
+          title: 'Conta bancária',
+          href: '/userbank',
+          icon: <RotateIcon />,
+        },
+        {
+          title: 'Alteração de senha',
+          href: '/userpassword',
+          icon: <RotateIcon />,
+        }
+      ]
     },
   ];
 

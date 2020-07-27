@@ -71,7 +71,7 @@ const ContractList = props => {
   //handle action
   const handleUpload = (id, user_id) => {
     MySwal.fire({
-      title: 'Aprovar a conta do cliente',
+      title: 'Upload Contract ',
       text: 'Entre com o investimento',
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
@@ -103,10 +103,7 @@ const ContractList = props => {
         UserService.uploadAdminContract(formData).then(
           response => {
             if(response.status == 'success') {
-              MySwal.fire({
-                title: 'Success',
-                text: response.message
-              })
+              
             }else if(response.status == 'fail') {
               MySwal.fire({
                 title: 'Fail',
@@ -125,10 +122,6 @@ const ContractList = props => {
   const handleDownload = (user_pdf) => {
     UserService.downloadContract(user_pdf).then(
       response => {
-        MySwal.fire({
-          title: 'Success',
-          text: 'success'
-        })
       },
       error => {
         console.log(error)
@@ -171,11 +164,6 @@ const ContractList = props => {
                   >
                     <TableCell>{item.user.full_name}</TableCell>
                     <TableCell>{item.user.email}</TableCell>
-                    {/* <TableCell>
-                        <Button variant="contained" color="secondary" style={{marginLeft: '10px'}} onClick={handleDownload.bind(this, item.admin_pdf)}>
-                          Download
-                        </Button>
-                    </TableCell> */}
                     <TableCell>
                       {item.user_pdf == '' || item.user_pdf == null? (''):(
                         <Button variant="contained" color="secondary" style={{marginLeft: '10px'}} onClick={handleDownload.bind(this, item.user_pdf)}>

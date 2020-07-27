@@ -101,10 +101,7 @@ const PlanList = props => {
         UserService.uploadUserContract(formData).then(
           response => {
             if(response.status == 'success') {
-              MySwal.fire({
-                title: 'Success',
-                text: response.message
-              })
+              
             }else if(response.status == 'fail') {
               MySwal.fire({
                 title: 'Fail',
@@ -123,10 +120,7 @@ const PlanList = props => {
   const handleDownload = (user_pdf) => {
     UserService.downloadUserContract().then(
       response => {
-        MySwal.fire({
-          title: 'Success',
-          text: 'success'
-        })
+
       },
       error => {
         console.log(error)

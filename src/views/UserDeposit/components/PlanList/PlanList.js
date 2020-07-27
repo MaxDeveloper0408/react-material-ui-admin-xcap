@@ -157,7 +157,6 @@ const PlanList = props => {
                   <TableCell className="blackText" style={{color: '#212a37'}}>Approved Value</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Plan Type</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Ações</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -172,11 +171,6 @@ const PlanList = props => {
                     <TableCell>{item.invest_type}</TableCell>
                     <TableCell>
                       {item.status}
-                    </TableCell>
-                    <TableCell>
-                      {/* <Button variant="contained" color="secondary">
-                         Contract
-                      </Button> */}
                     </TableCell>
                   </TableRow>
                 ))}

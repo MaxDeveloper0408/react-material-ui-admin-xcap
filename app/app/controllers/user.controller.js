@@ -153,7 +153,7 @@ exports.delete = (req, res) => {
     });
 }
 exports.setActive = (req, res) => {
-  let upload = multer({ storage: storage,limits:{fileSize:'10mb'}}).single('admin_pdf');
+  let upload = multer({ storage: storage,limits:{fileSize:'10mb'}, fileFilter: multerHelper.pdfFilter}).single('admin_pdf');
     upload(req, res, function(err) {
         if (req.fileValidationError) {
             return res.status(200).send({ status:'fail', message: req.fileValidationError });
@@ -306,7 +306,7 @@ exports.download_contract = (req, res) => {
 }
 
 exports.admin_upload_contract = (req, res) => {
-  let upload = multer({ storage: storage,limits:{fileSize:'10mb'}}).single('admin_pdf');
+  let upload = multer({ storage: storage,limits:{fileSize:'10mb'}, fileFilter: multerHelper.pdfFilter}).single('admin_pdf');
     upload(req, res, function(err) {
         if (req.fileValidationError) {
             return res.status(200).send({ status:'fail', message: req.fileValidationError });
@@ -338,7 +338,7 @@ exports.admin_upload_contract = (req, res) => {
 }
 exports.user_upload_contract = (req, res) => {
   // let upload = multer({ storage: storage,limits:{fileSize:'10mb'}, fileFilter: multerHelper.pdfFilter }).single
-  let upload = multer({ storage: storage,limits:{fileSize:'10mb'}}).single('user_pdf');
+  let upload = multer({ storage: storage,limits:{fileSize:'10mb'}, fileFilter: multerHelper.pdfFilter}).single('user_pdf');
     upload(req, res, function(err) {
         if (req.fileValidationError) {
             return res.status(200).send({ status:'fail', message: req.fileValidationError });
@@ -367,11 +367,17 @@ exports.user_upload_contract = (req, res) => {
     })
 }
 exports.download_user_contract = (req, res) => {
-  console.log(req.userId)
   Contract_pdf.findOne({where: {user_id: req.userId}}).then(data => {
-    console.log(data)
     const filepath = data.admin_pdf
     res.download(filepath, "contract.pdf")
   })
   
+}
+
+exports.check_cpf_user = (req, res) => {
+  User.findOne({where: {cpf: req.body.cpf, active: 'YES'}}).then(data => {
+    return res.status(200).send({cpf_user: data})
+  }).catch(err => {
+    return res.status(200).send({cpf_user: null});
+  });
 }

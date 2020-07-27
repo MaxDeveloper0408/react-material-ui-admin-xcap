@@ -172,8 +172,15 @@ const WithdrawList = props => {
       }
     )
   }
-  
-  const handleThrought = () => {
+  async function is_exist_cpf() {
+    const cpf_response = await UserService.check_cpf_user(document.getElementById('swal_withdraw_cpf').value)
+    if(cpf_response.cpf_user == null) {
+      return false;
+    }else {
+      return true
+    }
+  }
+  const  handleThrought = () => {
     UserService.getBalance(AuthService.getCurrentUser().id).then(
       response => {
         if(response.status == 'fail') {
@@ -187,17 +194,18 @@ const WithdrawList = props => {
             MySwal.fire({
               title: 'Alarm',
               icon: 'warning',
-              text: 'You should have available balance more than 1.000 to withraw'
+              text: 'You should have available balance more than 1.000 to transfer'
             })
           }else if(response.balance >= 1000) {
             MySwal.fire({
-              title: 'Withdraw',
+              title: 'Transfer to people',
               html:
                     '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : '+currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' })+'</h2>' +
                     '<input type="text" id="swal_withdraw_value1" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">' + 
                     '<input type="text" id="swal_withdraw_cpf" value="" class="swal2-input" style="max-width: 100%;" placeHolder="">', 
               showCancelButton: true,
               preConfirm: (value) => {
+                
                 
                 const cpfRegex = RegExp(/[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}/)
                 if( SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) < 0 
@@ -206,6 +214,8 @@ const WithdrawList = props => {
                   MySwal.showValidationMessage('You should put correct value')
                 }else if(!cpfRegex.test(document.getElementById('swal_withdraw_cpf').value)){
                   MySwal.showValidationMessage('You should put correct cpf')
+                }else {
+                  
                 }
               },
               onOpen: (el) => {
@@ -218,21 +228,32 @@ const WithdrawList = props => {
               if (result.dismiss === MySwal.DismissReason.cancel) {
                 return;
               }else if(result.value){
-                WithdrawService.transfer({
-                  cpf: document.getElementById('swal_withdraw_cpf').value,
-                  withdraw_value: SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value),
-              }).then(
-                  response => {
+                UserService.check_cpf_user(document.getElementById('swal_withdraw_cpf').value).then(cpf_response => {
+                  if(cpf_response.cpf_user == null) {
                     MySwal.fire({
-                      title: 'Success',
-                      text: response.message
+                      title: 'Fail',
+                      icon: 'warning',
+                      text: "This cpf don't exist in user account"
                     })
-                    window.location.reload();
-                  },
-                  error => {
-                    console.log(error)
+                  }else {
+                    WithdrawService.transfer({
+                      cpf: document.getElementById('swal_withdraw_cpf').value,
+                      withdraw_value: SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value),
+                  }).then(
+                      response => {
+                        MySwal.fire({
+                          title: 'Success',
+                          text: response.message
+                        })
+                        window.location.reload();
+                      },
+                      error => {
+                        console.log(error)
+                      }
+                    );
                   }
-                );
+                })
+                
               }
               
             })  

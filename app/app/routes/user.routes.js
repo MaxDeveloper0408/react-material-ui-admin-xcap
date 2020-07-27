@@ -27,7 +27,9 @@ module.exports = function(app) {
   app.get("/api/user/contract_all",[authJwt.verifyToken, authJwt.isAdmin],controller.contract_all);
   app.post("/api/user/uploadAdminContract",[authJwt.verifyToken, authJwt.isAdmin],controller.admin_upload_contract);
   app.post("/api/user/download_contract", [authJwt.verifyToken], controller.download_contract);
+  
   app.post("/api/user/uploadUserContract",[authJwt.verifyToken],controller.user_upload_contract);
   app.post("/api/user/download_user_contract", [authJwt.verifyToken], controller.download_user_contract);
+  app.post("/api/user/check_cpf_user", [authJwt.verifyToken], controller.check_cpf_user);
 
 };

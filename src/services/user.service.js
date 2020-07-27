@@ -105,6 +105,13 @@ class UserService {
             download(resp.data, "contract.pdf", content);
      });
   }
+  check_cpf_user(cpf) {
+    return axios
+      .post(URL + "check_cpf_user", {cpf: cpf}, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+    });
+  }
 }
 
 export default new UserService();

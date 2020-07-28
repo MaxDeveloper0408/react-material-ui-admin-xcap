@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 const scheduler = require('node-schedule');
-
+const Sequelize = require("sequelize");
 
 
 var corsOptions = {
@@ -14,6 +14,7 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());   
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const Op = Sequelize.Op
 const db = require("./app/models");
 const Role = db.role;
 
@@ -36,6 +37,7 @@ const User = db.user;
 const Bank = db.bank;
 const Case = db.case;
 const Contract = db.contract;
+
 var dailyJob = scheduler.scheduleJob('* * * * *', function(){
   console.log('update plan and available balance every day 00:00:00');
   //update user's available balance when update expire date and profit balance plan
@@ -68,6 +70,39 @@ var dailyJob = scheduler.scheduleJob('* * * * *', function(){
       }
   })
 });
+var lastOfMonth_rule = '0 0 1 * *';
+var monthlyJob = scheduler.scheduleJob('0 0 1 * *', function(){
+  console.log('start monthly job');
+  let now = moment();
+  Case.findAll({
+      include: [{
+        model: User,
+      }],
+      where:{balance: {[Op.gte]: 5000}}
+    }
+    ).then( (datas) => {
+    console.log(datas)
+    if(datas.length > 0){
+      datas.forEach(function (item, index) {
+        Contract.create(
+          {
+            user_id: item.user_id,
+            open_value: item.balance,
+            invest_type: item.user.investment_type,
+            start_date: now.format("YYYY-MM-DD"),
+            status: 'processing',
+            end_date: item.user.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
+          }).then((updated_data) => {
+              console.log('create new plan each start day of month')
+              Case.decrement(
+                {balance: item.balance},
+                {where: {user_id: item.user_id}}
+              )
+          })
+        })
+    }
+  })
+})
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

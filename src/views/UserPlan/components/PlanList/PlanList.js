@@ -161,9 +161,9 @@ const PlanList = props => {
           <PerfectScrollbar>
           <div className={classes.inner}>
           <div className={classes.margin}>
-          <Button variant="outlined" color="inherit" onClick={handleAddPlan.bind()}>
+          {/* <Button variant="outlined" color="inherit" onClick={handleAddPlan.bind()}>
               Add Plan
-          </Button>
+          </Button> */}
           </div>
             <Table>
               <TableHead>

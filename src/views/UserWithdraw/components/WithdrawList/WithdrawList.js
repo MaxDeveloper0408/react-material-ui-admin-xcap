@@ -105,53 +105,63 @@ const WithdrawList = props => {
   const handleWithdraw = () => {
     UserService.getBalance(AuthService.getCurrentUser().id).then(
       response => {
-        if(response.length == 0 || response == null || response == undefined || response.balance < 1000) {
+        if(response.status == 'fail') {
           MySwal.fire({
             title: 'Alarm',
-            text: 'You should have available balance more than 1.000 to withraw'
+            icon: 'warning',
+            text: response.message
           })
-        }else if(response.balance >= 1000) {
-          MySwal.fire({
-            title: 'Withdraw',
-            html:
-                  '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : '+currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' })+'</h2>' +
-                  '<input type="text" id="swal_withdraw_value" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">', 
-            showCancelButton: true,
-            preConfirm: (value) => {
-              if( document.getElementById('swal_withdraw_value').value < 0 || document.getElementById('swal_withdraw_value').value == '' 
-              || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value) > response.balance) {
-                MySwal.showValidationMessage('You should put correct value')
-              }
-            },
-            onOpen: () => {
-              const input = document.getElementById('swal_withdraw_value')
-              SimpleMaskMoney.setMask(input, args);
-              input.oninput = () => {
-
-              }
-            }
-          }).then(function (result) {
-            if (result.dismiss === MySwal.DismissReason.cancel) {
-              return;
-            }else if(result.value){
-              WithdrawService.add({
-                withdraw_value: SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value),
-            }).then(
-                response => {
-                  MySwal.fire({
-                    title: 'Success',
-                    text: response.message
-                  })
-                  window.location.reload();
-                },
-                error => {
-                  console.log(error)
+        } else {
+          if(response.length == 0 || response == null || response == undefined || response.balance < 1000) {
+            MySwal.fire({
+              title: 'Alarm',
+              icon: 'warning',
+              text: 'You should have available balance more than 1.000 to withraw'
+            })
+          }else if(response.balance >= 1000) {
+            MySwal.fire({
+              title: 'Withdraw',
+              html:
+                    '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : '+currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' })+'</h2>' +
+                    '<input type="text" id="swal_withdraw_value" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">', 
+              showCancelButton: true,
+              preConfirm: (value) => {
+                if( document.getElementById('swal_withdraw_value').value < 0 || document.getElementById('swal_withdraw_value').value == '' 
+                || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value) > response.balance) {
+                  MySwal.showValidationMessage('You should put correct value')
                 }
-              );
-            }
-            
-          })  
+              },
+              onOpen: () => {
+                const input = document.getElementById('swal_withdraw_value')
+                SimpleMaskMoney.setMask(input, args);
+                input.oninput = () => {
+  
+                }
+              }
+            }).then(function (result) {
+              if (result.dismiss === MySwal.DismissReason.cancel) {
+                return;
+              }else if(result.value){
+                WithdrawService.add({
+                  withdraw_value: SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value),
+              }).then(
+                  response => {
+                    MySwal.fire({
+                      title: 'Success',
+                      text: response.message
+                    })
+                    window.location.reload();
+                  },
+                  error => {
+                    console.log(error)
+                  }
+                );
+              }
+              
+            })  
+          }
         }
+       
       },
       error => {
         console.log(error)

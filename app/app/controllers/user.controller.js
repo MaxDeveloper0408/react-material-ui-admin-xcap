@@ -237,15 +237,24 @@ exports.bankUpdate = (req, res) => {
 }
 
 exports.getBalance = (req, res) => {
-  Case.findOne({
-      where: {
-          user_id: req.body.user_id
-      }
-  })
-  .then(data => {
-    res.status(200).send(data)
-  })
-  .catch(err => {
-    res.status(500).send({})
-  });
+  let now = moment();
+  if(moment().isBetween(now.date(25).format("YYYY-MM-DD"), now.endOf('month').format("YYYY-MM-DD"))) {
+      Case.findOne({
+          include: [{
+            model: User,
+          }],
+          where: {
+              user_id: req.body.user_id
+          }
+      })
+      .then(data => {
+        res.status(200).send(data)
+      })
+      .catch(err => {
+        res.status(200).send({status: 'fail', message: "Don't have any balance"})
+      });
+  }else {
+    res.status(200).send({status: 'fail', message: 'You should withdraw 25 day to 30'})
+  }
+  
 }

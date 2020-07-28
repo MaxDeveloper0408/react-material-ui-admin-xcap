@@ -49,6 +49,10 @@ db.contract.belongsTo(db.user, {foreignKey: 'user_id'})
 db.user.hasMany(db.withdraw, {foreignKey: 'user_id'})
 db.withdraw.belongsTo(db.user, {foreignKey: 'user_id'})
 
+db.user.hasOne(db.case, {foreignKey: 'user_id'})
+db.case.belongsTo(db.user, {foreignKey: 'user_id'})
+
+console.log('model');
 db.ROLES = ["user", "admin"];
 
 module.exports = db;

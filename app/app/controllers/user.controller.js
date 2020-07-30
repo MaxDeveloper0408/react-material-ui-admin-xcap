@@ -153,6 +153,7 @@ exports.delete = (req, res) => {
     });
 }
 exports.setActive = (req, res) => {
+
   let upload = multer({ storage: storage,limits:{fileSize:'10mb'}, fileFilter: multerHelper.pdfFilter}).single('admin_pdf');
     upload(req, res, function(err) {
         if (req.fileValidationError) {
@@ -167,12 +168,25 @@ exports.setActive = (req, res) => {
         else if (err) {
           return res.status(200).send({ status:'fail', message: err });
         }
-        
-        Contract_pdf.create({
+        let contract_pdf_create = {
           user_id: req.body.userId,
-          admin_pdf: req.file.path
-        })
-
+          admin_pdf: req.file.path,
+          invest_type: req.body.investment_type,
+        }
+        if(req.body.investment_type == 'FLEXIVEL') {
+          contract_pdf_create = {
+            user_id: req.body.userId,
+            admin_pdf: req.file.path,
+            invest_type: req.body.investment_type,
+          }
+        }else if(req.body.investment_type == 'CRESCIMENTO') {
+          contract_pdf_create = {
+            user_id: req.body.userId,
+            admin_pdf2: req.file.path,
+            invest_type: req.body.investment_type,
+          }
+        }
+        Contract_pdf.create(contract_pdf_create)
         User.update(
           {
             active: req.body.active,
@@ -299,9 +313,21 @@ exports.contract_all = (req, res) => {
     res.status(500).send([])
   });
 }
+exports.contract_by_user = (req, res) => {
+  Contract_pdf.findOne({
+      where: {
+          user_id: req.body.user_id
+      }
+  })
+  .then(data => {
+    res.status(200).send(data)
+  })
+  .catch(err => {
+    res.status(500).send(null)
+  });
+}
 exports.download_contract = (req, res) => {
   const filepath = req.body.pdf_path;
-  // const filepath = `public/uploads/admin_pdf-15955772746056.pdf`
   res.download(filepath, "contract.pdf")
 }
 
@@ -320,12 +346,23 @@ exports.admin_upload_contract = (req, res) => {
         else if (err) {
           return res.status(200).send({ status:'fail', message: err });
         }
-        
-        Contract_pdf.update(
-          {
+        let update_data = {
+          user_id: req.body.userId,
+          admin_pdf: req.file.path
+        }
+        if(req.body.pdf_field == "admin_pdf") {
+          update_data = {
             user_id: req.body.userId,
             admin_pdf: req.file.path
-          },
+          }
+        }else if(req.body.pdf_field == 'admin_pdf2'){
+          update_data = {
+            user_id: req.body.userId,
+            admin_pdf2: req.file.path
+          }
+        }
+        Contract_pdf.update(
+          update_data,
           {where: {id: req.body.id}}
         )
         .then(res_data => {
@@ -337,7 +374,6 @@ exports.admin_upload_contract = (req, res) => {
     })
 }
 exports.user_upload_contract = (req, res) => {
-  // let upload = multer({ storage: storage,limits:{fileSize:'10mb'}, fileFilter: multerHelper.pdfFilter }).single
   let upload = multer({ storage: storage,limits:{fileSize:'10mb'}, fileFilter: multerHelper.pdfFilter}).single('user_pdf');
     upload(req, res, function(err) {
         if (req.fileValidationError) {
@@ -352,10 +388,20 @@ exports.user_upload_contract = (req, res) => {
         else if (err) {
           return res.status(200).send({ status:'fail', message: err });
         }
-        Contract_pdf.update(
-          {
+        let update_data = {
+          user_pdf: req.file.path
+        }
+        if(req.body.pdf_field == "user_pdf") {
+          update_data = {
             user_pdf: req.file.path
-          },
+          }
+        }else if(req.body.pdf_field == 'user_pdf2'){
+          update_data = {
+            user_pdf2: req.file.path
+          }
+        }
+        Contract_pdf.update(
+          update_data,
           {where: {user_id: req.userId}}
         )
         .then(res_data => {
@@ -368,7 +414,13 @@ exports.user_upload_contract = (req, res) => {
 }
 exports.download_user_contract = (req, res) => {
   Contract_pdf.findOne({where: {user_id: req.userId}}).then(data => {
-    const filepath = data.admin_pdf
+
+    let filepath = data.admin_pdf
+    if(req.body.invest_type == 'CRESCIMENTO') {
+      filepath = data.admin_pdf2
+    }else if(req.body.invest_type == 'FLEXIVEL') {
+      filepath = data.admin_pdf
+    }
     res.download(filepath, "contract.pdf")
   })
   

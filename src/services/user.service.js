@@ -77,6 +77,9 @@ class UserService {
   getContractPDFAll() {
     return axios.get(URL + 'contract_all', {headers: authHeader()});
   }
+  getContractPDFByUser(user_id) {
+    return axios.post(URL + 'contract_by_user',{user_id: user_id}, {headers: authHeader()});
+  }
   downloadContract(pdf_path) {
     return axios.post(URL + "download_contract", {pdf_path: pdf_path}, {headers: authHeader(),responseType: 'blob'})
      .then(resp => {
@@ -98,8 +101,8 @@ class UserService {
         return response.data;
       });
   }
-  downloadUserContract() {
-    return axios.post(URL + "download_user_contract", {}, {headers: authHeader(),responseType: 'blob'})
+  downloadUserContract(invest_type) {
+    return axios.post(URL + "download_user_contract", {'invest_type': invest_type}, {headers: authHeader(),responseType: 'blob'})
      .then(resp => {
             const content = resp.headers['content-type'];
             download(resp.data, "contract.pdf", content);

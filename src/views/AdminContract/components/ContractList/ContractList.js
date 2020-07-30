@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 const ContractList = props => {
   //basic setting
   const classes = useStyles();
-  const { className, UserService, AuthService, MySwal, ...rest } = props;
+  const { className, UserService, AuthService, PlanService, MySwal, ...rest } = props;
   //handle table
   const [plans, setPlans] = useState([]);
   useEffect(() => {
@@ -69,7 +69,7 @@ const ContractList = props => {
     setRowsPerPage(event.target.value);
   };
   //handle action
-  const handleUpload = (id, user_id) => {
+  const handleUpload = (id, user_id,invest_type) => {
     MySwal.fire({
       title: 'Upload Contract ',
       text: 'Entre com o investimento',
@@ -98,7 +98,14 @@ const ContractList = props => {
         console.log(file)
         formData.append("id", id);
         formData.append("userId", user_id);
-        formData.append("admin_pdf", file);
+        
+        if(invest_type == 0){
+          formData.append('pdf_field', "admin_pdf")
+        }else {
+          formData.append('pdf_field', "admin_pdf2")
+        }
+        formData.append("admin_pdf", file)
+
 
         UserService.uploadAdminContract(formData).then(
           response => {
@@ -151,8 +158,10 @@ const ContractList = props => {
                 <TableRow>
                 <TableCell className="blackText" style={{color: '#212a37'}}>User Name</TableCell>
                 <TableCell className="blackText" style={{color: '#212a37'}}>User Email</TableCell>
-                <TableCell className="blackText" style={{color: '#212a37'}}>Download</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Upload</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Flexible Download</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Flexible Upload</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Crescimento Download</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Crescimento Upload</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -172,7 +181,19 @@ const ContractList = props => {
                       )}
                     </TableCell>
                     <TableCell>
-                        <Button variant="contained" color="secondary" onClick={handleUpload.bind(this, item.id, item.user_id)}>
+                        <Button variant="contained" color="secondary" onClick={handleUpload.bind(this, item.id, item.user_id,0)}>
+                          Upload
+                        </Button>
+                    </TableCell>
+                    <TableCell>
+                      {item.user_pdf2 == '' || item.user_pdf2 == null? (''):(
+                        <Button variant="contained" color="secondary" style={{marginLeft: '10px'}} onClick={handleDownload.bind(this, item.user_pdf2)}>
+                          Download
+                        </Button>
+                      )}                 
+                    </TableCell>
+                    <TableCell>
+                        <Button variant="contained" color="secondary" onClick={handleUpload.bind(this, item.id, item.user_id,1)}>
                           Upload
                         </Button>
                     </TableCell>

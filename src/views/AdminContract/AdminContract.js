@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
 import { ContractList } from './components';
 import UserService from "../../services/user.service";
+import PlanService from "../../services/plan.service";
 import AuthService from "../../services/auth.service";
 
 import Swal from 'sweetalert2'
@@ -33,6 +34,7 @@ const AdminContract = ({ match, location }) => {
           MySwal={MySwal}
           UserService={UserService}
           AuthService={AuthService}
+          PlanService={PlanService}
           />
         </Grid>
       </Grid>

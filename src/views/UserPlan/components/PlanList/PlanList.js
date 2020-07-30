@@ -50,11 +50,13 @@ const PlanList = props => {
   const { className, UserService, AuthService, PlanService, MySwal, ...rest } = props;
   //handle table
   const [plans, setPlans] = useState([]);
+  const [is_both, setIs_both] = useState(false);
   useEffect(() => {
     const fetchUsers = async () => {
         try {
           const response = await PlanService.getPlanByUser(AuthService.getCurrentUser().id);
           setPlans(response.data);
+          
         } catch (e) {
             setPlans([]);
         }
@@ -71,13 +73,32 @@ const PlanList = props => {
   };
   //handle action
   const handleUpload = () => {
+    let is_both_invest_type = false
+    let f_count = 0
+    let c_count = 0
+    plans.map(item => {
+      if(item.invest_type == 'FLEXIVEL') {
+        f_count = f_count + 1;
+      }else if(item.invest_type == 'CRESCIMENTO'){
+        c_count = c_count + 1;
+      }
+    })
+
+    if(f_count > 0 && c_count > 0) {
+      is_both_invest_type = true
+    }
+    var select_html = ''
+    if(is_both_invest_type) {
+      select_html = '<select id="swal_investment_type" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 16px;padding: .975em .625em;"><option value="FLEXIVEL">FLEXIVEL</option><option value="CRESCIMENTO">CRESCIMENTO</option></select>'
+    }
+
     MySwal.fire({
-      title: 'Aprovar a conta do cliente',
-      text: 'Entre com o investimento',
+      title: 'Upload Contract',
+      text: '',
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
-      html: '<input type="file" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">', 
+      html: '<input type="file" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">' + select_html, 
       preConfirm: (value) => {
         if(document.getElementById("swal_admin_cpf").files.length == 0) {
           MySwal.showValidationMessage('You should upload contract pdf')
@@ -96,36 +117,139 @@ const PlanList = props => {
       }else if(result.value){
         var formData = new FormData();
         var file = $('#swal_admin_cpf')[0].files[0];
-        formData.append("user_pdf", file);
+        
+        
+        let user_pdf = "user_pdf"
 
-        UserService.uploadUserContract(formData).then(
-          response => {
-            if(response.status == 'success') {
-              
-            }else if(response.status == 'fail') {
-              MySwal.fire({
-                title: 'Fail',
-                icon: 'warning',
-                text: response.message
-              })
-            }
-          },
-          error => {
-            console.log(error)
+        if(f_count > 0 && c_count == 0) {
+          user_pdf = "user_pdf"
+        }else if(f_count == 0 && c_count > 0){
+          user_pdf = "user_pdf2"
+        }else if(f_count > 0 && c_count > 0) {
+          if(document.getElementById("swal_investment_type").value == "FLEXIVEL") {
+            user_pdf = "user_pdf"
+          }else {
+            user_pdf = "user_pdf2"
           }
-        );
+        }
+
+        formData.append('user_pdf', file)
+        formData.append('pdf_field', user_pdf)
+        UserService.getContractPDFByUser(AuthService.getCurrentUser().id).then(cp_res => {
+          let cp_res_data = cp_res.data;
+          let is_exist = true;
+          
+          if(cp_res_data == null || cp_res_data.length == 0) {
+            is_exist = true;
+          }else {
+            if(user_pdf == "user_pdf") {
+              if(!cp_res_data.user_pdf || 0 === cp_res_data.user_pdf.length ) {
+                is_exist = true;
+              }else {
+                is_exist = false;
+              }
+            }else {
+              if(!cp_res_data.user_pdf2 || 0 === cp_res_data.user_pdf2.length ) {
+                is_exist = true;
+              }else {
+                is_exist = false;
+              }
+            }
+          }
+
+          if(is_exist) {
+            UserService.uploadUserContract(formData).then(
+              response => {
+                if(response.status == 'success') {
+                  
+                }else if(response.status == 'fail') {
+                  MySwal.fire({
+                    title: 'Fail',
+                    icon: 'warning',
+                    text: response.message
+                  })
+                }
+              },
+              error => {
+                console.log(error)
+              }
+            );
+          }else {
+            let alarm_string = user_pdf == 'user_pdf' ? 'You already uploaded Flexible contract' : 'You already uploaded Crescimento contract'
+            MySwal.fire({
+              title: 'Alarm',
+              text: alarm_string
+            })
+          }
+        })
       }
     })
   }
   const handleDownload = (user_pdf) => {
-    UserService.downloadUserContract().then(
-      response => {
-
-      },
-      error => {
-        console.log(error)
+    let is_both_invest_type = false
+    let f_count = 0
+    let c_count = 0
+    plans.map(item => {
+      if(item.invest_type == 'FLEXIVEL') {
+        f_count = f_count + 1;
+      }else if(item.invest_type == 'CRESCIMENTO'){
+        c_count = c_count + 1;
       }
-    );
+    })
+
+    if(f_count > 0 && c_count > 0) {
+      is_both_invest_type = true
+    }
+    var select_html = ''
+    if(is_both_invest_type) {
+      select_html = '<select id="swal_investment_type" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 16px;padding: .975em .625em;"><option value="FLEXIVEL">FLEXIVEL</option><option value="CRESCIMENTO">CRESCIMENTO</option></select>'
+    
+      MySwal.fire({
+        title: 'Download Contract',
+        text: 'Entre com o investimento',
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+        html: select_html, 
+        preConfirm: (value) => {
+          
+        },
+        onOpen: () => {
+          
+        }
+      }).then(function (result) {
+        if (result.dismiss === MySwal.DismissReason.cancel) {
+          return
+        }else if(result.value){
+          UserService.downloadUserContract(document.getElementById('swal_investment_type').value).then(
+            response => {
+      
+            },
+            error => {
+              console.log(error)
+            }
+          );
+        }
+      })
+    }else {
+      let investment_type = "FLEXIVEL"
+
+      if(f_count > 0 && c_count == 0) {
+        investment_type = "FLEXIVEL"
+      }else if(f_count == 0 && c_count > 0){
+        investment_type = "CRESCIMENTO"
+      }
+      UserService.downloadUserContract(investment_type).then(
+        response => {
+  
+        },
+        error => {
+          console.log(error)
+        }
+      );
+    }
+
+    
   }
 
   const handleAddPlan = () => {
@@ -241,7 +365,6 @@ const PlanList = props => {
                   <TableCell className="blackText" style={{color: '#212a37'}}>Total Value</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Plan Type</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Ações</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -264,11 +387,6 @@ const PlanList = props => {
                     <TableCell>{item.invest_type}</TableCell>
                     <TableCell>
                       {item.status}
-                    </TableCell>
-                    <TableCell>
-                      <Button variant="contained" color="secondary">
-                         Contract
-                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}

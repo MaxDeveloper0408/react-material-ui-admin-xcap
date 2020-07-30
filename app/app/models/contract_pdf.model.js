@@ -8,6 +8,16 @@ module.exports = (sequelize, Sequelize) => {
       },
       user_pdf: {
         type: Sequelize.STRING
+      },
+      admin_pdf2: {
+        type: Sequelize.STRING
+      },
+      user_pdf2: {
+        type: Sequelize.STRING
+      },
+      invest_type: {
+        type:   Sequelize.ENUM,
+        values: ['FLEXIVEL', 'CRESCIMENTO']
       }
     });
     return Contract_pdf;

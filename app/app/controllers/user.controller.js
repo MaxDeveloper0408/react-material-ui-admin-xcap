@@ -416,6 +416,7 @@ exports.download_user_contract = (req, res) => {
   Contract_pdf.findOne({where: {user_id: req.userId}}).then(data => {
 
     let filepath = data.admin_pdf
+    
     if(req.body.invest_type == 'CRESCIMENTO') {
       filepath = data.admin_pdf2
     }else if(req.body.invest_type == 'FLEXIVEL') {
@@ -433,3 +434,4 @@ exports.check_cpf_user = (req, res) => {
     return res.status(200).send({cpf_user: null});
   });
 }
+

@@ -98,6 +98,7 @@ const PlanList = props => {
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
+      allowOutsideClick: false,
       html: '<input type="file" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">' + select_html, 
       preConfirm: (value) => {
         if(document.getElementById("swal_admin_cpf").files.length == 0) {
@@ -161,7 +162,11 @@ const PlanList = props => {
             UserService.uploadUserContract(formData).then(
               response => {
                 if(response.status == 'success') {
-                  
+                  MySwal.fire({
+                    title: 'Uploaded successfully',
+                    icon: 'success',
+                    text: response.message
+                  })
                 }else if(response.status == 'fail') {
                   MySwal.fire({
                     title: 'Fail',
@@ -205,6 +210,7 @@ const PlanList = props => {
       select_html = '<select id="swal_investment_type" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 16px;padding: .975em .625em;"><option value="FLEXIVEL">FLEXIVEL</option><option value="CRESCIMENTO">CRESCIMENTO</option></select>'
     
       MySwal.fire({
+        allowOutsideClick: false,
         title: 'Download Contract',
         text: 'Entre com o investimento',
         showCancelButton: true,
@@ -223,7 +229,7 @@ const PlanList = props => {
         }else if(result.value){
           UserService.downloadUserContract(document.getElementById('swal_investment_type').value).then(
             response => {
-      
+              
             },
             error => {
               console.log(error)

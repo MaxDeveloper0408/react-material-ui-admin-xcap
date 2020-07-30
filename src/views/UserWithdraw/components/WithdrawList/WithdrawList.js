@@ -298,6 +298,7 @@ const WithdrawList = props => {
                   <TableCell className="blackText" style={{color: '#212a37'}}>Approve Date</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Value</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>CPF</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Type</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                 </TableRow>
               </TableHead>
@@ -320,6 +321,9 @@ const WithdrawList = props => {
                     </TableCell>
                     <TableCell>{currencyFormatter.format(item.value, { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>{item.cpf}</TableCell>
+                    <TableCell>
+                      {item.cpf == "" || item.cpf == null ? 'Withdraw':'Transfer'}
+                    </TableCell>
                     <TableCell>{item.status}</TableCell>
                   </TableRow>
                 ))}

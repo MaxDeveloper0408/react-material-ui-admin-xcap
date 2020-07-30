@@ -147,6 +147,7 @@ const UsersTable = props => {
         showCancelButton: true,
         confirmButtonText: 'Confirmar',
         cancelButtonText: 'Cancelar',
+        allowOutsideClick: false,
         html: '<input type="text" id="swal_plan_value" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">' + 
               '<input type="file" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">', 
         preConfirm: (value) => {

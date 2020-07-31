@@ -72,7 +72,7 @@ const ContractList = props => {
   const handleUpload = (id, user_id,invest_type) => {
     MySwal.fire({
       title: 'Upload Contract ',
-      text: 'Entre com o investimento',
+      text: 'Entre com o aporte',
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',

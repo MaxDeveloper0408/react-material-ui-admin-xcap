@@ -143,7 +143,7 @@ const UsersTable = props => {
     }else {
       const { value: select_investment } =  MySwal.fire({
         title: 'Aprovar a conta do cliente',
-        text: 'Entre com o investimento',
+        text: 'Entre com o aporte',
         input: 'text',
         inputValue: '',
         showCancelButton: true,
@@ -249,7 +249,7 @@ const UsersTable = props => {
                   <TableCell className="blackText" style={{color: '#212a37'}}>CPF</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Celular</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Plano</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Investimento</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Aporte</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Ações</TableCell>
                 </TableRow>
               </TableHead>

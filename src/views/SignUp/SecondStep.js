@@ -85,7 +85,7 @@ const SecondStep = ({
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth required margin="normal">
-            <InputLabel htmlFor="investment">Investimento</InputLabel>
+            <InputLabel htmlFor="investment">Aporte</InputLabel>
             <Select value={investment} onChange={handleChange("investment")}>
               <MenuItem value={"5.000-15.000"}>5.000-15.000</MenuItem>
               <MenuItem value={"20.000-50.000"}>20.000-50.000</MenuItem>

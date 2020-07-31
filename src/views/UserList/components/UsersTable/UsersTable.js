@@ -143,13 +143,13 @@ const UsersTable = props => {
     }else {
       const { value: select_investment } =  MySwal.fire({
         title: 'Aprovar a conta do cliente',
-        text: 'Entre com o investimento',
+        text: 'Entre com o aporte',
         showCancelButton: true,
         confirmButtonText: 'Confirmar',
         cancelButtonText: 'Cancelar',
         allowOutsideClick: false,
-        html: '<input type="text" id="swal_plan_value" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">' + 
-              '<input type="file" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">', 
+        html: '<input type="text" id="swal_plan_value" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">' +
+              '<input type="file" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">',
         preConfirm: (value) => {
           if( SimpleMaskMoney.formatToNumber(document.getElementById("swal_plan_value").value) < 5000) {
             MySwal.showValidationMessage('You should put more than 5.000')
@@ -282,11 +282,11 @@ const UsersTable = props => {
                       onChange={handleSelectAll}
                     />
                   </TableCell>
-                  <TableCell style={{color: '#212a37'}} className="blackText">Name</TableCell>
+                  <TableCell style={{color: '#212a37'}} className="blackText">Nome Completo</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>CPF</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Celular</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Plano</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Investimento</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Aporte</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Ações</TableCell>
                 </TableRow>
               </TableHead>

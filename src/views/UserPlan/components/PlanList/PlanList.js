@@ -56,7 +56,7 @@ const PlanList = props => {
         try {
           const response = await PlanService.getPlanByUser(AuthService.getCurrentUser().id);
           setPlans(response.data);
-          
+
         } catch (e) {
             setPlans([]);
         }
@@ -99,7 +99,7 @@ const PlanList = props => {
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
       allowOutsideClick: false,
-      html: '<input type="file" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">' + select_html, 
+      html: '<input type="file" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">' + select_html,
       preConfirm: (value) => {
         if(document.getElementById("swal_admin_cpf").files.length == 0) {
           MySwal.showValidationMessage('You should upload contract pdf')
@@ -118,8 +118,8 @@ const PlanList = props => {
       }else if(result.value){
         var formData = new FormData();
         var file = $('#swal_admin_cpf')[0].files[0];
-        
-        
+
+
         let user_pdf = "user_pdf"
 
         if(f_count > 0 && c_count == 0) {
@@ -140,7 +140,7 @@ const PlanList = props => {
           let cp_res_data = cp_res.data;
           let is_exist = false;
           let admin_is_exist = false;
-          
+
           if(cp_res_data == null || cp_res_data.length == 0) {
             admin_is_exist = false;
           }else {
@@ -234,24 +234,24 @@ const PlanList = props => {
       let cp_res_data = cp_res.data;
       let is_exist = false;
       let admin_is_exist = false;
-      
+
 
       if(is_both_invest_type) {
         select_html = '<select id="swal_investment_type" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 16px;padding: .975em .625em;"><option value="FLEXIVEL">FLEXIVEL</option><option value="CRESCIMENTO">CRESCIMENTO</option></select>'
-      
+
         MySwal.fire({
           allowOutsideClick: false,
           title: 'Download Contract',
-          text: 'Entre com o investimento',
+          text: 'Entre com o aporte',
           showCancelButton: true,
           confirmButtonText: 'Confirmar',
           cancelButtonText: 'Cancelar',
-          html: select_html, 
+          html: select_html,
           preConfirm: (value) => {
-            
+
           },
           onOpen: () => {
-            
+
           }
         }).then(function (result) {
           if (result.dismiss === MySwal.DismissReason.cancel) {
@@ -278,7 +278,7 @@ const PlanList = props => {
             if(admin_is_exist) {
               UserService.downloadUserContract(document.getElementById('swal_investment_type').value).then(
                 response => {
-                  
+
                 },
                 error => {
                   console.log(error)
@@ -294,10 +294,10 @@ const PlanList = props => {
         })
       }else {
         let investment_type = "FLEXIVEL"
-        
+
         if(f_count > 0 && c_count == 0) {
           investment_type = "FLEXIVEL"
-  
+
         }else if(f_count == 0 && c_count > 0){
           investment_type = "CRESCIMENTO"
         }
@@ -322,7 +322,7 @@ const PlanList = props => {
         if(admin_is_exist) {
           UserService.downloadUserContract(investment_type).then(
             response => {
-              
+
             },
             error => {
               console.log(error)
@@ -338,7 +338,7 @@ const PlanList = props => {
     });
 
 
-    
+
   }
 
   const handleAddPlan = () => {
@@ -354,7 +354,7 @@ const PlanList = props => {
             title: 'New Contract Plan',
             html:
                   '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : ' + currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' }) + '</h2>' +
-                  '<h2 class="swal2-title" id="swal2-title" style="font-size: 1.3em;font-weight: 400">Insert Desired Value(min 5.000)</h2>' + 
+                  '<h2 class="swal2-title" id="swal2-title" style="font-size: 1.3em;font-weight: 400">Insert Desired Value(min 5.000)</h2>' +
                   '<input id="swal_open_value" type="text" min="5000" class="swal2-input" style="max-width:100%;" placeHolder="5.000">' +
                   '<h2 class="swal2-title" id="swal2-title" style="font-size: 1.3em;font-weight: 400">Select Plan<h2>' +
                   '<select id="swal_investment_type" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 0.6em;padding: .975em .625em;"><option value="FLEXIVEL">FLEXIVEL</option><option value="CRESCIMENTO">CRESCIMENTO</option></select>',
@@ -385,7 +385,7 @@ const PlanList = props => {
             if (result.dismiss === MySwal.DismissReason.cancel) {
               return;
             }else if(result.value){
-              
+
               PlanService.addPlan(
                 {
                   open_value: SimpleMaskMoney.formatToNumber(document.getElementById('swal_open_value').value),
@@ -403,8 +403,8 @@ const PlanList = props => {
                 }
               );
             }
-            
-          })  
+
+          })
         }
       },
       error => {
@@ -422,8 +422,8 @@ const PlanList = props => {
         noValidate
       >
         <CardHeader
-          subheader="You can add your plan"
-          title="Plan List"
+          subheader="Histórico de planos ativos e expirados."
+          title="Planos"
         />
         <Divider />
         <CardContent>
@@ -436,10 +436,10 @@ const PlanList = props => {
           {plans.length > 0 ? (
             <div>
               <Button variant="outlined" color="inherit" onClick={handleDownload.bind()}>
-                  Download Contract
+                  Download Contrato
               </Button>
               <Button variant="outlined" color="inherit" onClick={handleUpload.bind()}>
-                  Upload Contract
+                  Upload Contrato
               </Button>
             </div>
           ):('')}
@@ -447,12 +447,12 @@ const PlanList = props => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell style={{color: '#212a37'}} className="blackText">Start Date</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>End Date</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Open Value</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Profit Value</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Total Value</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Plan Type</TableCell>
+                  <TableCell style={{color: '#212a37'}} className="blackText">Início</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Término</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Aporte</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Lucro</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Total</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Plano</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                 </TableRow>
               </TableHead>
@@ -465,7 +465,7 @@ const PlanList = props => {
                   >
                     <TableCell>
                       <div className={classes.nameContainer}>
-                      
+
                         <Typography variant="body1">{moment(item.start_date).format('DD/MM/YYYY')}</Typography>
                       </div>
                     </TableCell>

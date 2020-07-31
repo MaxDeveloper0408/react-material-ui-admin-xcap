@@ -478,7 +478,7 @@ const UserDetails = props => {
             </Grid>
             <Grid item xs={4} sm={4}>
               <FormControl fullWidth required margin="normal">
-                <InputLabel htmlFor="investment">Investimento</InputLabel>
+                <InputLabel htmlFor="investment">Aporte</InputLabel>
                 <Select value={user.investment} onChange={handleChange("investment")}>
                   <MenuItem value={"5.000-15.000"}>5.000-15.000</MenuItem>
                   <MenuItem value={"20.000-50.000"}>20.000-50.000</MenuItem>

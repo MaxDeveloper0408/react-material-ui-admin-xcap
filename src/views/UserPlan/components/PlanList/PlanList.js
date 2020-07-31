@@ -138,52 +138,76 @@ const PlanList = props => {
         formData.append('pdf_field', user_pdf)
         UserService.getContractPDFByUser(AuthService.getCurrentUser().id).then(cp_res => {
           let cp_res_data = cp_res.data;
-          let is_exist = true;
+          let is_exist = false;
+          let admin_is_exist = false;
           
           if(cp_res_data == null || cp_res_data.length == 0) {
-            is_exist = true;
+            admin_is_exist = false;
           }else {
+
+            if(user_pdf == "user_pdf") {
+              if(!cp_res_data.admin_pdf || 0 === cp_res_data.admin_pdf.length ) {
+                admin_is_exist = false;
+              }else {
+                admin_is_exist = true;
+              }
+            }else {
+              if(!cp_res_data.admin_pdf2 || 0 === cp_res_data.admin_pdf2.length ) {
+                admin_is_exist = false;
+              }else {
+                admin_is_exist = true;
+              }
+            }
+
             if(user_pdf == "user_pdf") {
               if(!cp_res_data.user_pdf || 0 === cp_res_data.user_pdf.length ) {
-                is_exist = true;
-              }else {
                 is_exist = false;
+              }else {
+                is_exist = true;
               }
             }else {
               if(!cp_res_data.user_pdf2 || 0 === cp_res_data.user_pdf2.length ) {
-                is_exist = true;
-              }else {
                 is_exist = false;
+              }else {
+                is_exist = true;
               }
             }
+
           }
 
-          if(is_exist) {
-            UserService.uploadUserContract(formData).then(
-              response => {
-                if(response.status == 'success') {
-                  MySwal.fire({
-                    title: 'Uploaded successfully',
-                    icon: 'success',
-                    text: response.message
-                  })
-                }else if(response.status == 'fail') {
-                  MySwal.fire({
-                    title: 'Fail',
-                    icon: 'warning',
-                    text: response.message
-                  })
+          if(admin_is_exist) {
+            if(!is_exist){
+              UserService.uploadUserContract(formData).then(
+                response => {
+                  if(response.status == 'success') {
+                    MySwal.fire({
+                      title: 'Uploaded successfully',
+                      icon: 'success',
+                      text: response.message
+                    })
+                  }else if(response.status == 'fail') {
+                    MySwal.fire({
+                      title: 'Fail',
+                      icon: 'warning',
+                      text: response.message
+                    })
+                  }
+                },
+                error => {
+                  console.log(error)
                 }
-              },
-              error => {
-                console.log(error)
-              }
-            );
+              );
+            }else {
+              let alarm_string = user_pdf == 'user_pdf' ? 'You already uploaded Flexible contract' : 'You already uploaded Crescimento contract'
+              MySwal.fire({
+                title: 'Alarm',
+                text: alarm_string
+              })
+            }
           }else {
-            let alarm_string = user_pdf == 'user_pdf' ? 'You already uploaded Flexible contract' : 'You already uploaded Crescimento contract'
             MySwal.fire({
               title: 'Alarm',
-              text: alarm_string
+              text: 'Nenhum contrato disponível no momento'
             })
           }
         })
@@ -206,28 +230,97 @@ const PlanList = props => {
       is_both_invest_type = true
     }
     var select_html = ''
-    if(is_both_invest_type) {
-      select_html = '<select id="swal_investment_type" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 16px;padding: .975em .625em;"><option value="FLEXIVEL">FLEXIVEL</option><option value="CRESCIMENTO">CRESCIMENTO</option></select>'
-    
-      MySwal.fire({
-        allowOutsideClick: false,
-        title: 'Download Contract',
-        text: 'Entre com o investimento',
-        showCancelButton: true,
-        confirmButtonText: 'Confirmar',
-        cancelButtonText: 'Cancelar',
-        html: select_html, 
-        preConfirm: (value) => {
-          
-        },
-        onOpen: () => {
-          
+    UserService.getContractPDFByUser(AuthService.getCurrentUser().id).then(cp_res => {
+      let cp_res_data = cp_res.data;
+      let is_exist = false;
+      let admin_is_exist = false;
+      
+
+      if(is_both_invest_type) {
+        select_html = '<select id="swal_investment_type" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 16px;padding: .975em .625em;"><option value="FLEXIVEL">FLEXIVEL</option><option value="CRESCIMENTO">CRESCIMENTO</option></select>'
+      
+        MySwal.fire({
+          allowOutsideClick: false,
+          title: 'Download Contract',
+          text: 'Entre com o investimento',
+          showCancelButton: true,
+          confirmButtonText: 'Confirmar',
+          cancelButtonText: 'Cancelar',
+          html: select_html, 
+          preConfirm: (value) => {
+            
+          },
+          onOpen: () => {
+            
+          }
+        }).then(function (result) {
+          if (result.dismiss === MySwal.DismissReason.cancel) {
+            return
+          }else if(result.value){
+            let invest_type_value = document.getElementById('swal_investment_type').value
+            if(cp_res_data == null || cp_res_data.length == 0) {
+              admin_is_exist = false;
+            }else {
+              if(invest_type_value == "FLEXIVEL") {
+                if(!cp_res_data.admin_pdf || 0 === cp_res_data.admin_pdf.length ) {
+                  admin_is_exist = false;
+                }else {
+                  admin_is_exist = true;
+                }
+              }else {
+                if(!cp_res_data.admin_pdf2 || 0 === cp_res_data.admin_pdf2.length ) {
+                  admin_is_exist = false;
+                }else {
+                  admin_is_exist = true;
+                }
+              }
+            }
+            if(admin_is_exist) {
+              UserService.downloadUserContract(document.getElementById('swal_investment_type').value).then(
+                response => {
+                  
+                },
+                error => {
+                  console.log(error)
+                }
+              );
+            }else {
+              MySwal.fire({
+                title: 'Alarm',
+                text: 'Nenhum contrato disponível no momento'
+              })
+            }
+          }
+        })
+      }else {
+        let investment_type = "FLEXIVEL"
+        
+        if(f_count > 0 && c_count == 0) {
+          investment_type = "FLEXIVEL"
+  
+        }else if(f_count == 0 && c_count > 0){
+          investment_type = "CRESCIMENTO"
         }
-      }).then(function (result) {
-        if (result.dismiss === MySwal.DismissReason.cancel) {
-          return
-        }else if(result.value){
-          UserService.downloadUserContract(document.getElementById('swal_investment_type').value).then(
+
+        if(cp_res_data == null || cp_res_data.length == 0) {
+          admin_is_exist = false;
+        }else {
+          if(investment_type == "FLEXIVEL") {
+            if(!cp_res_data.admin_pdf || 0 === cp_res_data.admin_pdf.length ) {
+              admin_is_exist = false;
+            }else {
+              admin_is_exist = true;
+            }
+          }else {
+            if(!cp_res_data.admin_pdf2 || 0 === cp_res_data.admin_pdf2.length ) {
+              admin_is_exist = false;
+            }else {
+              admin_is_exist = true;
+            }
+          }
+        }
+        if(admin_is_exist) {
+          UserService.downloadUserContract(investment_type).then(
             response => {
               
             },
@@ -235,25 +328,15 @@ const PlanList = props => {
               console.log(error)
             }
           );
+        }else {
+          MySwal.fire({
+            title: 'Alarm',
+            text: 'Nenhum contrato disponível no momento'
+          })
         }
-      })
-    }else {
-      let investment_type = "FLEXIVEL"
-
-      if(f_count > 0 && c_count == 0) {
-        investment_type = "FLEXIVEL"
-      }else if(f_count == 0 && c_count > 0){
-        investment_type = "CRESCIMENTO"
       }
-      UserService.downloadUserContract(investment_type).then(
-        response => {
-  
-        },
-        error => {
-          console.log(error)
-        }
-      );
-    }
+    });
+
 
     
   }

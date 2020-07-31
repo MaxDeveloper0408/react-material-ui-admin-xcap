@@ -78,10 +78,10 @@ const Password = props => {
         <Divider />
         <CardActions>
           <Button
-            color="primary"
-            variant="outlined"
+            color="secondary"
+            variant="contained"
           >
-            Update
+            Atualizar
           </Button>
         </CardActions>
       </form>

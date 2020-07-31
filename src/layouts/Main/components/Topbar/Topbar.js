@@ -46,12 +46,6 @@ const Topbar = props => {
       </RouterLink>
         <div className={classes.flexGrow} />
         <Hidden mdDown>
-        <div className={classes.row}>
-          <SearchInput
-            className={classes.searchInput}
-            placeholder="Buscar.."
-          />
-        </div>
           <IconButton style={{color: '#939499'}}>
             <Badge
               badgeContent={notifications.length}

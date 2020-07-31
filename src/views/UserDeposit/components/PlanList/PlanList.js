@@ -126,7 +126,7 @@ const PlanList = props => {
                 }
               );
             }
-          })  
+          })
   }
   return (
     <Card
@@ -138,24 +138,24 @@ const PlanList = props => {
         noValidate
       >
         <CardHeader
-          subheader="You can request new deposit"
-          title="Deposit List"
+          subheader="Histórico de depósitos realizados."
+          title="Depósitos"
         />
         <Divider />
         <CardContent>
           <PerfectScrollbar>
-          <div className={classes.inner}>
           <div className={classes.margin}>
+          <div className={classes.inner}>
           <Button variant="outlined" color="inherit" onClick={handleAdd.bind()}>
-              New Deposit
+              Depositar
           </Button>
           </div>
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Request Value</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Approved Value</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Plan Type</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Solicitado</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Aprovado</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Plano</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                 </TableRow>
               </TableHead>

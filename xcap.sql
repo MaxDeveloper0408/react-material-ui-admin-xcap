@@ -11,7 +11,7 @@
  Target Server Version : 100138
  File Encoding         : 65001
 
- Date: 29/05/2020 16:17:26
+ Date: 11/07/2020 16:51:52
 */
 
 SET NAMES utf8mb4;
@@ -35,22 +35,25 @@ CREATE TABLE `bank_datas`  (
 -- ----------------------------
 -- Records of bank_datas
 -- ----------------------------
-INSERT INTO `bank_datas` VALUES (17, 'wqw', 'qweqwee', 'qweqwe', 'qweqweq', '2020-05-29 12:45:11', '2020-05-29 12:45:22');
+INSERT INTO `bank_datas` VALUES (17, 'wqw', 'qweqwee', 'qweqwe', 'qweqweq', '2020-05-29 12:45:11', '2020-06-02 20:49:44');
 
 -- ----------------------------
 -- Table structure for contracts
 -- ----------------------------
 DROP TABLE IF EXISTS `contracts`;
 CREATE TABLE `contracts`  (
-  `contrato_id` int(11) NOT NULL,
-  `tipo` enum('FLEXIVEL','CRESCIMENTO') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `valorInicial` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `valorFinal` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `data_inicio` date NOT NULL,
-  `data_fim` date NOT NULL,
-  `contrato_user` int(11) NOT NULL,
-  PRIMARY KEY (`contrato_id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `invest_type` enum('FLEXIVEL','CRESCIMENTO') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `open_value` decimal(65, 0) NULL DEFAULT NULL,
+  `profit_value` decimal(65, 0) NULL DEFAULT NULL,
+  `start_date` date NULL DEFAULT NULL,
+  `end_date` date NULL DEFAULT NULL,
+  `user_id` int(11) NULL DEFAULT NULL,
+  `status` enum('pending','processing','exprired') CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `createdAt` datetime(0) NULL DEFAULT NULL,
+  `updatedAt` datetime(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for error_logs
@@ -137,7 +140,11 @@ CREATE TABLE `users`  (
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES (15, 'Test', 'CRESCIMENTO', '2020-05-08', 'FEMININO', '532.820.857-96', '+55 (12) 32132-1321', '12020-120', 'Rua Joaquim Távora', 123, '', 'Centro', 'Taubaté', 'SP', 'test@test.com', '20.000-50.000', '$2a$08$tHhDCLtU3soD2GxlVN7exOhVPaVGE0//28pHaoLZt5pZu.bSnMy0S', '1', NULL, '2020-05-28 11:49:50', '2020-05-28 11:49:50', 'CLIENTE', 'YES');
-INSERT INTO `users` VALUES (17, 'Customer1', 'CRESCIMENTO', '2020-05-08', 'MASCULINO', '532.820.857-96', '+55 (12) 32132-1321', '12020-120', 'Rua Joaquim Távora', 123, '', 'Centro', 'Taubaté', 'SP', 'aaa@aaa.com', '100.000+', '$2a$08$lsDvxgJQk632CYZ/hiU5Z.h/7jLkBhIoP03Fg2IS3Hp63uVAGmoZm', '0', NULL, '2020-05-28 11:49:50', '2020-05-29 13:15:50', 'CLIENTE', 'YES');
-INSERT INTO `users` VALUES (18, 'Customer1', 'CRESCIMENTO', '2020-05-08', 'MASCULINO', '532.820.857-96', '+55 (12) 32132-1321', '12020-120', 'Rua Joaquim Távora', 123, '', 'Centro', 'Taubaté', 'SP', 'aaa@aaa.com', '5.000-15.000', '$2a$08$tHhDCLtU3soD2GxlVN7exOhVPaVGE0//28pHaoLZt5pZu.bSnMy0S', '0', NULL, '2020-05-28 11:49:50', '2020-05-29 07:50:38', 'CLIENTE', 'NO');
+INSERT INTO `users` VALUES (17, 'Customer1', 'CRESCIMENTO', '2020-05-08', 'MASCULINO', '532.820.857-96', '+55 (12) 32132-1321', '12020-120', 'Rua Joaquim Távora', 123, '', 'Centro', 'Taubaté', 'SP', 'aaa@aaa.com', '100.000+', '$2a$08$yMV9g.W8oQxxsnI6w6b5zuPOa1KqZEzEPLwNe424Dj/SruIA6s0IS', '0', NULL, '2020-05-28 11:49:50', '2020-07-11 09:00:07', 'CLIENTE', 'YES');
+INSERT INTO `users` VALUES (18, 'Customer2', 'CRESCIMENTO', '2020-05-08', 'MASCULINO', '532.820.857-96', '+55 (12) 32132-1321', '12020-120', 'Rua Joaquim Távora', 123, '', 'Centro', 'Taubaté', 'SP', 'aaa@aaa.com', '5.000-15.000', '$2a$08$tHhDCLtU3soD2GxlVN7exOhVPaVGE0//28pHaoLZt5pZu.bSnMy0S', '0', NULL, '2020-05-28 11:49:50', '2020-07-10 09:35:30', 'CLIENTE', 'YES');
+
+SET FOREIGN_KEY_CHECKS = 1;
+6', '+55 (12) 32132-1321', '12020-120', 'Rua Joaquim Távora', 123, '', 'Centro', 'Taubaté', 'SP', 'aaa@aaa.com', '100.000+', '$2a$08$yMV9g.W8oQxxsnI6w6b5zuPOa1KqZEzEPLwNe424Dj/SruIA6s0IS', '0', NULL, '2020-05-28 11:49:50', '2020-06-30 12:50:39', 'CLIENTE', 'YES');
+INSERT INTO `users` VALUES (18, 'Customer2', 'CRESCIMENTO', '2020-05-08', 'MASCULINO', '532.820.857-96', '+55 (12) 32132-1321', '12020-120', 'Rua Joaquim Távora', 123, '', 'Centro', 'Taubaté', 'SP', 'aaa2@aaa.com', '5.000-15.000', '$2a$08$tHhDCLtU3soD2GxlVN7exOhVPaVGE0//28pHaoLZt5pZu.bSnMy0S', '0', NULL, '2020-05-28 11:49:50', '2020-06-30 14:21:31', 'CLIENTE', 'NO');
 
 SET FOREIGN_KEY_CHECKS = 1;

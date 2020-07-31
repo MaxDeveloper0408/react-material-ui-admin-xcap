@@ -11,6 +11,9 @@ import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
 import AccountBoxIcon from '@material-ui/icons/AccountBoxOutlined';
 import SettingsIcon from '@material-ui/icons/SettingsOutlined';
 import PageViewIcon from '@material-ui/icons/PageviewOutlined';
+import LocalAtmIcon from '@material-ui/icons/LocalAtmOutlined';
+import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
+import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 
 import { Profile, SidebarNav, UpgradePlan } from './components';
 
@@ -55,71 +58,53 @@ const Sidebar = props => {
       icon: <AccountBoxIcon />,
       subpages: [
         {
-          title: 'Lista de solicitações de não clientes',
+          title: 'Solicitações de não clientes',
           href: '/users',
-          icon: <RotateIcon />,
+      icon: <ArrowForwardIosOutlinedIcon />,
         },
         {
           title: 'Lista de clientes',
           href: '/active_users',
-          icon: <RotateIcon />,
+      icon: <ArrowForwardIosOutlinedIcon />,
         }
       ]
     },
     {
-      title: 'Plan',
+      title: 'Planos',
       href: '/adminplan',
-      icon: <DashboardIcon />,
-    },
-    
-    {
-      title: 'Deposit',
-      href: '/admindeposit',
-      icon: <DashboardIcon />,
-    },
-    {
-      title: 'Withdraw',
-      href: '/adminwithdraw',
-      icon: <DashboardIcon />,
-    },
-    {
-      title: 'Contract',
-      href: '/admincontract',
-      icon: <DashboardIcon />,
-    },
-    {
-      title: 'Transferir',
-      href: '/products',
       icon: <Rotate90DegreesCcwIcon />,
+    },
 
+    {
+      title: 'Depósitos',
+      href: '/admindeposit',
+      icon: <AccountBalanceWalletOutlinedIcon />,
+    },
+    {
+      title: 'Saques',
+      href: '/adminwithdraw',
+      icon: <LocalAtmIcon />,
+    },
+    {
+      title: 'Contrato',
+      href: '/admincontract',
+      icon: <InsertDriveFileIcon />,
     },
     {
       title: 'Extrato',
-      href: '/sign-in',
+      href: '/dashboard',
       icon: <PageViewIcon />,
 
     },
     {
-      title: 'Contrato',
-      href: '/typography',
-      icon: <InsertDriveFileIcon />,
-
-    },
-    {
       title: 'Projeção',
-      href: '/icons',
+      href: '/dashboard',
       icon: <InsertChartIcon />,
 
     },
     {
-      title: 'Minha Conta',
-      href: '/account',
-      icon: <AccountBoxIcon />,
-
-    },
-    {
-      title: 'Configuração',
-      href: '/settings',
+      title: 'Configurações',
+      href: '/userpassword',
       icon: <SettingsIcon />,
 
     }
@@ -132,46 +117,39 @@ const Sidebar = props => {
 
     },
     {
-      title: 'Solicitações',
+      title: 'Planos',
+      href: '/userplan',
+      icon: <DashboardIcon />,
+    },
+    {
+      title: 'Depósitos',
+      href: '/userdeposit',
+      icon: <DashboardIcon />,
+    },
+    {
+      title: 'Saques',
+      href: '/userwithdraw',
+      icon: <DashboardIcon />,
+    },
+    {
+      title: 'Configurações',
       href: '/userpersonal',
       icon: <AccountBoxIcon />,
       subpages: [
         {
           title: 'Dados cadastrais',
           href: '/userpersonal',
-          icon: <RotateIcon />,
+          icon: <ArrowForwardIosOutlinedIcon />,
         },
-      ]
-    },
-    {
-      title: 'Plan',
-      href: '/userplan',
-      icon: <DashboardIcon />,
-    },
-    {
-      title: 'Deposit',
-      href: '/userdeposit',
-      icon: <DashboardIcon />,
-    },
-    {
-      title: 'Withdraw',
-      href: '/userwithdraw',
-      icon: <DashboardIcon />,
-    },
-    {
-      title: 'Configuração',
-      href: '/userbank',
-      icon: <AccountBoxIcon />,
-      subpages: [
         {
           title: 'Conta bancária',
           href: '/userbank',
-          icon: <RotateIcon />,
+          icon: <ArrowForwardIosOutlinedIcon />,
         },
         {
           title: 'Alteração de senha',
           href: '/userpassword',
-          icon: <RotateIcon />,
+          icon: <ArrowForwardIosOutlinedIcon />,
         }
       ]
     },

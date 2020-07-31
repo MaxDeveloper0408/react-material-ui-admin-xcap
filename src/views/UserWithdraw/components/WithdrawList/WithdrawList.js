@@ -7,7 +7,7 @@ import moment from 'moment';
 import currencyFormatter from 'currency-formatter';
 import SimpleMaskMoney from 'simple-mask-money/lib/simple-mask-money'
 import $ from 'jquery';
-import 'jquery-mask-plugin/dist/jquery.mask.min'; 
+import 'jquery-mask-plugin/dist/jquery.mask.min';
 
 
 
@@ -56,7 +56,7 @@ const WithdrawList = props => {
   //   input.oninput = () => {
   //     input.value = SimpleMaskMoney.format(input.value);
   //   }
-  
+
   //   // Your send method
   //   input.onkeyup = (e) => {
   //     if (e.key !== "Enter") return;
@@ -64,7 +64,7 @@ const WithdrawList = props => {
   //     SimpleMaskMoney.formatToNumber(input.value);
   //   }
   // }
-  
+
 
   const classes = useStyles();
   const { className, UserService, AuthService, PlanService,WithdrawService, MySwal, ...rest } = props;
@@ -80,7 +80,7 @@ const WithdrawList = props => {
         }
     };
     fetchUsers();
-  
+
   }, []);
 
   const args = {
@@ -126,11 +126,11 @@ const WithdrawList = props => {
               title: 'Withdraw',
               html:
                     '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : '+currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' })+'</h2>' +
-                    '<input type="text" id="swal_withdraw_value" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">', 
+                    '<input type="text" id="swal_withdraw_value" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">',
               showCancelButton: true,
               preConfirm: (value) => {
-                if( SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value) < 0 
-                || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value) == '' 
+                if( SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value) < 0
+                || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value) == ''
                 || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value) > response.balance) {
                   MySwal.showValidationMessage('You should put correct value')
                 }
@@ -139,7 +139,7 @@ const WithdrawList = props => {
                 const input = document.getElementById('swal_withdraw_value')
                 SimpleMaskMoney.setMask(input, args);
                 input.oninput = () => {
-  
+
                 }
               }
             }).then(function (result) {
@@ -161,11 +161,11 @@ const WithdrawList = props => {
                   }
                 );
               }
-              
-            })  
+
+            })
           }
         }
-       
+
       },
       error => {
         console.log(error)
@@ -201,21 +201,21 @@ const WithdrawList = props => {
               title: 'Transfer to people',
               html:
                     '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : '+currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' })+'</h2>' +
-                    '<input type="text" id="swal_withdraw_value1" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">' + 
-                    '<input type="text" id="swal_withdraw_cpf" value="" class="swal2-input" style="max-width: 100%;" placeHolder="">', 
+                    '<input type="text" id="swal_withdraw_value1" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">' +
+                    '<input type="text" id="swal_withdraw_cpf" value="" class="swal2-input" style="max-width: 100%;" placeHolder="">',
               showCancelButton: true,
               preConfirm: (value) => {
-                
-                
+
+
                 const cpfRegex = RegExp(/[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}/)
-                if( SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) < 0 
-                || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) == '' 
+                if( SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) < 0
+                || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) == ''
                 || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) > response.balance) {
                   MySwal.showValidationMessage('You should put correct value')
                 }else if(!cpfRegex.test(document.getElementById('swal_withdraw_cpf').value)){
                   MySwal.showValidationMessage('You should put correct cpf')
                 }else {
-                  
+
                 }
               },
               onOpen: (el) => {
@@ -253,13 +253,13 @@ const WithdrawList = props => {
                     );
                   }
                 })
-                
+
               }
-              
-            })  
+
+            })
           }
         }
-       
+
       },
       error => {
         console.log(error)
@@ -276,8 +276,8 @@ const WithdrawList = props => {
         noValidate
       >
         <CardHeader
-          subheader="You can add your withdraw"
-          title="Withdraw List"
+          subheader="Saques disponíveis do dia 25 ao 30 de cada mês."
+          title="Saques"
         />
         <Divider />
         <CardContent>
@@ -285,20 +285,20 @@ const WithdrawList = props => {
           <div className={classes.inner}>
           <div className={classes.margin}>
           <Button variant="outlined" color="inherit" onClick={handleWithdraw.bind()}>
-              Withdraw
+              Sacar para conta pessoal
           </Button>
           <Button variant="outlined" color="inherit" onClick={handleThrought.bind()}>
-              Throught Accounts
+              Transferir para outro CPF
           </Button>
           </div>
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell style={{color: '#212a37'}} className="blackText">Request Date</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Approve Date</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Value</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>CPF</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Type</TableCell>
+                  <TableCell style={{color: '#212a37'}} className="blackText">Solicitado</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Aprovado</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Valor</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>CPF do Destinatário</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Tipo</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                 </TableRow>
               </TableHead>
@@ -354,5 +354,3 @@ WithdrawList.propTypes = {
 };
 
 export default WithdrawList;
-
-

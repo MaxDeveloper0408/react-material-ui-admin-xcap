@@ -223,7 +223,7 @@ exports.setActive = (req, res) => {
             return res.status(200).send({ status:'fail', message: err.message });
         });
     })
-    
+
 }
 
 
@@ -297,12 +297,12 @@ exports.getBalance = (req, res) => {
         res.status(200).send(data)
       })
       .catch(err => {
-        res.status(200).send({status: 'fail', message: "Don't have any balance"})
+        res.status(200).send({status: 'fail', message: "Você não tem saldo suficiente"})
       });
   }else {
-    res.status(200).send({status: 'fail', message: 'You should withdraw 25 day to 30'})
+    res.status(200).send({status: 'fail', title: 'Saque', message: 'O saque é disponível entre os dias 25 e 30 de cada mês.'})
   }
-  
+
 }
 exports.contract_all = (req, res) => {
   Contract_pdf.findAll({include: [User]})
@@ -416,7 +416,7 @@ exports.download_user_contract = (req, res) => {
   Contract_pdf.findOne({where: {user_id: req.userId}}).then(data => {
 
     let filepath = data.admin_pdf
-    
+
     if(req.body.invest_type == 'CRESCIMENTO') {
       filepath = data.admin_pdf2
     }else if(req.body.invest_type == 'FLEXIVEL') {
@@ -424,7 +424,7 @@ exports.download_user_contract = (req, res) => {
     }
     res.download(filepath, "contract.pdf")
   })
-  
+
 }
 
 exports.check_cpf_user = (req, res) => {
@@ -434,4 +434,3 @@ exports.check_cpf_user = (req, res) => {
     return res.status(200).send({cpf_user: null});
   });
 }
-

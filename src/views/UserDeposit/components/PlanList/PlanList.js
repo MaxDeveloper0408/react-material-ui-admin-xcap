@@ -76,11 +76,11 @@ const PlanList = props => {
 
   const handleAdd = () => {
           MySwal.fire({
-            title: 'New Deposit',
+            title: 'Novo Depósito',
             html:
-                  '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Insert Desired Value(min 5.000)</h2>' +
-                  '<input id="swal_open_value" type="text" min="5000" class="swal2-input" style="max-width:100%;" placeHolder="5.000">' +
-                  '<h2 class="swal2-title" id="swal2-title" style="font-size: 1.3em;font-weight: 400">Select Plan<h2>' +
+                  '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Insira o valor desejado (min. R$5.000,00)</h2>' +
+                  '<input id="swal_open_value" type="text" min="5000" class="swal2-input" style="max-width:100%;" placeHolder="5.000,00">' +
+                  '<h2 class="swal2-title" id="swal2-title" style="font-size: 1.3em;font-weight: 400">Selecione o Plano<h2>' +
                   '<select id="swal_investment_type" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 0.6em;padding: .975em .625em;"><option value="FLEXIVEL">FLEXIVEL</option><option value="CRESCIMENTO">CRESCIMENTO</option></select>',
             showCancelButton: true,
             preConfirm: (value) => {
@@ -153,8 +153,8 @@ const PlanList = props => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Solicitado</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Aprovado</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Valor Informado</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Valor Aprovado</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Plano</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                 </TableRow>

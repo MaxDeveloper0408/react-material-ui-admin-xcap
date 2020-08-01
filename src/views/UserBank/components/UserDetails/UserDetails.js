@@ -173,7 +173,7 @@ const UserDetails = props => {
                   }}
                   label="Banco Nome"
                   name="banco_nome"
-                  placeholder="Banco Nome"
+                  placeholder="ex: Banco do Brasil"
                   value={bank.banco_nome}
                   onChange={handleChange("banco_nome")}
                   margin="normal"
@@ -190,9 +190,9 @@ const UserDetails = props => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  label="Banco Agencia"
+                  label="Número da Agência"
                   name="banco_agencia"
-                  placeholder="Banco Agencia"
+                  placeholder="ex: 123"
                   value={bank.banco_agencia}
                   onChange={handleChange("banco_agencia")}
                   margin="normal"
@@ -209,9 +209,9 @@ const UserDetails = props => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  label="Banco Conta"
+                  label="Número da Conta"
                   name="banco_conta"
-                  placeholder="Banco Conta"
+                  placeholder="ex: 40342-9"
                   value={bank.banco_conta}
                   onChange={handleChange("banco_conta")}
                   margin="normal"
@@ -228,9 +228,9 @@ const UserDetails = props => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  label="Tipo Conta"
+                  label="Tipo de Conta"
                   name="tipo_conta"
-                  placeholder="Tipo Conta"
+                  placeholder="selecione"
                   value={bank.tipo_conta}
                   onChange={handleChange("tipo_conta")}
                   margin="normal"

@@ -71,15 +71,15 @@ const ContractList = props => {
   //handle action
   const handleUpload = (id, user_id,invest_type) => {
     MySwal.fire({
-      title: 'Upload Contract ',
+      title: 'Upload do Contrato ',
       text: 'Entre com o aporte',
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
-      html: '<input type="file" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">', 
+      html: '<input type="file" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">',
       preConfirm: (value) => {
         if(document.getElementById("swal_admin_cpf").files.length == 0) {
-          MySwal.showValidationMessage('You should upload contract pdf')
+          MySwal.showValidationMessage('O contrato precisa estar em formato .PDF')
         }
       },
       onOpen: () => {
@@ -98,7 +98,7 @@ const ContractList = props => {
         console.log(file)
         formData.append("id", id);
         formData.append("userId", user_id);
-        
+
         if(invest_type == 0){
           formData.append('pdf_field', "admin_pdf")
         }else {
@@ -110,10 +110,10 @@ const ContractList = props => {
         UserService.uploadAdminContract(formData).then(
           response => {
             if(response.status == 'success') {
-              
+
             }else if(response.status == 'fail') {
               MySwal.fire({
-                title: 'Fail',
+                title: 'Falha',
                 icon: 'warning',
                 text: response.message
               })
@@ -190,7 +190,7 @@ const ContractList = props => {
                         <Button variant="contained" color="secondary" style={{marginLeft: '10px'}} onClick={handleDownload.bind(this, item.user_pdf2)}>
                           Download
                         </Button>
-                      )}                 
+                      )}
                     </TableCell>
                     <TableCell>
                         <Button variant="contained" color="secondary" onClick={handleUpload.bind(this, item.id, item.user_id,1)}>

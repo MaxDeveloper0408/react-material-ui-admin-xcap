@@ -93,7 +93,7 @@ const PlanList = props => {
     }
 
     MySwal.fire({
-      title: 'Upload Contract',
+      title: 'Upload do Contrato',
       text: '',
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
@@ -102,7 +102,7 @@ const PlanList = props => {
       html: '<input type="file" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">' + select_html,
       preConfirm: (value) => {
         if(document.getElementById("swal_admin_cpf").files.length == 0) {
-          MySwal.showValidationMessage('You should upload contract pdf')
+          MySwal.showValidationMessage('O contrato precisa estar em formato .PDF')
         }
       },
       onOpen: () => {
@@ -353,10 +353,10 @@ const PlanList = props => {
           MySwal.fire({
             title: 'New Contract Plan',
             html:
-                  '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : ' + currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' }) + '</h2>' +
-                  '<h2 class="swal2-title" id="swal2-title" style="font-size: 1.3em;font-weight: 400">Insert Desired Value(min 5.000)</h2>' +
-                  '<input id="swal_open_value" type="text" min="5000" class="swal2-input" style="max-width:100%;" placeHolder="5.000">' +
-                  '<h2 class="swal2-title" id="swal2-title" style="font-size: 1.3em;font-weight: 400">Select Plan<h2>' +
+                  '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Saldo atual: ' + currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' }) + '</h2>' +
+                  '<h2 class="swal2-title" id="swal2-title" style="font-size: 1.3em;font-weight: 400">Insira o valor desejado (min. R$5.000,00)</h2>' +
+                  '<input id="swal_open_value" type="text" min="5000" class="swal2-input" style="max-width:100%;" placeHolder="5.000,00">' +
+                  '<h2 class="swal2-title" id="swal2-title" style="font-size: 1.3em;font-weight: 400">Selecione o Plano<h2>' +
                   '<select id="swal_investment_type" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 0.6em;padding: .975em .625em;"><option value="FLEXIVEL">FLEXIVEL</option><option value="CRESCIMENTO">CRESCIMENTO</option></select>',
             showCancelButton: true,
             preConfirm: (value) => {
@@ -447,8 +447,8 @@ const PlanList = props => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell style={{color: '#212a37'}} className="blackText">Início</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Término</TableCell>
+                  <TableCell style={{color: '#212a37'}} className="blackText">Data de Início</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Data de Término</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Aporte</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Lucro</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Total</TableCell>

@@ -117,9 +117,9 @@ const WithdrawList = props => {
         } else {
           if(response.length == 0 || response == null || response == undefined || response.balance < 1000) {
             MySwal.fire({
-              title: 'Alarm',
+              title: 'Saque',
               icon: 'warning',
-              text: 'You should have available balance more than 1.000 to withraw'
+              text: 'Você precisa ter no mínimo R$1.000,00 disponíveis para sacar.'
             })
           }else if(response.balance >= 1000) {
             MySwal.fire({
@@ -294,8 +294,8 @@ const WithdrawList = props => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell style={{color: '#212a37'}} className="blackText">Solicitado</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Aprovado</TableCell>
+                  <TableCell style={{color: '#212a37'}} className="blackText">Data de Solicitação</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Data de Aprovação</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Valor</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>CPF do Destinatário</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Tipo</TableCell>

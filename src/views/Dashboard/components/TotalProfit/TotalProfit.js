@@ -10,7 +10,7 @@ import {
   Avatar,
   LinearProgress
 } from '@material-ui/core';
-import PeopleIcon from '@material-ui/icons/PeopleOutlined';
+import LocalAtmIcon from '@material-ui/icons/LocalAtmOutlined';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -82,7 +82,7 @@ const TasksProgress = props => {
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
-              <PeopleIcon className={classes.icon} />
+              <LocalAtmIcon className={classes.icon} />
             </Avatar>
           </Grid>
         </Grid>

@@ -187,10 +187,10 @@ const WithdrawList = props => {
                       item.status == 'pending' ? (
                         <div>
                         <Button variant="contained" color="secondary" onClick={handleApprove.bind(this, item.id)}>
-                         Approve
+                         Aprovar
                         </Button>
                         <Button variant="contained" color="secondary" style={{marginLeft: '10px'}} onClick={handleDelete.bind(this, item.id, item.value)}>
-                        Delete
+                        Recusar
                         </Button>
                         </div>
                       ) : ('')

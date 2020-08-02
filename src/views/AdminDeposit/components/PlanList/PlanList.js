@@ -77,10 +77,10 @@ const PlanList = props => {
 
   const handleApprove = (user_id, deposit_id, user_value, invest_type) => {
           MySwal.fire({
-            title: 'Approve Deposit',
+            title: 'Aprovar Depósito',
             html:
-                '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Request balance : ' + currencyFormatter.format(user_value, { code: 'BRL', symbol: '' }) + '</h2>' +
-                  '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Insira o valor desejado (min. R$5.000,00)</h2>' +
+                '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Cliente solicitou: ' + currencyFormatter.format(user_value, { code: 'BRL', symbol: '' }) + '</h2>' +
+                  '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Insira um valor (min. R$5.000,00)</h2>' +
                   '<input id="swal_open_value" type="text" min="5000" class="swal2-input" style="max-width:100%;" placeHolder="5.000,00">' +
                   '<select id="swal_investment_type" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 16px;padding: .975em .625em;"><option value="FLEXIVEL">FLEXIVEL</option><option value="CRESCIMENTO">CRESCIMENTO</option></select>',
             showCancelButton: true,
@@ -142,7 +142,7 @@ const PlanList = props => {
         noValidate
       >
         <CardHeader
-          subheader="Histórico de depósitos ativos e expirados."
+          subheader="Histórico de depósitos solicitados."
           title="Lista de Depósitos"
         />
         <Divider />
@@ -183,7 +183,7 @@ const PlanList = props => {
                     <TableCell>
                       {item.status != 'approved' ? (
                         <Button variant="contained" color="secondary" onClick={handleApprove.bind(this, item.user_id, item.id, item.user_value, item.invest_type)}>
-                        Approve
+                        Aprovar
                         </Button>
                       ): ('')}
                     </TableCell>

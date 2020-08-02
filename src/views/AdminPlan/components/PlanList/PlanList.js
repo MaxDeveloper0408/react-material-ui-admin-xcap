@@ -106,7 +106,7 @@ const PlanList = props => {
         noValidate
       >
         <CardHeader
-          subheader="Histórico de planos ativos e expirados."
+          subheader="Histórico de solicitação de planos."
           title="Planos"
         />
         <Divider />

@@ -10,7 +10,8 @@ import {
   Avatar,
   LinearProgress
 } from '@material-ui/core';
-import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
+import MoneyIcon from '@material-ui/icons/MoneyOutlined';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,14 +25,25 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 700
   },
   avatar: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.success.main,
     height: 56,
     width: 56
   },
   icon: {
     height: 32,
     width: 32
+  },
+  difference: {
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    alignItems: 'center'
+  },
+  differenceIcon: {
+    color: theme.palette.success.dark
+  },
+  differenceValue: {
+    color: theme.palette.success.dark,
+    marginRight: theme.spacing(1)
   },
   progress: {
     marginTop: theme.spacing(3)
@@ -60,19 +72,29 @@ const TasksProgress = props => {
               gutterBottom
               variant="body2"
             >
-              TASKS PROGRESS
+              FUNDO DE CRESCIMENTO
             </Typography>
-            <Typography variant="h3">75.5%</Typography>
+            <Typography
+              color="inherit"
+              variant="h3"
+            >
+              R$ 15.000,00
+            </Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
-              <InsertChartIcon className={classes.icon} />
+              <MoneyIcon className={classes.icon} />
             </Avatar>
           </Grid>
         </Grid>
+        <Typography
+          className={classes.caption}
+          variant="caption"
+        >
+          plano de crescimento finaliza em: 30/03/2021
+        </Typography>
         <LinearProgress
           className={classes.progress}
-          value={75.5}
           variant="determinate"
         />
       </CardContent>

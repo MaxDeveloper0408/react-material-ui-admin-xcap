@@ -142,7 +142,7 @@ const PlanList = props => {
         noValidate
       >
         <CardHeader
-          subheader="Você pode solicitar um novo depósito"
+          subheader="Histórico de depósitos ativos e expirados."
           title="Lista de Depósitos"
         />
         <Divider />
@@ -154,12 +154,12 @@ const PlanList = props => {
             <Table>
               <TableHead>
                 <TableRow>
-                <TableCell className="blackText" style={{color: '#212a37'}}>User Name</TableCell>
-                <TableCell className="blackText" style={{color: '#212a37'}}>User Email</TableCell>
-                <TableCell className="blackText" style={{color: '#212a37'}}>User Cellphone</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Request Value</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Approved Value</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Plan Type</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Nome Completo</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>E-mail</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Celular</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Valor Informado</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Valor Aprovado</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Plano</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Ações</TableCell>
                 </TableRow>

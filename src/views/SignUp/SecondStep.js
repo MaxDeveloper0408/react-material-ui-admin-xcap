@@ -38,7 +38,7 @@ const SecondStep = ({
                     fullWidth
                     label="CEP"
                     name="zipcode"
-                    placeholder="Enter your zipcode"
+                    placeholder="Informe seu CEP"
                     margin="normal"
                     error={!isZipcode}
                     helperText={isZipcode ? "" : "Formato de CEP inválido."}

@@ -2,9 +2,15 @@ import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import PeopleIcon from '@material-ui/icons/PeopleOutlined';
+import {
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  Avatar,
+  LinearProgress
+} from '@material-ui/core';
+import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,10 +43,13 @@ const useStyles = makeStyles(theme => ({
   differenceValue: {
     color: theme.palette.success.dark,
     marginRight: theme.spacing(1)
+  },
+  progress: {
+    marginTop: theme.spacing(3)
   }
 }));
 
-const TotalUsers = props => {
+const TasksProgress = props => {
   const { className, ...rest } = props;
 
   const classes = useStyles();
@@ -62,38 +71,38 @@ const TotalUsers = props => {
               gutterBottom
               variant="body2"
             >
-              TOTAL USERS
+              FUNDO FLEXÍVEL
             </Typography>
-            <Typography variant="h3">1,600</Typography>
+            <Typography
+              color="inherit"
+              variant="h3"
+            >
+              R$ 5.000,00
+            </Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
-              <PeopleIcon className={classes.icon} />
+              <InsertChartIcon className={classes.icon} />
             </Avatar>
           </Grid>
         </Grid>
-        <div className={classes.difference}>
-          <ArrowUpwardIcon className={classes.differenceIcon} />
-          <Typography
-            className={classes.differenceValue}
-            variant="body2"
-          >
-            16%
-          </Typography>
-          <Typography
-            className={classes.caption}
-            variant="caption"
-          >
-            Since last month
-          </Typography>
-        </div>
+        <Typography
+          className={classes.caption}
+          variant="caption"
+        >
+         plano flexível finaliza em: 30/09/2020
+        </Typography>
+        <LinearProgress
+          className={classes.progress}
+          variant="determinate"
+        />
       </CardContent>
     </Card>
   );
 };
 
-TotalUsers.propTypes = {
+TasksProgress.propTypes = {
   className: PropTypes.string
 };
 
-export default TotalUsers;
+export default TasksProgress;

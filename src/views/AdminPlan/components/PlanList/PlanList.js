@@ -70,7 +70,7 @@ const PlanList = props => {
   //handle action
   const handleApprove = (plan_id) => {
     MySwal.fire({
-      title: 'Confirm',
+      title: 'Confirmar',
       icon: 'warning',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
@@ -81,7 +81,7 @@ const PlanList = props => {
         PlanService.setApprove(plan_id).then(
           response => {
             MySwal.fire({
-              title: 'Success',
+              title: 'Sucesso',
               text: response.message
             })
             window.location.reload();
@@ -94,7 +94,7 @@ const PlanList = props => {
 
       }
     });
-    
+
   }
   return (
     <Card
@@ -106,8 +106,8 @@ const PlanList = props => {
         noValidate
       >
         <CardHeader
-          subheader=""
-          title="Plan List"
+          subheader="Histórico de planos ativos e expirados."
+          title="Planos"
         />
         <Divider />
         <CardContent>
@@ -118,14 +118,14 @@ const PlanList = props => {
             <Table>
               <TableHead>
                 <TableRow>
-                <TableCell style={{color: '#212a37'}} className="blackText">User Name</TableCell>
-                <TableCell style={{color: '#212a37'}} className="blackText">User Email</TableCell>
-                  <TableCell style={{color: '#212a37'}} className="blackText">Start Date</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>End Date</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Open Value</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Profit Value</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Total Value</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Plan Type</TableCell>
+                <TableCell style={{color: '#212a37'}} className="blackText">Nome Completo</TableCell>
+                <TableCell style={{color: '#212a37'}} className="blackText">E-mail</TableCell>
+                  <TableCell style={{color: '#212a37'}} className="blackText">Data de Início</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Data de Término</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Aporte</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Lucro</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Total</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Plano</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Ações</TableCell>
                 </TableRow>
@@ -141,7 +141,7 @@ const PlanList = props => {
                     <TableCell>{item.user.email}</TableCell>
                     <TableCell>
                       <div className={classes.nameContainer}>
-                      
+
                         <Typography variant="body1">{moment(item.start_date).format('DD/MM/YYYY')}</Typography>
                       </div>
                     </TableCell>
@@ -157,7 +157,7 @@ const PlanList = props => {
                       {
                       item.status == 'pending' ? (
                         <Button variant="contained" color="secondary" onClick={handleApprove.bind(this, item.id)}>
-                         Approve
+                         Aprovar
                       </Button>
                       ) : ('')
                       }

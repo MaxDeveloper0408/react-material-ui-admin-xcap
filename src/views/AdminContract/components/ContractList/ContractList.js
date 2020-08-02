@@ -145,7 +145,8 @@ const ContractList = props => {
         noValidate
       >
         <CardHeader
-          title="Contract Doc List"
+          subheader="Lista de todos os contratos dos planos: flexível e crescimento."
+          title="Contratos"
         />
         <Divider />
         <CardContent>
@@ -156,10 +157,10 @@ const ContractList = props => {
             <Table>
               <TableHead>
                 <TableRow>
-                <TableCell className="blackText" style={{color: '#212a37'}}>User Name</TableCell>
-                <TableCell className="blackText" style={{color: '#212a37'}}>User Email</TableCell>
-                <TableCell className="blackText" style={{color: '#212a37'}}>Flexible Download</TableCell>
-                <TableCell className="blackText" style={{color: '#212a37'}}>Flexible Upload</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Nome Completo</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>E-mail</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Flexível Download</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Flexível Upload</TableCell>
                 <TableCell className="blackText" style={{color: '#212a37'}}>Crescimento Download</TableCell>
                 <TableCell className="blackText" style={{color: '#212a37'}}>Crescimento Upload</TableCell>
                 </TableRow>

@@ -93,7 +93,7 @@ const WithdrawList = props => {
           }
         )
       } else if (result.dismiss === MySwal.DismissReason.cancel) {
-        
+
       }
     });
   }
@@ -124,7 +124,7 @@ const WithdrawList = props => {
 
       }
     });
-    
+
   }
   return (
     <Card
@@ -136,8 +136,8 @@ const WithdrawList = props => {
         noValidate
       >
         <CardHeader
-          subheader="You can add your withdraw"
-          title="Withdraw List"
+          subheader="Histórico de saques e transferências realizadas."
+          title="Saques"
         />
         <Divider />
         <CardContent>
@@ -148,12 +148,12 @@ const WithdrawList = props => {
             <Table>
               <TableHead>
                 <TableRow>
-                <TableCell className="blackText" style={{color: '#212a37'}}>Name</TableCell>
-                  <TableCell style={{color: '#212a37'}} className="blackText">Request Date</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Approve Date</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Value</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Transfer CPF</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Type</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Nome Completo</TableCell>
+                  <TableCell style={{color: '#212a37'}} className="blackText">Data de Solicitação</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Data de Aprovação</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Valor</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Transf. CPF</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Tipo</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Ações</TableCell>
                 </TableRow>

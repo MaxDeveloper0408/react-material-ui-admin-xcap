@@ -25,8 +25,8 @@ const Profile = props => {
   const { className, ...rest } = props;
   const classes = useStyles();
   const user = {
-    name: 'Nome na Conta',
-    bio: 'Investidor'
+    name: 'Nome',
+    bio: 'Bem vindo à XCapital !'
   };
 
   return (

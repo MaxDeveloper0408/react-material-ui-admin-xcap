@@ -338,7 +338,7 @@ const UserDetails = props => {
                         disabled
                         label="CPF"
                         name="cpf"
-                        placeholder="format: 532.820.857-96"
+                        placeholder="formato: 123.432.156-12"
                         margin="normal"
                         error={filedError.cpf !== ""}
                         helperText={

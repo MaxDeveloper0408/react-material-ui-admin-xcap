@@ -119,17 +119,29 @@ const Sidebar = props => {
     {
       title: 'Planos',
       href: '/userplan',
-      icon: <DashboardIcon />,
+      icon: <Rotate90DegreesCcwIcon />,
     },
     {
       title: 'Depósitos',
       href: '/userdeposit',
-      icon: <DashboardIcon />,
+      icon: <AccountBalanceWalletOutlinedIcon />,
     },
     {
       title: 'Saques',
       href: '/userwithdraw',
-      icon: <DashboardIcon />,
+      icon: <LocalAtmIcon />,
+    },
+    {
+      title: 'Extrato',
+      href: '/dashboard',
+      icon: <PageViewIcon />,
+
+    },
+    {
+      title: 'Projeção',
+      href: '/dashboard',
+      icon: <InsertChartIcon />,
+
     },
     {
       title: 'Configurações',

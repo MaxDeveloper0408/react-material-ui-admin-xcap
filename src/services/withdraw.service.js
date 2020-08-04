@@ -1,6 +1,11 @@
 import axios from 'axios';
 import authHeader from './auth-header';
-const URL = 'http://localhost:8080/api/withdraw/';
+
+const URL = `${process.env.REACT_APP_SERVER_URL}withdraw/`;
+
+// const URL = 'http://localhost:8080/api/withdraw/';
+// const AUTH_URL = 'https://xcapfinancial.herokuapp.com/api/withdraw/';
+
 
 class WithdrawService {
   getAll() {

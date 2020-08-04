@@ -3,7 +3,9 @@ import authHeader from './auth-header';
 import authMultipartHeader from './auth-multipart-header';
 import download from 'js-file-download';
 
-const URL = 'http://localhost:8080/api/user/';
+const URL = `${process.env.REACT_APP_SERVER_URL}user/`;
+// const URL = 'http://localhost:8080/api/user/';
+// const AUTH_URL = 'https://xcapfinancial.herokuapp.com/api/user/';
 
 
 class UserService {

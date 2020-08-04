@@ -1,10 +1,11 @@
 import axios from "axios";
 // const dotenv = require('dotenv');
 // dotenv.config('/');
-// const { API_URL } = process.env;
-// const AUTH_URL = `${API_URL}auth/`;
+const AUTH_URL = `${process.env.REACT_APP_SERVER_URL}auth/`;
 
-const AUTH_URL = 'http://localhost:8080/api/auth/';
+// const AUTH_URL = 'http://localhost:8080/api/auth/';
+// const AUTH_URL = 'https://xcapfinancial.herokuapp.com/api/auth/';
+
 
 
 class AuthService {

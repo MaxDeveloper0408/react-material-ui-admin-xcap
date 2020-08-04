@@ -1,6 +1,8 @@
 import axios from 'axios';
 import authHeader from './auth-header';
-const URL = 'http://localhost:8080/api/deposit/';
+const URL = `${process.env.REACT_APP_SERVER_URL}deposit/`;
+// const URL = 'http://localhost:8080/api/deposit/';
+// const URL = 'https://xcapfinancial.herokuapp.com/api/deposit/';
 
 class DepositService {
   getAll() {

@@ -6,7 +6,13 @@ const scheduler = require('node-schedule');
 const Sequelize = require("sequelize");
 
 const path = require("path");
-app.use(express.static(path.join(__dirname, "./public/")));
+app.use(express.static(path.join(__dirname, 'build')));
+
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+// app.use(express.static(path.join(__dirname, "./public/")));
 
 var corsOptions = {
   origin: "http://localhost:3000"
@@ -107,7 +113,7 @@ var monthlyJob = scheduler.scheduleJob('0 0 1 * *', function(){
   })
 })
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

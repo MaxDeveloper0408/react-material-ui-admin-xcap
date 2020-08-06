@@ -2,20 +2,20 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
+const router = express.Router();
 const scheduler = require('node-schedule');
 const Sequelize = require("sequelize");
 
 const path = require("path");
-
-app.use(express.static(path.join(__dirname, 'build')));
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
 // app.use(express.static(path.join(__dirname, "./public/")));
+// var corsOptions = {
+//   origin: "http://localhost:3000"
+// };
 
 var corsOptions = {
-  origin: "http://localhost:3000"
+  origin: "https://xcapitalsc.herokuapp.com"
 };
+
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());   
@@ -25,9 +25,6 @@ const Op = Sequelize.Op
 const db = require("./app/models");
 const Role = db.role;
 
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
-});
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/plan.routes')(app);
@@ -112,8 +109,14 @@ var monthlyJob = scheduler.scheduleJob('0 0 1 * *', function(){
   })
 })
 
+
+// app.use(express.static(path.join(__dirname, 'build')));
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
+app.use("/", router);
+
 const PORT = process.env.PORT || 8080;
-// const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

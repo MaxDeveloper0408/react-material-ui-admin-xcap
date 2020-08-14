@@ -7,14 +7,14 @@ const scheduler = require('node-schedule');
 const Sequelize = require("sequelize");
 
 const path = require("path");
-// app.use(express.static(path.join(__dirname, "./public/")));
-// var corsOptions = {
-//   origin: "http://localhost:3000"
-// };
+ app.use(express.static(path.join(__dirname, "./public/")));
+ var corsOptions = {
+   origin: "http://localhost:3000"
+ };
 
-var corsOptions = {
-  origin: "https://xcapitalsc.herokuapp.com"
-};
+//var corsOptions = {
+//  origin: "https://xcapitalsc.herokuapp.com"
+//};
 
 
 app.use(cors(corsOptions));

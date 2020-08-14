@@ -285,7 +285,7 @@ const WithdrawList = props => {
           <div className={classes.inner}>
           <div className={classes.margin}>
           <Button variant="outlined" color="inherit" onClick={handleWithdraw.bind()}>
-              Sacar para conta pessoal
+              Saque para conta pessoal
           </Button>
           <Button variant="outlined" color="inherit" onClick={handleThrought.bind()}>
               Transferir para outro CPF

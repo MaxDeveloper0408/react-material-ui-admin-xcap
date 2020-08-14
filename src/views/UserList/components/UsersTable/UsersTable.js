@@ -149,12 +149,12 @@ const UsersTable = props => {
         cancelButtonText: 'Cancelar',
         allowOutsideClick: false,
         html: '<input type="text" id="swal_plan_value" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">' +
-              '<input type="file" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">',
+              '<input type="file" required="false" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">',
         preConfirm: (value) => {
           if( SimpleMaskMoney.formatToNumber(document.getElementById("swal_plan_value").value) < 5000) {
-            MySwal.showValidationMessage('You should put more than 5.000')
+            MySwal.showValidationMessage('O valor precisa ser maior que R$5.000,00')
           }else if(document.getElementById("swal_admin_cpf").files.length == 0) {
-            MySwal.showValidationMessage('You should upload contract pdf')
+            MySwal.showValidationMessage('É necessário fazer upload do contrato')
           }
         },
         onOpen: () => {

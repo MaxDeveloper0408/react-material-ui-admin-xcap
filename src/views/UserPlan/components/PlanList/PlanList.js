@@ -436,11 +436,11 @@ const PlanList = props => {
           {plans.length > 0 ? (
             <div>
               <Button variant="outlined" color="inherit" onClick={handleDownload.bind()}>
-                  Download Contrato
+                  Download do Contrato
               </Button>
-              <Button variant="outlined" color="inherit" onClick={handleUpload.bind()}>
+              {/* <Button variant="outlined" color="inherit" onClick={handleUpload.bind()}>
                   Upload Contrato
-              </Button>
+              </Button> */}
             </div>
           ):('')}
           </div>

@@ -76,6 +76,7 @@ const ContractList = props => {
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
+      allowOutsideClick: false,
       html: '<input type="file" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">',
       preConfirm: (value) => {
         if(document.getElementById("swal_admin_cpf").files.length == 0) {

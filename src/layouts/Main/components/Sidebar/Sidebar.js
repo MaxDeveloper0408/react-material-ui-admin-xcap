@@ -132,7 +132,7 @@ const Sidebar = props => {
       icon: <LocalAtmIcon />,
     },
     {
-      title: 'Extrato',
+      title: 'Rendimentos',
       href: '/dashboard',
       icon: <PageViewIcon />,
 
@@ -179,9 +179,6 @@ const Sidebar = props => {
         {...rest}
         className={clsx(classes.root, className)}
       >
-        <Profile />
-        <Divider className={classes.divider} />
-
         <SidebarNav
           className={classes.nav}
           pages={AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") ? pages : user_pages}

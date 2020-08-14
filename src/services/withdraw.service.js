@@ -4,7 +4,7 @@ import authHeader from './auth-header';
 const URL = `${process.env.REACT_APP_SERVER_URL}withdraw/`;
 
 // const URL = 'http://localhost:8080/api/withdraw/';
-// const AUTH_URL = 'https://xcapfinancial.herokuapp.com/api/withdraw/';
+// const AUTH_URL = 'http://localhost:3000/api/withdraw/';
 
 
 class WithdrawService {

@@ -3,7 +3,7 @@ import authHeader from './auth-header';
 
 const URL = `${process.env.REACT_APP_SERVER_URL}plan/`;
 // const URL = 'http://localhost:8080/api/plan/';
-// const AUTH_URL = 'https://xcapfinancial.herokuapp.com/api/plan/';
+// const AUTH_URL = 'http://localhost:3000/api/plan/';
 
 
 class PlanService {

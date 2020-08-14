@@ -39,17 +39,6 @@ const UsersToolbar = props => {
       className={clsx(classes.root, className)}
     >
       <div className={classes.row}>
-        <span className={classes.spacer} />
-        <Button className={classes.importButton}>Importar</Button>
-        <Button className={classes.exportButton}>Exportar</Button>
-        <Button
-          color="primary"
-          variant="contained"
-        >
-          Add usuário
-        </Button>
-      </div>
-      <div className={classes.row}>
         <SearchInput
           className={classes.searchInput}
           placeholder="Buscar.."

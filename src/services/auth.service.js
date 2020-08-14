@@ -4,7 +4,7 @@ import axios from "axios";
 const AUTH_URL = `${process.env.REACT_APP_SERVER_URL}auth/`;
 
 // const AUTH_URL = 'http://localhost:8080/api/auth/';
-// const AUTH_URL = 'https://xcapfinancial.herokuapp.com/api/auth/';
+// const AUTH_URL = 'http://localhost:3000/api/auth/';
 
 
 

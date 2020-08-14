@@ -1,4 +1,5 @@
 import React from 'react';
+import userService from 'services/user.service';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -21,13 +22,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Profile = props => {
-  const { className, ...rest } = props;
+const UsersTable = props => {
+  const { className, users, history, ...rest } = props;
   const classes = useStyles();
   const user = {
-    name: 'Nome',
-    bio: 'Bem vindo à XCapital !'
+    name: '',
+    bio: ''
   };
+
 
   return (
     <div
@@ -45,8 +47,10 @@ const Profile = props => {
   );
 };
 
-Profile.propTypes = {
-  className: PropTypes.string
+UsersTable.propTypes = {
+  className: PropTypes.string,
+  users: PropTypes.array.isRequired,
+  history: PropTypes.object
 };
 
-export default Profile;
+export default UsersTable;

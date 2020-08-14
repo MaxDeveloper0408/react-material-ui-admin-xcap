@@ -5,7 +5,7 @@ import download from 'js-file-download';
 
 const URL = `${process.env.REACT_APP_SERVER_URL}user/`;
 // const URL = 'http://localhost:8080/api/user/';
-// const AUTH_URL = 'https://xcapfinancial.herokuapp.com/api/user/';
+// const AUTH_URL = 'http://localhost:3000/api/user/';
 
 
 class UserService {

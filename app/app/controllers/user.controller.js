@@ -7,6 +7,8 @@ const Bank = db.bank;
 const Case = db.case;
 const Contract = db.contract;
 const Contract_pdf = db.contract_pdf;
+const Bank_list = db.bank_list;
+const Case_deposit = db.case_deposit;
 
 const multer = require('multer');
 const path = require('path');
@@ -160,7 +162,43 @@ exports.setActive = (req, res) => {
             return res.status(200).send({ status:'fail', message: req.fileValidationError });
         }
         else if (!req.file) {
-            return res.status(200).send({ status:'fail', message: 'please select file' });
+          User.update(
+            {
+              active: req.body.active,
+            },
+            {where: {id: req.body.userId}}
+          )
+          .then(user => {
+              let now = moment();
+              Contract.create(
+                {
+                  user_id: req.body.userId,
+                  open_value: req.body.investment,
+                  invest_type: req.body.investment_type,
+                  start_date: now.format("YYYY-MM-DD"),
+                  status: 'processing',
+                  end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
+                }
+              )
+              .then(res_data => {
+                  Case.count({
+                    where: {user_id: req.body.userId}}).then(count => {
+                    if(count == 0 ) {
+                      Case.create({user_id: req.body.userId, balance: 0}).then(create_case => {
+                        console.log(create_case)
+                      })
+                    }
+                  })
+                  return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+              })
+              .catch(err => {
+                  return res.status(200).send({ status:'fail', message: err.message });
+              });
+          })
+          .catch(err => {
+              return res.status(200).send({ status:'fail', message: err.message });
+          });
+          return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
         }
         else if (err instanceof multer.MulterError) {
           return res.status(200).send({ status:'fail', message: err });
@@ -187,6 +225,7 @@ exports.setActive = (req, res) => {
           }
         }
         Contract_pdf.create(contract_pdf_create)
+
         User.update(
           {
             active: req.body.active,
@@ -206,7 +245,9 @@ exports.setActive = (req, res) => {
               }
             )
             .then(res_data => {
-                Case.count({user_id: req.body.userId}).then(count => {
+              
+                Case.count({
+                  where: {user_id: req.body.userId}}).then(count => {
                   if(count == 0 ) {
                     Case.create({user_id: req.body.userId, balance: 0}).then(create_case => {
                       console.log(create_case)
@@ -229,6 +270,9 @@ exports.setActive = (req, res) => {
 
 exports.userBank = (req, res) => {
   Bank.findOne({
+      include: [{
+        model: Bank_list,
+      }],
       where: {
           user_id: req.body.user_id
       }
@@ -434,3 +478,65 @@ exports.check_cpf_user = (req, res) => {
     return res.status(200).send({cpf_user: null});
   });
 }
+
+exports.bank_all = (req, res) => {
+  Bank_list.findAll()
+  .then(datas => {
+    res.status(200).send(datas)
+  })
+  .catch(err => {
+    res.status(500).send([])
+  });
+}
+
+
+exports.all_case_deposit = (req, res) => {
+  Case_deposit.findAll({include: [User]})
+  .then(datas => {
+    res.status(200).send(datas)
+  })
+  .catch(err => {
+    res.status(500).send([])
+  });
+}
+exports.add_fund = (req, res) => {
+  let now = moment();
+  Case_deposit.create(
+    {
+      admin_id: req.userId,
+      user_id: req.body.user_id,
+      amount: req.body.amount,
+    }
+  )
+  .then(res_data => {
+      Case.count({where: {user_id: req.body.user_id}}).then(count => {
+        if(count == 0 ) {
+          Case.create({user_id: req.body.user_id, balance: req.body.amount}).then(create_case => {
+          })
+        }else if(count > 0) {
+          Case.increment(
+            {balance: req.body.amount},
+              {where: {user_id: req.body.user_id}}
+          )
+        }
+      })
+      return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+  })
+  .catch(err => {
+      return res.status(500).send({ status:'fail', message: err.message });
+  });
+}
+
+exports.setProfit = (req, res) => {
+  User.update(
+      {profit_percent: req.body.profit_percent},
+      {where: {id: req.body.user_id}}
+  )
+  .then(user => {
+      return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+  })
+  .catch(err => {
+      return res.status(500).send({ status:'fail', message: err.message });
+  });
+}
+

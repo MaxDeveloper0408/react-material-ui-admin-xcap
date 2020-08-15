@@ -19,6 +19,9 @@ module.exports = function(app) {
   app.post("/api/user/updatePassword", [authJwt.verifyToken], controller.updatePassword);
   app.post("/api/user/delete", [authJwt.verifyToken, authJwt.isAdmin], controller.delete);
   app.post("/api/user/setActive", [authJwt.verifyToken, authJwt.isAdmin], controller.setActive);
+  app.post("/api/user/setProfit", [authJwt.verifyToken, authJwt.isAdmin], controller.setProfit);
+  app.get("/api/user/all_case_deposit", [authJwt.verifyToken, authJwt.isAdmin], controller.all_case_deposit);
+  app.post("/api/user/add_fund", [authJwt.verifyToken, authJwt.isAdmin], controller.add_fund);
 
   app.post("/api/user/bank",[authJwt.verifyToken],controller.userBank);
   app.post("/api/user/bankUpdate", [authJwt.verifyToken], controller.bankUpdate);
@@ -32,5 +35,9 @@ module.exports = function(app) {
   app.post("/api/user/uploadUserContract",[authJwt.verifyToken],controller.user_upload_contract);
   app.post("/api/user/download_user_contract", [authJwt.verifyToken], controller.download_user_contract);
   app.post("/api/user/check_cpf_user", [authJwt.verifyToken], controller.check_cpf_user);
+
+  app.post("/api/user/bank_all", [authJwt.verifyToken], controller.bank_all);
+  
+  
 
 };

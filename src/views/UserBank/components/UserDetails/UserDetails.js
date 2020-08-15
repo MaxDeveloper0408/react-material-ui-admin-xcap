@@ -2,6 +2,8 @@ import React, { useState,useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
+import InputMask from "react-input-mask";
+
 import {
   Card,
   CardHeader,
@@ -10,11 +12,17 @@ import {
   Divider,
   Grid,
   Button,
-  TextField
+  TextField,
+  Select,
+  InputLabel,
+  MenuItem
 } from '@material-ui/core';
+import AutoSelect from 'react-select';
 
 const useStyles = makeStyles(() => ({
-    root: {},
+    root: {
+      height: '100%!important'
+    },
     colorWhite: {
       color: 'white!important'
     },
@@ -24,32 +32,54 @@ const useStyles = makeStyles(() => ({
           backgroundColor: 'rgb(107, 110, 128)!important'
         }
     },
+    
 }));
 
 const UserDetails = props => {
-  const { className, UserService, AuthService, MySwal, ...rest } = props;
+  const { className, UserService, AuthService, MySwal, ...rest } = props
   const [bank, setBank] = useState({
     user_id: AuthService.getCurrentUser().id,
-    banco_nome: "",
     banco_agencia: "",
     banco_conta: "",
     tipo_conta: "",
-  });
+    bank_id: ""
+  })
+  const [bank_list, setBank_list] = useState([])
+  const [select_bank, setSelect_bank] = useState({label: '', value: 0})
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
-          const response = await UserService.getBank(AuthService.getCurrentUser().id);
-          if(response.data)
-            setBank(response.data);
+          const response = await UserService.getBank(AuthService.getCurrentUser().id)
+          if(response.data) {
+            setBank(response.data)
+            setSelect_bank({label: response.data.bank_list.name, value: response.data.bank_id})
+          }
+            
+
+      } catch (e) {
+
+      }
+    }
+    const fetchBank = async () => {
+      try {
+          const bank_response = await UserService.bank_all()
+          if(bank_response.data) {
+            setBank_list(bank_response.data.map(bank_item => ({
+              value: bank_item.id,
+              label: bank_item.name
+            })))
+          }
       } catch (e) {
 
       }
     };
     fetchUser();
+    fetchBank();
   }, []);
+
   const classes = useStyles();
   const [fields, setFields] = useState({
-    banco_nome: "",
     banco_agencia: "",
     banco_conta: "",
     tipo_conta: "",
@@ -60,6 +90,7 @@ const UserDetails = props => {
   })
   const [isError, setIsError] = useState(false)
   const handleChange = input => ({ target: { value } }) => {
+    
     // Set user to the fields
     setBank({
       ...bank,
@@ -111,8 +142,13 @@ const UserDetails = props => {
     })
   }
   const submit = () => {
-    console.log(bank);
-    if(bank && bank.banco_nome.length > 0 && bank.banco_agencia.length > 0 && bank.banco_conta.length > 0 && bank.tipo_conta.length > 0){
+    if(bank.bank_id == "" || bank.bank_id == 0 || bank.bank_id == null) {
+      MySwal.fire({
+        title: 'Fail',
+        text: "You should select bank",
+        dangerMode: true
+      })
+    }else if(bank && bank.banco_agencia.length > 0 && bank.banco_conta.length > 0 && bank.tipo_conta.length > 0){
       if(!isError) {
         UserService.bankUpdate(
           bank
@@ -145,10 +181,26 @@ const UserDetails = props => {
         dangerMode: true
       })
     }
-
   }
-  //console.log(bank);
-  //setIsError(bank.banco_nome.length > 0 && bank.banco_agencia.length > 0 && bank.banco_conta.length > 0 && bank.tipo_conta.length > 0);
+  const select_customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      // borderBottom: '1px dotted pink',
+      // color: state.isSelected ? 'red' : 'white',
+      color: 'black',
+    }),
+    // control: () => ({
+      // width: '100%',
+    // })
+  }
+  const handleChange_bank = value => {
+    setBank({
+      ...bank,
+      bank_id: value.value
+    })
+    setSelect_bank({label: value.label, value: value.value})
+  }
+  
   return (
     <Card
       {...rest}
@@ -165,46 +217,50 @@ const UserDetails = props => {
         <Divider />
         <CardContent>
             <Grid container spacing={2} noValidate>
+            <Grid item xs={12}>
+                <InputLabel htmlFor="Banco Nome">Banco Nome</InputLabel>
+                <AutoSelect 
+                value={select_bank? select_bank : ''}
+                onChange={value => handleChange_bank(value)}
+                maxMenuHeight={190}
+                styles={select_customStyles}
+                options={bank_list} />
+            </Grid>
               <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  label="Banco Nome"
-                  name="banco_nome"
-                  placeholder="ex: Banco do Brasil"
-                  value={bank.banco_nome}
-                  onChange={handleChange("banco_nome")}
-                  margin="normal"
-                  error={filedError.banco_nome !== ""}
-                  helperText={
-                    filedError.banco_nome !== "" ? `${filedError.banco_nome}` : ""
-                  }
-                  required
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  label="Número da Agência"
-                  name="banco_agencia"
-                  placeholder="ex: 123"
+                <InputMask
+                  mask="999999999999999999999999999999999999999"
+                  maskChar=" "
                   value={bank.banco_agencia}
                   onChange={handleChange("banco_agencia")}
-                  margin="normal"
-                  error={filedError.banco_agencia !== ""}
-                  helperText={
-                    filedError.banco_agencia !== "" ? `${filedError.banco_agencia}` : ""
-                  }
-                  required
-                />
+                >
+                  {() => <TextField
+                              fullWidth
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              label="Número da Agência"
+                              name="banco_agencia"
+                              placeholder="ex: 123"
+                              // value={bank.banco_agencia}
+                              // onChange={handleChange("banco_agencia")}
+                              margin="normal"
+                              error={filedError.banco_agencia !== ""}
+                              helperText={
+                                filedError.banco_agencia !== "" ? `${filedError.banco_agencia}` : ""
+                              }
+                              required
+                    />}
+              </InputMask>
+                
               </Grid>
               <Grid item xs={6}>
-                <TextField
+              <InputMask
+                  mask="99999-9"
+                  maskChar=" "
+                  value={bank.banco_conta}
+                  onChange={handleChange("banco_conta")}
+                >
+                  {() => <TextField
                   fullWidth
                   InputLabelProps={{
                     shrink: true,
@@ -212,34 +268,22 @@ const UserDetails = props => {
                   label="Número da Conta"
                   name="banco_conta"
                   placeholder="ex: 40342-9"
-                  value={bank.banco_conta}
-                  onChange={handleChange("banco_conta")}
                   margin="normal"
                   error={filedError.banco_conta !== ""}
                   helperText={
                     filedError.banco_conta !== "" ? `${filedError.banco_conta}` : ""
                   }
                   required
-                />
+                />}
+              </InputMask>
+                
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  label="Tipo de Conta"
-                  name="tipo_conta"
-                  placeholder="selecione"
-                  value={bank.tipo_conta}
-                  onChange={handleChange("tipo_conta")}
-                  margin="normal"
-                  error={filedError.tipo_conta !== ""}
-                  helperText={
-                    filedError.tipo_conta !== "" ? `${filedError.tipo_conta}` : ""
-                  }
-                  required
-                />
+                <InputLabel htmlFor="investment_type">Tipo de Conta</InputLabel>
+                <Select value={bank.tipo_conta} onChange={handleChange("tipo_conta")}>
+                  <MenuItem value={"Conta Corrente"}>Conta Corrente</MenuItem>
+                  <MenuItem value={"Conta Poupança"}>Conta Poupança</MenuItem>
+                </Select>
               </Grid>
             </Grid>
           </CardContent>

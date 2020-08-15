@@ -80,6 +80,13 @@ const Sidebar = props => {
       href: '/admindeposit',
       icon: <AccountBalanceWalletOutlinedIcon />,
     },
+    
+    {
+      title: 'Add Deposit',
+      href: '/admincasedeposit',
+      icon: <AccountBalanceWalletOutlinedIcon />,
+    },
+    
     {
       title: 'Saques',
       href: '/adminwithdraw',
@@ -134,11 +141,6 @@ const Sidebar = props => {
       ]
     },
     {
-      title: 'Rendimentos',
-      href: '/userincome',
-      icon: <Rotate90DegreesCcwIcon />,
-    },
-    {
       title: 'Depósitos',
       href: '/userdeposit',
       icon: <AccountBalanceWalletOutlinedIcon />,
@@ -150,7 +152,7 @@ const Sidebar = props => {
     },
     {
       title: 'Rendimentos',
-      href: '/dashboard',
+      href: '/userincome',
       icon: <PageViewIcon />,
 
     },

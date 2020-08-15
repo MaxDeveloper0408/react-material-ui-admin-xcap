@@ -14,7 +14,11 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING
       },
       tipo_conta: {
-        type: Sequelize.STRING
+        type:   Sequelize.ENUM,
+        values: ['Conta Corrente','Conta Poupança']
+      },
+      bank_id: {
+        type: Sequelize.INTEGER
       }
     });
     return Bank;

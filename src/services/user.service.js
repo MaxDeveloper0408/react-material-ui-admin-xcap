@@ -117,6 +117,27 @@ class UserService {
         return response.data;
     });
   }
+
+  bank_all(){
+    return axios.post(URL + 'bank_all',{}, {headers: authHeader()});
+  }
+  getAllCaseDeposit() {
+    return axios.get(URL + 'all_case_deposit', {headers: authHeader()});
+  }
+  addFund(data) {
+    return axios
+      .post(URL + "add_fund", data, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+    });
+  }
+  setProfit(data){
+    return axios
+      .post(URL + "setProfit", data, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+      });
+  }
 }
 
 export default new UserService();

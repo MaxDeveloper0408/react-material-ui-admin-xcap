@@ -48,8 +48,13 @@ var dailyJob = scheduler.scheduleJob('* * * * *', function(){
   //update user's available balance when update expire date and profit balance plan
   let now = moment();
   Contract.findAll(
-    {where: {end_date: now.format("YYYY-MM-DD"), status: 'processing'},
-    raw: true}
+    {
+      include: [{
+        model: User,
+      }],
+      where: {end_date: now.format("YYYY-MM-DD"), status: 'processing'},
+      raw: true
+    }
   )
   .then((expired_datas) => {
       if(expired_datas.length > 0){
@@ -62,7 +67,7 @@ var dailyJob = scheduler.scheduleJob('* * * * *', function(){
               console.log('Successfully expired');
               let added_value = item.invest_type=='FLEXIVEL' ? 
               (Number(item.open_value) + Number(item.open_value*10/100)) 
-              : (Number(item.open_value) + Number(item.open_value*30/100))
+              : (Number(item.open_value) + Number(item.open_value*8*item.user.profit_percent==null?20:item.user.profit_percent/100))
 
               Case.increment(
                 {balance: added_value},

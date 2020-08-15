@@ -72,7 +72,10 @@ module.exports = (sequelize, Sequelize) => {
       active: {
         type: Sequelize.ENUM,
         values: ['YES', 'NO']
-      }
+      },
+      profit_percent: {
+        type: Sequelize.INTEGER
+      },
     });
     return User;
   };

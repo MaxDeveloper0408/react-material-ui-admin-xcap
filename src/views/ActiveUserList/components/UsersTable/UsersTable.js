@@ -178,6 +178,46 @@ const UsersTable = props => {
       })
     }
   }
+  const handleProfit = (userId, profit_percent) => {
+    MySwal.fire({
+      title: 'Change Profit %',
+      text: 'select %',
+      input: 'select',
+      inputOptions: {
+        "20": "20%",
+        "19": "19%",
+        "18": "18%",
+        "17": "17%",
+        "16": "16%",
+        "15": "15%"
+      },
+      inputValue: profit_percent == null || profit_percent == '' ? 20:profit_percent,
+      showCancelButton: true,
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (value != null) {
+            resolve()
+          }
+        })
+      }
+    }).then(function (result) {
+      if (result.dismiss === MySwal.DismissReason.cancel) {
+      }else if(result.value) {
+        userService.setProfit({user_id: userId, profit_percent: result.value}).then(
+          response => {
+            MySwal.fire({
+              title: 'Success',
+              text: response.message
+            })
+            window.location.reload();
+          },
+          error => {
+            console.log(error)
+          }
+        );
+      }
+    })
+  }
   const handleDelete = (userId) => {
     MySwal.fire({
       title: "Confirma a exclusão permanentemente?",
@@ -278,7 +318,7 @@ const UsersTable = props => {
                     <TableCell>{user.cpf}</TableCell>
                     <TableCell>{user.cellphone}</TableCell>
                     <TableCell>
-                      {user.investment_type}
+                      {user.investment_type} - ( {user.profit_percent} )
                     </TableCell>
                     <TableCell>
                       {user.investment}
@@ -287,6 +327,11 @@ const UsersTable = props => {
                       {moment(user.createdAt).format('DD/MM/YYYY')}
                     </TableCell> */}
                     <TableCell>
+                      {user.investment_type == 'CRESCIMENTO'? (
+                         <Button variant="contained" color="secondary" onClick={handleProfit.bind(this, user.id, user.profit_percent)}>
+                           Change Profit %
+                         </Button>
+                      ):('')}
                       <Button variant="contained" color="secondary" onClick={handleEdit.bind(this, user.id)}>
                           Editar
                       </Button>

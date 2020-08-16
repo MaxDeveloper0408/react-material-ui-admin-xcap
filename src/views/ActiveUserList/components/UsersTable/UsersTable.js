@@ -180,8 +180,8 @@ const UsersTable = props => {
   }
   const handleProfit = (userId, profit_percent) => {
     MySwal.fire({
-      title: 'Change Profit %',
-      text: 'select %',
+      title: 'Selecione abaixo:',
+      text: '',
       input: 'select',
       inputOptions: {
         "20": "20%",
@@ -329,7 +329,7 @@ const UsersTable = props => {
                     <TableCell>
                       {user.investment_type == 'CRESCIMENTO'? (
                          <Button variant="contained" color="secondary" onClick={handleProfit.bind(this, user.id, user.profit_percent)}>
-                           Change Profit %
+                           Lucro %
                          </Button>
                       ):('')}
                       <Button variant="contained" color="secondary" onClick={handleEdit.bind(this, user.id)}>

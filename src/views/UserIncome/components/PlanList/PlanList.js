@@ -422,8 +422,8 @@ const PlanList = props => {
         noValidate
       >
         <CardHeader
-          subheader="Histórico de planos ativos e expirados."
-          title="Planos"
+          subheader="Histórico completo de rendimentos."
+          title="Rendimentos"
         />
         <Divider />
         <CardContent>

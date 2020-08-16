@@ -49,7 +49,7 @@
     "react-input-mask": "^2.0.4",
     "react-perfect-scrollbar": "^1.5.3",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "^3.4.3",
     "react-select": "^3.1.0",
     "recompose": "^0.30.0",
     "simple-mask-money": "^3.0.1",

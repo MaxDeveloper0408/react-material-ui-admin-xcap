@@ -80,13 +80,13 @@ const Sidebar = props => {
       href: '/admindeposit',
       icon: <AccountBalanceWalletOutlinedIcon />,
     },
-    
+
     {
-      title: 'Add Deposit',
+      title: 'Depositar',
       href: '/admincasedeposit',
       icon: <AccountBalanceWalletOutlinedIcon />,
     },
-    
+
     {
       title: 'Saques',
       href: '/adminwithdraw',
@@ -129,12 +129,12 @@ const Sidebar = props => {
       icon: <Rotate90DegreesCcwIcon />,
       subpages: [
         {
-          title: 'Flexible Plan',
+          title: 'Flexível',
           href: '/userplan_flexible',
           icon: <Rotate90DegreesCcwIcon />,
         },
         {
-          title: 'Crescimento Plan',
+          title: 'Crescimento',
           href: '/userplan_crescimento',
           icon: <Rotate90DegreesCcwIcon />,
         }

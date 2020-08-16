@@ -89,21 +89,21 @@ const WithdrawList = props => {
   };
   //handle action
   const  handleThrought = () => {
-    
+
             MySwal.fire({
-              title: 'Transfer to people',
+              title: 'Depositar para cliente',
               html:
                     '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Minimal balance : '+currencyFormatter.format(5000, { code: 'BRL', symbol: '' })+'</h2>' +
                     '<input type="text" id="swal_withdraw_value1" value="" class="swal2-input" style="max-width: 100%;" placeHolder="5,000">' +
-                    '<input type="text" id="swal_withdraw_cpf" value="" class="swal2-input" style="max-width: 100%;" placeHolder="">',
+                    '<input type="text" id="swal_withdraw_cpf" value="" class="swal2-input" style="max-width: 100%;" placeHolder="CPF">',
               showCancelButton: true,
               preConfirm: (value) => {
                 const cpfRegex = RegExp(/[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}/)
                 if( SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) < 5000
                 || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) == '') {
-                  MySwal.showValidationMessage('You should put more than 5,000')
+                  MySwal.showValidationMessage('Mínimo de 5.000,00')
                 }else if(!cpfRegex.test(document.getElementById('swal_withdraw_cpf').value)){
-                  MySwal.showValidationMessage('You should put correct cpf')
+                  MySwal.showValidationMessage('CPF é inválido ou não existe no sistema')
                 }else {
 
                 }
@@ -123,7 +123,7 @@ const WithdrawList = props => {
                     MySwal.fire({
                       title: 'Fail',
                       icon: 'warning',
-                      text: "This cpf don't exist in user account"
+                      text: "CPF inválido ou não existe no sistema"
                     })
                   }else {
                     UserService.addFund({
@@ -148,10 +148,10 @@ const WithdrawList = props => {
               }
 
             })
-          
-        
 
-    
+
+
+
   }
   return (
     <Card
@@ -163,8 +163,8 @@ const WithdrawList = props => {
         noValidate
       >
         <CardHeader
-          subheader="Admin Add Deposit"
-          title="Admin Add Deposit"
+          subheader="Histórico de depósitos realizados por Adm."
+          title="Depositar"
         />
         <Divider />
         <CardContent>

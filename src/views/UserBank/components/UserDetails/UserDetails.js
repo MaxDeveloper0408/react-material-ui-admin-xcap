@@ -53,7 +53,7 @@ const UserDetails = props => {
           const response = await UserService.getBank(AuthService.getCurrentUser().id)
           if(response.data) {
             setBank(response.data)
-            setSelect_bank({label: response.data.bank_list.name, value: response.data.bank_id})
+            setSelect_bank({label: response.data.bank_list.code + ' - ' + response.data.bank_list.name, value: response.data.bank_id})
           }
             
 
@@ -67,7 +67,7 @@ const UserDetails = props => {
           if(bank_response.data) {
             setBank_list(bank_response.data.map(bank_item => ({
               value: bank_item.id,
-              label: bank_item.name
+              label: bank_item.code + ' - ' +bank_item.name
             })))
           }
       } catch (e) {
@@ -228,7 +228,7 @@ const UserDetails = props => {
             </Grid>
               <Grid item xs={6}>
                 <InputMask
-                  mask="999999999999999999999999999999999999999"
+                  mask="999-9"
                   maskChar=" "
                   value={bank.banco_agencia}
                   onChange={handleChange("banco_agencia")}

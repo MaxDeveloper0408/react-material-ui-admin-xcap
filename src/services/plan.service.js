@@ -16,6 +16,9 @@ class PlanService {
   getPlanByUser(userId) {
     return axios.post(URL + 'all_by_user', {user_id: userId}, {headers: authHeader()});
   }
+  getPlanByUserIT(userId, investment_type) {
+    return axios.post(URL + 'all_by_user_it', {user_id: userId, invest_type: investment_type}, {headers: authHeader()});
+  }
   addPlan(add_data) {
     return axios
       .post(URL + "add_plan", add_data, {headers: authHeader()})

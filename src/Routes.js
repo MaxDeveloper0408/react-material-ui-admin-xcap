@@ -15,6 +15,8 @@ import {
   UserPersonal as UserPersonalView,
   UserBank as UserBankView,
   UserPlan as UserPlanView,
+  UserPlanCresci as UserPlanCresciView,
+  UserIncome as UserIncomeView,
   UserDeposit as UserDepositView,
   UserWithdraw as UserWithdrawView,
   AdminPlan as AdminPlanView,
@@ -175,7 +177,31 @@ class Routes extends Component {
           component={UserPlanView}
           exact
           layout={MainLayout}
-          path="/userplan"
+          path="/userplan_flexible"
+        />
+        )}
+        {AuthService.getCurrentUser() && (
+        <RouteWithLayout
+          component={UserPlanView}
+          exact
+          layout={MainLayout}
+          path="/userplan_flexible"
+        />
+        )}
+        {AuthService.getCurrentUser() && (
+        <RouteWithLayout
+          component={UserPlanCresciView}
+          exact
+          layout={MainLayout}
+          path="/userplan_crescimento"
+        />
+        )}
+        {AuthService.getCurrentUser() && (
+        <RouteWithLayout
+          component={UserIncomeView}
+          exact
+          layout={MainLayout}
+          path="/userincome"
         />
         )}
         {AuthService.getCurrentUser() && (

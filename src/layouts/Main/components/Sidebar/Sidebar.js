@@ -118,7 +118,24 @@ const Sidebar = props => {
     },
     {
       title: 'Planos',
-      href: '/userplan',
+      href: '/userplan_flexible',
+      icon: <Rotate90DegreesCcwIcon />,
+      subpages: [
+        {
+          title: 'Flexible Plan',
+          href: '/userplan_flexible',
+          icon: <Rotate90DegreesCcwIcon />,
+        },
+        {
+          title: 'Crescimento Plan',
+          href: '/userplan_crescimento',
+          icon: <Rotate90DegreesCcwIcon />,
+        }
+      ]
+    },
+    {
+      title: 'Rendimentos',
+      href: '/userincome',
       icon: <Rotate90DegreesCcwIcon />,
     },
     {

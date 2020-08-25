@@ -54,7 +54,7 @@ const PlanList = props => {
   useEffect(() => {
     const fetchUsers = async () => {
         try {
-          const response = await PlanService.getPlanByUserIT(AuthService.getCurrentUser().id, 'FLEXIVEL');
+          const response = await PlanService.getPlanByUserIT(AuthService.getCurrentUser().id, 'CRESCIMENTO');
           setPlans(response.data);
 
         } catch (e) {

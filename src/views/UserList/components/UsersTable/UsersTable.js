@@ -153,9 +153,10 @@ const UsersTable = props => {
         preConfirm: (value) => {
           if( SimpleMaskMoney.formatToNumber(document.getElementById("swal_plan_value").value) < 5000) {
             MySwal.showValidationMessage('O valor precisa ser maior que R$5.000,00')
-          }else if(document.getElementById("swal_admin_cpf").files.length == 0) {
-            MySwal.showValidationMessage('É necessário fazer upload do contrato')
           }
+          // }else if(document.getElementById("swal_admin_cpf").files.length == 0) {
+          //   MySwal.showValidationMessage('É necessário fazer upload do contrato')
+          // }
         },
         onOpen: () => {
           $("#swal_admin_cpf").change(function (e) {

@@ -42,6 +42,20 @@ exports.all_by_user = (req, res) => {
     res.status(500).send([])
   });
 }
+exports.all_by_user_it = (req, res) => {
+  Contract.findAll({
+      where: {
+        user_id: req.body.user_id,
+        invest_type: req.body.invest_type
+      }
+  })
+  .then(datas => {
+    res.status(200).send(datas)
+  })
+  .catch(err => {
+    res.status(500).send([])
+  });
+}
 exports.add_plan = (req, res) => {
   let now = moment();
   Contract.create(

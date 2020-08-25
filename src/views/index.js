@@ -13,6 +13,8 @@ export { default as UserEdit } from './UserEdit';
 export { default as UserPersonal } from './UserPersonal';
 export { default as UserBank } from './UserBank';
 export { default as UserPlan } from './UserPlan';
+export { default as UserPlanCresci } from './UserPlanCresci';
+export { default as UserIncome } from './UserIncome';
 export { default as UserDeposit } from './UserDeposit';
 export { default as UserWithdraw } from './UserWithdraw';
 export { default as AdminPlan } from './AdminPlan';

@@ -11,6 +11,7 @@ import {
   LinearProgress
 } from '@material-ui/core';
 import LocalAtmIcon from '@material-ui/icons/LocalAtmOutlined';
+import currencyFormatter from 'currency-formatter';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -61,7 +62,7 @@ const TasksProgress = props => {
         try {
           const response = await UserService.getPlanSum({invest_type: 'CRESCIMENTO'});
           if(response.status && response.status == 'success') {
-            setPlansum(response.sum)  
+            setPlansum(currencyFormatter.format(response.sum, { code: 'BRL', symbol: '' }))
           }else {
             setPlansum(0)
           }

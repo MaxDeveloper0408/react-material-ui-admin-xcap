@@ -11,7 +11,8 @@ import {
   LinearProgress
 } from '@material-ui/core';
 import LocalAtmIcon from '@material-ui/icons/LocalAtmOutlined';
-
+import currencyFormatter from 'currency-formatter';
+import moment from 'moment';
 const useStyles = makeStyles(theme => ({
   root: {
     height: '100%'
@@ -60,7 +61,7 @@ const TasksProgress = props => {
         try {
           const response = await UserService.getPlanSumByUser({invest_type: 'CRESCIMENTO'});
           if(response.status && response.status == 'success') {
-            setPlansum(response.sum)  
+            setPlansum(currencyFormatter.format(response.sum, { code: 'BRL', symbol: '' }))
             setMaxdate(response.max)
           }else {
             setPlansum(0)
@@ -108,7 +109,7 @@ const TasksProgress = props => {
           className={classes.caption}
           variant="caption"
         >
-          valor consolidado dos aportes nos planos. {maxdate == '0'? '':maxdate}
+          valor consolidado dos aportes nos planos. {maxdate == '0'? '':moment(maxdate).format('DD/MM/YYYY')}
         </Typography>
         <LinearProgress
           className={classes.progress}

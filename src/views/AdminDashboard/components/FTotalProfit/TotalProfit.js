@@ -90,7 +90,7 @@ const TasksProgress = props => {
               gutterBottom
               variant="body2"
             >
-              FLEXIBLE TOTAL APORTADO
+              VALOR EM FUNDO FLEXÍVEL
             </Typography>
             <Typography
               color="inherit"

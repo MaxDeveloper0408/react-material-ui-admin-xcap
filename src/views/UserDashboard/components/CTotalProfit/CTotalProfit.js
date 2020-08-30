@@ -90,7 +90,7 @@ const TasksProgress = props => {
               gutterBottom
               variant="body2"
             >
-              CRESCIMENTO TOTAL APORTADO
+              VALOR EM FUNDO DE CRESCIMENTO
             </Typography>
             <Typography
               color="inherit"

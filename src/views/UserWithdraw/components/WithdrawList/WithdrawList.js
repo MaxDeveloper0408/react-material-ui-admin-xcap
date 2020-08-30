@@ -123,16 +123,16 @@ const WithdrawList = props => {
             })
           }else if(response.balance >= 1000) {
             MySwal.fire({
-              title: 'Withdraw',
+              title: 'Saque',
               html:
-                    '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : '+currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' })+'</h2>' +
+                    '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Valor disponível: '+currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' })+'</h2>' +
                     '<input type="text" id="swal_withdraw_value" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">',
               showCancelButton: true,
               preConfirm: (value) => {
                 if( SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value) < 0
                 || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value) == ''
                 || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value').value) > response.balance) {
-                  MySwal.showValidationMessage('You should put correct value')
+                  MySwal.showValidationMessage('Informe o valor corretamente')
                 }
               },
               onOpen: () => {
@@ -194,13 +194,13 @@ const WithdrawList = props => {
             MySwal.fire({
               title: 'Alarm',
               icon: 'warning',
-              text: 'You should have available balance more than 1.000 to transfer'
+              text: 'É necessário um mínimo de 1.000,00 para transferir'
             })
           }else if(response.balance >= 1000) {
             MySwal.fire({
               title: 'Transfer to people',
               html:
-                    '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Avaliable balance : '+currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' })+'</h2>' +
+                    '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Valor disponível: '+currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' })+'</h2>' +
                     '<input type="text" id="swal_withdraw_value1" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">' +
                     '<input type="text" id="swal_withdraw_cpf" value="" class="swal2-input" style="max-width: 100%;" placeHolder="">',
               showCancelButton: true,
@@ -211,9 +211,9 @@ const WithdrawList = props => {
                 if( SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) < 0
                 || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) == ''
                 || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) > response.balance) {
-                  MySwal.showValidationMessage('You should put correct value')
+                  MySwal.showValidationMessage('Informe um valor correto')
                 }else if(!cpfRegex.test(document.getElementById('swal_withdraw_cpf').value)){
-                  MySwal.showValidationMessage('You should put correct cpf')
+                  MySwal.showValidationMessage('Informe o CPF corretamente')
                 }else {
 
                 }
@@ -233,7 +233,7 @@ const WithdrawList = props => {
                     MySwal.fire({
                       title: 'Fail',
                       icon: 'warning',
-                      text: "This cpf don't exist in user account"
+                      text: "CPF inválido ou não existe no sistema"
                     })
                   }else {
                     WithdrawService.transfer({

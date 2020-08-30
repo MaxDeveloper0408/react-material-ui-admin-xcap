@@ -89,7 +89,7 @@ const TasksProgress = props => {
               gutterBottom
               variant="body2"
             >
-              TOTAL PAID WITHDRAWS
+              TOTAL EM SAQUE APROVADO
             </Typography>
             <Typography
               color="inherit"
@@ -108,7 +108,7 @@ const TasksProgress = props => {
           className={classes.caption}
           variant="caption"
         >
-          valor consolidado dos aportes nos planos.
+          saques pagos referentes ao mês anterior.
         </Typography>
         <LinearProgress
           className={classes.progress}

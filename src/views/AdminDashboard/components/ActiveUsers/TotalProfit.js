@@ -61,7 +61,7 @@ const TasksProgress = props => {
         try {
           const response = await UserService.active_users_count();
           if(response.status && response.status == 'success') {
-            setPlansum(response.sum)  
+            setPlansum(response.sum)
           }else {
             setPlansum(0)
           }
@@ -89,13 +89,13 @@ const TasksProgress = props => {
               gutterBottom
               variant="body2"
             >
-              ACTIVE USERS COUNT
+              CONTAS ATIVAS
             </Typography>
             <Typography
               color="inherit"
               variant="h3"
             >
-              R$ {plansum}
+              {plansum}
             </Typography>
           </Grid>
           <Grid item>
@@ -108,7 +108,7 @@ const TasksProgress = props => {
           className={classes.caption}
           variant="caption"
         >
-          valor consolidado dos aportes nos planos.
+          número de contas de cliente ativas no sistema.
         </Typography>
         <LinearProgress
           className={classes.progress}

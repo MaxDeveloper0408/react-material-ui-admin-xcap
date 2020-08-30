@@ -111,7 +111,7 @@ const TasksProgress = props => {
           className={classes.caption}
           variant="caption"
         >
-          valor consolidado dos aportes nos planos.{maxdate == '0'? '':moment(maxdate).format('DD/MM/YYYY')}
+          total de aportes no plano flexível.{maxdate == '0'? '':moment(maxdate).format('DD/MM/YYYY')}
         </Typography>
         <LinearProgress
           className={classes.progress}

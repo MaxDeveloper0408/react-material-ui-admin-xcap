@@ -109,7 +109,7 @@ const TasksProgress = props => {
           className={classes.caption}
           variant="caption"
         >
-          valor consolidado dos aportes nos planos.
+          total de aportes no plano de crescimento.
         </Typography>
         <LinearProgress
           className={classes.progress}

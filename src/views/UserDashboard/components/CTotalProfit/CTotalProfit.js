@@ -53,15 +53,15 @@ const TasksProgress = props => {
   const { className, UserService, ...rest } = props;
 
   const classes = useStyles();
-
-  const [plans, setPlans] = useState([]);
+  const [maxdate, setMaxdate] = useState('');
   const [plansum, setPlansum] = useState('');
   useEffect(() => {
     const fetchService = async () => {
         try {
-          const response = await UserService.getPlanSum({invest_type: ''});
+          const response = await UserService.getPlanSumByUser({invest_type: 'CRESCIMENTO'});
           if(response.status && response.status == 'success') {
             setPlansum(response.sum)  
+            setMaxdate(response.max)
           }else {
             setPlansum(0)
           }
@@ -89,7 +89,7 @@ const TasksProgress = props => {
               gutterBottom
               variant="body2"
             >
-              TOTAL APORTADO
+              CRESCIMENTO TOTAL APORTADO
             </Typography>
             <Typography
               color="inherit"
@@ -108,7 +108,7 @@ const TasksProgress = props => {
           className={classes.caption}
           variant="caption"
         >
-          valor consolidado dos aportes nos planos.
+          valor consolidado dos aportes nos planos. {maxdate == '0'? '':maxdate}
         </Typography>
         <LinearProgress
           className={classes.progress}

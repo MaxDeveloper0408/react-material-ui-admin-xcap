@@ -6,9 +6,6 @@ import {
   TotalProfit,
   CTotalProfit,
   FTotalProfit,
-  WTotalProfit,
-  WPTotalProfit,
-  ActiveUsers
 } from './components';
 
 const useStyles = makeStyles(theme => ({
@@ -57,39 +54,6 @@ const Dashboard = () => {
           xs={12}
         >
           <TotalProfit 
-            UserService={UserService}
-          />
-        </Grid>
-        <Grid
-          item
-          lg={4}
-          sm={6}
-          xl={4}
-          xs={12}
-        >
-          <WTotalProfit 
-            UserService={UserService}
-          />
-        </Grid>
-        <Grid
-          item
-          lg={4}
-          sm={6}
-          xl={4}
-          xs={12}
-        >
-          <WPTotalProfit 
-            UserService={UserService}
-          />
-        </Grid>
-        <Grid
-          item
-          lg={4}
-          sm={6}
-          xl={4}
-          xs={12}
-        >
-          <ActiveUsers 
             UserService={UserService}
           />
         </Grid>

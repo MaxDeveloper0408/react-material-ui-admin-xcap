@@ -1,3 +1,4 @@
+const Sequelize = require("sequelize");
 const moment = require('moment');
 const db = require("../models");
 const config = require("../config/auth.config");
@@ -540,3 +541,64 @@ exports.setProfit = (req, res) => {
   });
 }
 
+exports.getPlanSum = (req, res) => {
+  let param = { where: { invest_type: req.body.invest_type } };
+  if(req.body.invest_type == '' || req.body.invest_type == null) {
+    param = {};
+  } 
+  Contract.sum('open_value', param).then(sum => {
+    return res.status(200).send({ status:'success', sum: sum })
+  }).catch(err => {
+    return res.status(200).send({ status:'fail', message: err.message })
+  })
+}
+exports.getPlanSumByUser = (req, res) => {
+  console.log(req.userId)
+  let param = { where: { invest_type: req.body.invest_type, user_id: req.userId } };
+  if(req.body.invest_type == '' || req.body.invest_type == null) {
+    param = { where: { user_id: req.userId } };
+  } 
+  Contract.sum('open_value', param).then(sum => {
+    Contract.max('end_date', param).then(max => {
+      return res.status(200).send({ status:'success', sum: sum, max: max })
+    }).catch(err => {
+      return res.status(200).send({ status:'fail', message: err.message })
+    })
+  }).catch(err => {
+    return res.status(200).send({ status:'fail', message: err.message })
+  })
+}
+
+exports.getPlanExpDateByUser = (req, res) => {
+  let param = { where: { invest_type: req.body.invest_type, user_id: req.userId } };
+  if(req.body.invest_type == '' || req.body.invest_type == null) {
+    param = {};
+  } 
+  Contract.max('end_date', param).then(max => {
+    return res.status(200).send({ status:'success', max: max })
+  }).catch(err => {
+    return res.status(200).send({ status:'fail', message: err.message })
+  })
+}
+
+exports.withdraw_sum_pending = (req, res) => {
+  Contract.sum('open_value', {where: {status: 'processing'}}).then(sum => {
+    return res.status(200).send({ status:'success', sum: sum })
+  }).catch(err => {
+    return res.status(200).send({ status:'fail', message: err.message })
+  })
+}
+exports.withdraw_sum_paid = (req, res) => {
+  Contract.sum('open_value', {where: {status: 'expired'}}).then(sum => {
+    return res.status(200).send({ status:'success', sum: sum })
+  }).catch(err => {
+    return res.status(200).send({ status:'fail', message: err.message })
+  })
+}
+exports.active_users_count = (req, res) => {
+  User.count({where: {active: 'YES', admin: '0'}}).then(count => {
+    return res.status(200).send({ status:'success', sum: count })
+  }).catch(err => {
+    return res.status(200).send({ status:'fail', message: err.message })
+  })
+}

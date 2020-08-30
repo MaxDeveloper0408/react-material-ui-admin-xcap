@@ -183,8 +183,14 @@ const SignIn = props => {
     if(formState.isValid) {
       AuthService.login(formState.values).then(
         () => {
-          history.push("/dashboard");
-          window.location.reload("/dashboard");
+          const user = JSON.parse(localStorage.getItem('user'));
+          if( user.roles[0] == 'ROLE_ADMIN' ) {
+            history.push("/admindashboard");
+            window.location.reload("/admindashboard");
+          }else {
+            history.push("/userdashboard");
+            window.location.reload("/userdashboard");
+          }
         },
         error => {
           const resMessage =

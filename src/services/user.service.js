@@ -138,6 +138,41 @@ class UserService {
         return response.data;
       });
   }
+  getPlanSum(data){
+    return axios
+      .post(URL + "getPlanSum", data, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+      });
+  }
+  getPlanSumByUser(data){
+    return axios
+      .post(URL + "getPlanSumByUser", data, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+      });
+  }
+  withdraw_sum_pending() {
+    return axios
+      .post(URL + "withdraw_sum_pending", {}, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+      });
+  }
+  withdraw_sum_paid() {
+    return axios
+      .post(URL + "withdraw_sum_paid", {}, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+      });
+  }
+  active_users_count() {
+    return axios
+    .post(URL + "active_users_count", {}, {headers: authHeader()})
+    .then(response => {
+      return response.data;
+    });
+  }
 }
 
 export default new UserService();

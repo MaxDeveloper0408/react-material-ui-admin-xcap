@@ -8,6 +8,8 @@ import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
 
 import {
   Dashboard as DashboardView,
+  AdminDashboard as AdminDashboardView,
+  UserDashboard as UserDashboardView,
   ProductList as ProductListView,
   UserList as UserListView,
   ActiveUserList as ActiveUserListView,
@@ -81,16 +83,24 @@ class Routes extends Component {
         <Redirect
           exact
           from="/"
-          to="/dashboard"
+          to="/userdashboard"
         />
         )}
         
         {AuthService.getCurrentUser() && (
         <RouteWithLayout
-          component={DashboardView}
+          component={UserDashboardView}
           exact
           layout={MainLayout}
-          path="/dashboard"
+          path="/userdashboard"
+        />
+        )}
+        {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
+        <RouteWithLayout
+          component={AdminDashboardView}
+          exact
+          layout={MainLayout}
+          path="/admindashboard"
         />
         )}
         {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (

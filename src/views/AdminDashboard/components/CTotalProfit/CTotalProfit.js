@@ -59,7 +59,7 @@ const TasksProgress = props => {
   useEffect(() => {
     const fetchService = async () => {
         try {
-          const response = await UserService.getPlanSum({invest_type: ''});
+          const response = await UserService.getPlanSum({invest_type: 'CRESCIMENTO'});
           if(response.status && response.status == 'success') {
             setPlansum(response.sum)  
           }else {
@@ -89,7 +89,7 @@ const TasksProgress = props => {
               gutterBottom
               variant="body2"
             >
-              TOTAL APORTADO
+              CRESCIMENTO TOTAL APORTADO
             </Typography>
             <Typography
               color="inherit"

@@ -22,6 +22,12 @@ module.exports = function(app) {
   app.post("/api/user/setProfit", [authJwt.verifyToken, authJwt.isAdmin], controller.setProfit);
   app.get("/api/user/all_case_deposit", [authJwt.verifyToken, authJwt.isAdmin], controller.all_case_deposit);
   app.post("/api/user/add_fund", [authJwt.verifyToken, authJwt.isAdmin], controller.add_fund);
+  app.post("/api/user/getPlanSum", [authJwt.verifyToken, authJwt.isAdmin], controller.getPlanSum);
+  
+  app.post("/api/user/withdraw_sum_pending", [authJwt.verifyToken, authJwt.isAdmin], controller.withdraw_sum_pending);
+  app.post("/api/user/withdraw_sum_paid", [authJwt.verifyToken, authJwt.isAdmin], controller.withdraw_sum_paid);
+  app.post("/api/user/active_users_count", [authJwt.verifyToken, authJwt.isAdmin], controller.active_users_count);
+  
 
   app.post("/api/user/bank",[authJwt.verifyToken],controller.userBank);
   app.post("/api/user/bankUpdate", [authJwt.verifyToken], controller.bankUpdate);
@@ -37,7 +43,7 @@ module.exports = function(app) {
   app.post("/api/user/check_cpf_user", [authJwt.verifyToken], controller.check_cpf_user);
 
   app.post("/api/user/bank_all", [authJwt.verifyToken], controller.bank_all);
-  
-  
+  app.post("/api/user/getPlanSumByUser", [authJwt.verifyToken], controller.getPlanSumByUser);
+  app.post("/api/user/getPlanExpDateByUser", [authJwt.verifyToken], controller.getPlanExpDateByUser);
 
 };

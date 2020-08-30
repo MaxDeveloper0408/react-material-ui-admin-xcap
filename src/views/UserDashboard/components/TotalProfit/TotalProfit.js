@@ -59,7 +59,7 @@ const TasksProgress = props => {
   useEffect(() => {
     const fetchService = async () => {
         try {
-          const response = await UserService.getPlanSum({invest_type: ''});
+          const response = await UserService.getPlanSumByUser({invest_type: ''});
           if(response.status && response.status == 'success') {
             setPlansum(response.sum)  
           }else {

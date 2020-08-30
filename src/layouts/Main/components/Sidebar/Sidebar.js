@@ -48,7 +48,7 @@ const Sidebar = props => {
   const pages = [
     {
       title: 'Dashboard',
-      href: '/dashboard',
+      href: '/admindashboard',
       icon: <DashboardIcon />,
 
     },
@@ -119,7 +119,7 @@ const Sidebar = props => {
   const user_pages = [
     {
       title: 'Dashboard',
-      href: '/dashboard',
+      href: '/userdashboard',
       icon: <DashboardIcon />,
 
     },

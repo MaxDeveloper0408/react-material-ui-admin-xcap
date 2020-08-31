@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
       cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
-
+const Op = Sequelize.Op;
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
   };
@@ -590,7 +590,19 @@ exports.withdraw_sum_pending = (req, res) => {
   })
 }
 exports.withdraw_sum_paid = (req, res) => {
-  Withdraw.sum('value', {where: {status: 'approved'}}).then(sum => {
+  Withdraw.sum(
+    'value', 
+    { where: 
+      {
+        status: 'approved',
+        createdAt: {
+          [Op.gt]: moment(moment().format("YYYY-MM-DD")).subtract(1,'months').startOf('month').format('YYYY-MM-DD'),
+          [Op.lte]: moment(moment().format("YYYY-MM-DD")).subtract(1,'months').endOf('month').format('YYYY-MM-DD')
+        }
+      }
+    }
+  )
+  .then(sum => {
     return res.status(200).send({ status:'success', sum: sum })
   }).catch(err => {
     return res.status(200).send({ status:'fail', message: err.message })

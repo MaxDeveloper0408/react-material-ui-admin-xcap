@@ -10,6 +10,7 @@ const Contract = db.contract;
 const Contract_pdf = db.contract_pdf;
 const Bank_list = db.bank_list;
 const Case_deposit = db.case_deposit;
+const Withdraw = db.withdraw;
 
 const multer = require('multer');
 const path = require('path');
@@ -582,14 +583,14 @@ exports.getPlanExpDateByUser = (req, res) => {
 }
 
 exports.withdraw_sum_pending = (req, res) => {
-  Contract.sum('open_value', {where: {status: 'processing'}}).then(sum => {
+  Withdraw.sum('value', {where: {status: 'pending'}}).then(sum => {
     return res.status(200).send({ status:'success', sum: sum })
   }).catch(err => {
     return res.status(200).send({ status:'fail', message: err.message })
   })
 }
 exports.withdraw_sum_paid = (req, res) => {
-  Contract.sum('open_value', {where: {status: 'expired'}}).then(sum => {
+  Withdraw.sum('value', {where: {status: 'approved'}}).then(sum => {
     return res.status(200).send({ status:'success', sum: sum })
   }).catch(err => {
     return res.status(200).send({ status:'fail', message: err.message })

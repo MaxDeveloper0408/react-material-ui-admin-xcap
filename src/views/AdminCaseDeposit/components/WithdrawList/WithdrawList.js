@@ -93,7 +93,7 @@ const WithdrawList = props => {
             MySwal.fire({
               title: 'Depositar para cliente',
               html:
-                    '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Minimal balance : '+currencyFormatter.format(5000, { code: 'BRL', symbol: '' })+'</h2>' +
+                    '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Mínimo de: '+currencyFormatter.format(5000, { code: 'BRL', symbol: '' })+'</h2>' +
                     '<input type="text" id="swal_withdraw_value1" value="" class="swal2-input" style="max-width: 100%;" placeHolder="5,000">' +
                     '<input type="text" id="swal_withdraw_cpf" value="" class="swal2-input" style="max-width: 100%;" placeHolder="CPF">',
               showCancelButton: true,
@@ -172,13 +172,13 @@ const WithdrawList = props => {
           <div className={classes.inner}>
           <div className={classes.margin}>
           <Button variant="outlined" color="inherit" onClick={handleThrought.bind()}>
-              Add Fund
+              Adicionar fundos
           </Button>
           </div>
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell style={{color: '#212a37'}} className="blackText">Created At</TableCell>
+                  <TableCell style={{color: '#212a37'}} className="blackText">Data</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Valor</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>CPF do Destinatário</TableCell>
                 </TableRow>

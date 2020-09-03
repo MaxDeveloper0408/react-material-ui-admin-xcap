@@ -97,18 +97,18 @@ const Sidebar = props => {
       href: '/admincontract',
       icon: <InsertDriveFileIcon />,
     },
-    {
-      title: 'Extrato',
-      href: '/dashboard',
-      icon: <PageViewIcon />,
-
-    },
-    {
-      title: 'Projeção',
-      href: '/dashboard',
-      icon: <InsertChartIcon />,
-
-    },
+    // {
+    //   title: 'Extrato',
+    //   href: '/admindashboard',
+    //   icon: <PageViewIcon />,
+    //
+    // },
+    // {
+    //   title: 'Projeção',
+    //   href: '/admindashboard',
+    //   icon: <InsertChartIcon />,
+    //
+    // },
     {
       title: 'Configurações',
       href: '/userpassword',
@@ -151,17 +151,17 @@ const Sidebar = props => {
       icon: <LocalAtmIcon />,
     },
     {
-      title: 'Rendimentos',
+      title: 'Extrato',
       href: '/userincome',
       icon: <PageViewIcon />,
 
     },
-    {
-      title: 'Projeção',
-      href: '/dashboard',
-      icon: <InsertChartIcon />,
-
-    },
+    // {
+    //   title: 'Projeção',
+    //   href: '/userdashboard',
+    //   icon: <InsertChartIcon />,
+    //
+    // },
     {
       title: 'Configurações',
       href: '/userpersonal',

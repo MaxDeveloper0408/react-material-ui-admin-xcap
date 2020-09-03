@@ -198,7 +198,7 @@ const WithdrawList = props => {
             })
           }else if(response.balance >= 1000) {
             MySwal.fire({
-              title: 'Transfer to people',
+              title: 'Transferência',
               html:
                     '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Valor disponível: '+currencyFormatter.format(response.balance, { code: 'BRL', symbol: '' })+'</h2>' +
                     '<input type="text" id="swal_withdraw_value1" value="" class="swal2-input" style="max-width: 100%;" placeHolder="1,000">' +

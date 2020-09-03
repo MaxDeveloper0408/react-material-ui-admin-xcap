@@ -423,7 +423,7 @@ const PlanList = props => {
       >
         <CardHeader
           subheader="Histórico completo de rendimentos."
-          title="Rendimentos"
+          title="Extrato"
         />
         <Divider />
         <CardContent>

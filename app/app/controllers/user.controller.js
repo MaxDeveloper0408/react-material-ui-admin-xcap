@@ -247,7 +247,7 @@ exports.setActive = (req, res) => {
               }
             )
             .then(res_data => {
-              
+
                 Case.count({
                   where: {user_id: req.body.userId}}).then(count => {
                   if(count == 0 ) {
@@ -330,7 +330,7 @@ exports.bankUpdate = (req, res) => {
 
 exports.getBalance = (req, res) => {
   let now = moment();
-  if(moment().isBetween(now.date(25).format("YYYY-MM-DD"), now.endOf('month').format("YYYY-MM-DD"))) {
+  if(moment().isBetween(now.date(2).format("YYYY-MM-DD"), now.endOf('month').format("YYYY-MM-DD"))) {
       Case.findOne({
           include: [{
             model: User,
@@ -346,7 +346,7 @@ exports.getBalance = (req, res) => {
         res.status(200).send({status: 'fail', message: "Você não tem saldo suficiente"})
       });
   }else {
-    res.status(200).send({status: 'fail', title: 'Saque', message: 'O saque é disponível entre os dias 25 e 30 de cada mês.'})
+    res.status(200).send({status: 'fail', title: 'Saque', message: 'O saque ficará disponível entre os dias 25 e 30 de cada mês.'})
   }
 
 }
@@ -546,7 +546,7 @@ exports.getPlanSum = (req, res) => {
   let param = { where: { invest_type: req.body.invest_type } };
   if(req.body.invest_type == '' || req.body.invest_type == null) {
     param = {};
-  } 
+  }
   Contract.sum('open_value', param).then(sum => {
     return res.status(200).send({ status:'success', sum: sum })
   }).catch(err => {
@@ -558,7 +558,7 @@ exports.getPlanSumByUser = (req, res) => {
   let param = { where: { invest_type: req.body.invest_type, user_id: req.userId } };
   if(req.body.invest_type == '' || req.body.invest_type == null) {
     param = { where: { user_id: req.userId } };
-  } 
+  }
   Contract.sum('open_value', param).then(sum => {
     Contract.max('end_date', param).then(max => {
       return res.status(200).send({ status:'success', sum: sum, max: max })
@@ -574,7 +574,7 @@ exports.getPlanExpDateByUser = (req, res) => {
   let param = { where: { invest_type: req.body.invest_type, user_id: req.userId } };
   if(req.body.invest_type == '' || req.body.invest_type == null) {
     param = {};
-  } 
+  }
   Contract.max('end_date', param).then(max => {
     return res.status(200).send({ status:'success', max: max })
   }).catch(err => {
@@ -591,8 +591,8 @@ exports.withdraw_sum_pending = (req, res) => {
 }
 exports.withdraw_sum_paid = (req, res) => {
   Withdraw.sum(
-    'value', 
-    { where: 
+    'value',
+    { where:
       {
         status: 'approved',
         createdAt: {

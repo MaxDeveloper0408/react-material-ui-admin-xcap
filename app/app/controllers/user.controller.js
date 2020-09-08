@@ -178,7 +178,7 @@ exports.setActive = (req, res) => {
                   open_value: req.body.investment,
                   invest_type: req.body.investment_type,
                   start_date: now.format("YYYY-MM-DD"),
-                  status: 'processing',
+                  status: 'processando',
                   end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
                 }
               )
@@ -242,7 +242,7 @@ exports.setActive = (req, res) => {
                 open_value: req.body.investment,
                 invest_type: req.body.investment_type,
                 start_date: now.format("YYYY-MM-DD"),
-                status: 'processing',
+                status: 'processando',
                 end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
               }
             )
@@ -583,7 +583,7 @@ exports.getPlanExpDateByUser = (req, res) => {
 }
 
 exports.withdraw_sum_pending = (req, res) => {
-  Withdraw.sum('value', {where: {status: 'pending'}}).then(sum => {
+  Withdraw.sum('value', {where: {status: 'pendente'}}).then(sum => {
     return res.status(200).send({ status:'success', sum: sum })
   }).catch(err => {
     return res.status(200).send({ status:'fail', message: err.message })
@@ -594,7 +594,7 @@ exports.withdraw_sum_paid = (req, res) => {
     'value',
     { where:
       {
-        status: 'approved',
+        status: 'aprovado',
         createdAt: {
           [Op.gt]: moment(moment().format("YYYY-MM-DD")).subtract(1,'months').startOf('month').format('YYYY-MM-DD'),
           [Op.lte]: moment(moment().format("YYYY-MM-DD")).subtract(1,'months').endOf('month').format('YYYY-MM-DD')

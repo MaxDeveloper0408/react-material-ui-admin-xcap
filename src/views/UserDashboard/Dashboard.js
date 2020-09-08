@@ -6,6 +6,7 @@ import {
   TotalProfit,
   CTotalProfit,
   FTotalProfit,
+  VTotalProfit,
 } from './components';
 
 const useStyles = makeStyles(theme => ({
@@ -31,7 +32,7 @@ const Dashboard = () => {
           xl={4}
           xs={12}
         >
-          <FTotalProfit 
+          <FTotalProfit
             UserService={UserService}
           />
         </Grid>
@@ -42,7 +43,7 @@ const Dashboard = () => {
           xl={4}
           xs={12}
         >
-          <CTotalProfit 
+          <CTotalProfit
             UserService={UserService}
           />
         </Grid>
@@ -53,7 +54,18 @@ const Dashboard = () => {
           xl={4}
           xs={12}
         >
-          <TotalProfit 
+          <TotalProfit
+            UserService={UserService}
+          />
+        </Grid>
+        <Grid
+          item
+          lg={4}
+          sm={6}
+          xl={4}
+          xs={12}
+        >
+          <VTotalProfit
             UserService={UserService}
           />
         </Grid>

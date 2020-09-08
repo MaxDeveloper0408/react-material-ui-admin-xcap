@@ -89,7 +89,7 @@ const TasksProgress = props => {
               gutterBottom
               variant="body2"
             >
-              VALOR TOTAL EM FUNDOS
+              SALDO DISPONÍVEL
             </Typography>
             <Typography
               color="inherit"
@@ -108,7 +108,7 @@ const TasksProgress = props => {
           className={classes.caption}
           variant="caption"
         >
-          valor consolidado dos aportes nos planos.
+          total disponível para saque e transferência.
         </Typography>
         <LinearProgress
           className={classes.progress}

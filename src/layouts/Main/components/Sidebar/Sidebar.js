@@ -88,7 +88,7 @@ const Sidebar = props => {
     },
 
     {
-      title: 'Saques',
+      title: 'Saques/Transferências',
       href: '/adminwithdraw',
       icon: <LocalAtmIcon />,
     },
@@ -140,13 +140,13 @@ const Sidebar = props => {
         }
       ]
     },
+    // {
+    //   title: 'Depósitos',
+    //   href: '/userdeposit',
+    //   icon: <AccountBalanceWalletOutlinedIcon />,
+    // },
     {
-      title: 'Depósitos',
-      href: '/userdeposit',
-      icon: <AccountBalanceWalletOutlinedIcon />,
-    },
-    {
-      title: 'Saques',
+      title: 'Saques/Transferências',
       href: '/userwithdraw',
       icon: <LocalAtmIcon />,
     },

@@ -49,7 +49,7 @@ var dailyJob = scheduler.scheduleJob('* * * * *', function(){
       include: [{
         model: User,
       }],
-      where: {end_date: now.format("YYYY-MM-DD"), status: 'processing'},
+      where: {end_date: now.format("YYYY-MM-DD"), status: 'processando'},
       raw: true
     }
   )
@@ -57,7 +57,7 @@ var dailyJob = scheduler.scheduleJob('* * * * *', function(){
       if(expired_datas.length > 0){
         expired_datas.forEach(function (item, index) {
           Contract.update(
-            {status: 'expired'},
+            {status: 'concluído'},
             {
               where: {id: item.id},
             }).then((updated_data) => {
@@ -97,7 +97,7 @@ var monthlyJob = scheduler.scheduleJob('0 0 1 * *', function(){
             open_value: item.balance,
             invest_type: 'FLEXIVEL',
             start_date: now.format("YYYY-MM-DD"),
-            status: 'processing',
+            status: 'processando',
             end_date: moment(now.format("YYYY-MM-DD")).add(1, 'M')
           }).then((updated_data) => {
               console.log('create new plan each start day of month')

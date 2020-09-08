@@ -462,7 +462,6 @@ const UserDetails = props => {
                 <Select value={user.gender} onChange={handleChange("gender")}>
                   <MenuItem value={"MASCULINO"}>MASCULINO</MenuItem>
                   <MenuItem value={"FEMININO"}>FEMININO</MenuItem>
-                  <MenuItem value={"TRANSGÊNERO"}>TRANSGÊNERO</MenuItem>
                   <MenuItem value={"OUTRO"}>OUTRO</MenuItem>
                 </Select>
               </FormControl>

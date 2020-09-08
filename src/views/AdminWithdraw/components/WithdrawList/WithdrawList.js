@@ -137,7 +137,7 @@ const WithdrawList = props => {
       >
         <CardHeader
           subheader="Histórico de saques e transferências realizadas."
-          title="Saques"
+          title="Saques/Transferências"
         />
         <Divider />
         <CardContent>
@@ -184,7 +184,7 @@ const WithdrawList = props => {
                     <TableCell>{item.status}</TableCell>
                     <TableCell>
                       {
-                      item.status == 'pending' ? (
+                      item.status == 'pendente' ? (
                         <div>
                         <Button variant="contained" color="secondary" onClick={handleApprove.bind(this, item.id)}>
                          Aprovar

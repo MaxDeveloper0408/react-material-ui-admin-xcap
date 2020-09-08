@@ -18,8 +18,8 @@ exports.all = (req, res) => {
 }
 exports.set_approve = (req, res) => {
   Withdraw.update(
-      {status: 'approved'},
-      {where: {id: req.body.id, status: 'pending'}}
+      {status: 'aprovado'},
+      {where: {id: req.body.id, status: 'pendente'}}
   )
   .then(user => {
       return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
@@ -30,8 +30,8 @@ exports.set_approve = (req, res) => {
 }
 exports.delete = (req, res) => {
   Withdraw.update(
-      {status: 'canceled'},
-      {where: {id: req.body.id, status: 'pending'}}
+      {status: 'cancelado'},
+      {where: {id: req.body.id, status: 'pendente'}}
   )
   .then(user => {
     Case.increment(
@@ -63,7 +63,7 @@ exports.add = (req, res) => {
     {
       user_id: req.userId,
       value: req.body.withdraw_value,
-      status: 'pending'
+      status: 'pendente'
     }
   )
   .then(res_data => {
@@ -84,7 +84,7 @@ exports.transfer = (req, res) => {
       user_id: req.userId,
       value: req.body.withdraw_value,
       cpf: req.body.cpf,
-      status: 'pending'
+      status: 'pendente'
     }
   )
   .then(res_data => {

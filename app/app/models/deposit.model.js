@@ -15,7 +15,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       status: {
           type:   Sequelize.ENUM,
-          values: ['pending','approved']
+          values: ['pendente','aprovado']
       },
     });
     return Deposit;

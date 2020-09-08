@@ -9,7 +9,7 @@ export default [
       name: 'Ekaterina Tankova'
     },
     createdAt: 1555016400000,
-    status: 'pending'
+    status: 'pendente'
   },
   {
     id: uuid(),
@@ -39,7 +39,7 @@ export default [
       name: 'Anje Keizer'
     },
     createdAt: 1554757200000,
-    status: 'pending'
+    status: 'pendente'
   },
   {
     id: uuid(),

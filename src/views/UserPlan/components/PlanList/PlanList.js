@@ -241,7 +241,7 @@ const PlanList = props => {
 
         MySwal.fire({
           allowOutsideClick: false,
-          title: 'Download Contract',
+          title: 'Download Contrato',
           text: 'Entre com o aporte',
           showCancelButton: true,
           confirmButtonText: 'Confirmar',
@@ -447,8 +447,6 @@ const PlanList = props => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell style={{color: '#212a37'}} className="blackText">Data de Início</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Data de Término</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Aporte</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Lucro</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Total</TableCell>
@@ -463,13 +461,6 @@ const PlanList = props => {
                     hover
                     key={item.id}
                   >
-                    <TableCell>
-                      <div className={classes.nameContainer}>
-
-                        <Typography variant="body1">{moment(item.start_date).format('DD/MM/YYYY')}</Typography>
-                      </div>
-                    </TableCell>
-                    <TableCell>{moment(item.end_date).format('DD/MM/YYYY')}</TableCell>
                     <TableCell>{currencyFormatter.format(item.open_value, { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format(item.open_value*10/100, { code: 'BRL', symbol: '' }) : currencyFormatter.format(item.open_value*30/100, { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format((Number(item.open_value) + Number(item.open_value*10/100)), { code: 'BRL', symbol: '' }) : currencyFormatter.format((Number(item.open_value) + Number(item.open_value*30/100)), { code: 'BRL', symbol: '' })}</TableCell>

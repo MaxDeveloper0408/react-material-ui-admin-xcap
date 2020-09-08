@@ -21,8 +21,8 @@ exports.all = (req, res) => {
 exports.set_approve = (req, res) => {
   console.log(req.body)
   Deposit.update(
-      {status: 'approved', admin_value: req.body.admin_value},
-      {where: {id: req.body.id, status: 'pending'}}
+      {status: 'aprovado', admin_value: req.body.admin_value},
+      {where: {id: req.body.id, status: 'pendente'}}
   )
   .then(user => {
       let now = moment();
@@ -32,7 +32,7 @@ exports.set_approve = (req, res) => {
           open_value: req.body.admin_value,
           invest_type: req.body.investment_type,
           start_date: now.format("YYYY-MM-DD"),
-          status: 'processing',
+          status: 'processando',
           end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
         }
       )
@@ -67,7 +67,7 @@ exports.add = (req, res) => {
       user_id: req.userId,
       user_value: req.body.user_value,
       invest_type: req.body.investment_type,
-      status: 'pending',
+      status: 'pendente',
     }
   )
   .then(res_data => {

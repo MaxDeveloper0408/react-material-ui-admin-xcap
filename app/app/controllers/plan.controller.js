@@ -19,8 +19,8 @@ exports.all = (req, res) => {
 
 exports.set_approve = (req, res) => {
   Contract.update(
-      {status: 'processing'},
-      {where: {id: req.body.id, status: 'pending'}}
+      {status: 'processando'},
+      {where: {id: req.body.id, status: 'pendente'}}
   )
   .then(user => {
       return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
@@ -64,7 +64,7 @@ exports.add_plan = (req, res) => {
       open_value: req.body.open_value,
       invest_type: req.body.investment_type,
       start_date: now.format("YYYY-MM-DD"),
-      status: 'processing',
+      status: 'processando',
       end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
     }
   )

@@ -14,7 +14,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       status: {
         type:   Sequelize.ENUM,
-        values: ['pending','approved','canceled']
+        values: ['pendente','aprovado','cancelado']
       },
     });
     return Withdraw_history;

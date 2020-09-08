@@ -155,7 +155,7 @@ const PlanList = props => {
                     </TableCell>
                     <TableCell>
                       {
-                      item.status == 'pending' ? (
+                      item.status == 'pendente' ? (
                         <Button variant="contained" color="secondary" onClick={handleApprove.bind(this, item.id)}>
                          Aprovar
                       </Button>

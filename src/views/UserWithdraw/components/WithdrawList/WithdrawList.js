@@ -276,8 +276,8 @@ const WithdrawList = props => {
         noValidate
       >
         <CardHeader
-          subheader="Saques disponíveis do dia 25 ao 30 de cada mês."
-          title="Saques"
+          subheader="Saques e transferências disponíveis do dia 25 ao 30 de cada mês."
+          title="Saques/Transferências"
         />
         <Divider />
         <CardContent>

@@ -241,7 +241,7 @@ const PlanList = props => {
 
         MySwal.fire({
           allowOutsideClick: false,
-          title: 'Download Contract',
+          title: 'Download Contrato',
           text: 'Entre com o aporte',
           showCancelButton: true,
           confirmButtonText: 'Confirmar',
@@ -435,9 +435,9 @@ const PlanList = props => {
           </Button> */}
           {plans.length > 0 ? (
             <div>
-              <Button variant="outlined" color="inherit" onClick={handleDownload.bind()}>
+              {/*  <Button variant="outlined" color="inherit" onClick={handleDownload.bind()}>
                   Download do Contrato
-              </Button>
+              </Button>*/}
               {/* <Button variant="outlined" color="inherit" onClick={handleUpload.bind()}>
                   Upload Contrato
               </Button> */}

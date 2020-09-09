@@ -50,24 +50,16 @@ const Sidebar = props => {
       title: 'Dashboard',
       href: '/admindashboard',
       icon: <DashboardIcon />,
-
     },
     {
-      title: 'Solicitações',
+      title: 'Aprovação de novos usuários',
       href: '/users',
       icon: <AccountBoxIcon />,
-      subpages: [
-        {
-          title: 'Solicitações de não clientes',
-          href: '/users',
-      icon: <ArrowForwardIosOutlinedIcon />,
-        },
-        {
-          title: 'Lista de clientes',
-          href: '/active_users',
-      icon: <ArrowForwardIosOutlinedIcon />,
-        }
-      ]
+    },
+    {
+      title: 'Lista de clientes',
+      href: '/active_users',
+      icon: <AccountBoxIcon />,
     },
     {
       title: 'Planos',

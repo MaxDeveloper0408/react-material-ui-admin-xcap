@@ -90,7 +90,7 @@ const TasksProgress = props => {
               gutterBottom
               variant="body2"
             >
-              Avaliable Balance
+              SALDO DISPONÍVEL
             </Typography>
             <Typography
               color="inherit"

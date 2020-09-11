@@ -7,6 +7,7 @@ node_modules/
 .idea/
 .pnp.js
 /app/app/config/db.config.js
+
 # testing
 /coverage
 
@@ -16,7 +17,6 @@ node_modules/
 # misc
 .DS_Store
 # /.env
-/.env
 /.env.production
 /.env.local
 /.env.development.local

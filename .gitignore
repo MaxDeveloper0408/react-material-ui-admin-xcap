@@ -4,8 +4,9 @@
 
 /.pnp
 node_modules/
+.idea/
 .pnp.js
-app/app/config/db.config.js
+/app/app/config/db.config.js
 # testing
 /coverage
 
@@ -15,6 +16,8 @@ app/app/config/db.config.js
 # misc
 .DS_Store
 # /.env
+/.env
+/.env.production
 /.env.local
 /.env.development.local
 /.env.test.local

@@ -152,6 +152,13 @@ class UserService {
         return response.data;
       });
   }
+  getExpiredProfitSumByUser(data){
+    return axios
+      .post(URL + "getExpiredProfitSumByUser", data, {headers: authHeader()})
+      .then(response => {
+        return response.data;
+      });
+  }
   withdraw_sum_pending() {
     return axios
       .post(URL + "withdraw_sum_pending", {}, {headers: authHeader()})

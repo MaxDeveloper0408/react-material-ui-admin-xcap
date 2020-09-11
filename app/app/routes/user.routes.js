@@ -45,5 +45,6 @@ module.exports = function(app) {
   app.post("/api/user/bank_all", [authJwt.verifyToken], controller.bank_all);
   app.post("/api/user/getPlanSumByUser", [authJwt.verifyToken], controller.getPlanSumByUser);
   app.post("/api/user/getPlanExpDateByUser", [authJwt.verifyToken], controller.getPlanExpDateByUser);
+  app.post("/api/user/getExpiredProfitSumByUser", [authJwt.verifyToken], controller.getExpiredProfitSumByUser);
 
 };

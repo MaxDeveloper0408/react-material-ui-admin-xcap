@@ -1,12 +1,17 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
+
 import UserService from "../../services/user.service";
+import AuthService from "../../services/auth.service";
+
 import {
   TotalProfit,
   CTotalProfit,
   FTotalProfit,
   VTotalProfit,
+  AvaliableBalance,
+  ETotalProfit,
 } from './components';
 
 const useStyles = makeStyles(theme => ({
@@ -67,6 +72,30 @@ const Dashboard = () => {
         >
           <VTotalProfit
             UserService={UserService}
+          />
+        </Grid>
+        <Grid
+          item
+          lg={4}
+          sm={6}
+          xl={4}
+          xs={12}
+        >
+          <ETotalProfit
+            UserService={UserService}
+            AuthService={AuthService}
+          />
+        </Grid>
+        <Grid
+          item
+          lg={4}
+          sm={6}
+          xl={4}
+          xs={12}
+        >
+          <AvaliableBalance
+            UserService={UserService}
+            AuthService={AuthService}
           />
         </Grid>
       </Grid>

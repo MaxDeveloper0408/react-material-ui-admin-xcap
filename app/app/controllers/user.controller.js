@@ -615,3 +615,11 @@ exports.active_users_count = (req, res) => {
     return res.status(200).send({ status:'fail', message: err.message })
   })
 }
+
+exports.getExpiredProfitSumByUser = (req, res) => {
+  Contract.sum('profit_value', { where: { status: 'concluído', user_id: req.userId } }).then(sum => {
+    return res.status(200).send({ status:'success', sum: sum })
+  }).catch(err => {
+    return res.status(200).send({ status:'fail', message: err.message })
+  })
+}

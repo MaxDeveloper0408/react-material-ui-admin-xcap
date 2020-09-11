@@ -34,6 +34,7 @@ rule.hour = 00;
 rule.minute = 00;
 rule.second = 00;
 rule.dayOfWeek = new scheduler.Range(0,6);
+
 const moment = require('moment');
 const User = db.user;
 const Bank = db.bank;
@@ -56,16 +57,21 @@ var dailyJob = scheduler.scheduleJob('* * * * *', function(){
   .then((expired_datas) => {
       if(expired_datas.length > 0){
         expired_datas.forEach(function (item, index) {
+
+          let added_value = item.invest_type=='FLEXIVEL' ?
+            (Number(item.open_value) + Number(item.open_value*10/100))
+            : (Number(item.open_value) + Number(item.open_value*8*item.user.profit_percent==null?20:item.user.profit_percent/100))
+          let expired_profit_value = Number(added_value) - Number(item.open_value)
+
           Contract.update(
-            {status: 'concluído'},
+            {
+              profit_value: expired_profit_value,
+              status: 'concluído'
+            },
             {
               where: {id: item.id},
             }).then((updated_data) => {
               console.log('Successfully expired');
-              let added_value = item.invest_type=='FLEXIVEL' ? 
-              (Number(item.open_value) + Number(item.open_value*10/100)) 
-              : (Number(item.open_value) + Number(item.open_value*8*item.user.profit_percent==null?20:item.user.profit_percent/100))
-
               Case.increment(
                 {balance: added_value},
                 {where: {user_id: item.user_id}}

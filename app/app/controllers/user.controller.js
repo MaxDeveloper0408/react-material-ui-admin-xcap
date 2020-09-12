@@ -1,7 +1,6 @@
 const Sequelize = require("sequelize");
 const moment = require('moment');
 const db = require("../models");
-const config = require("../config/auth.config");
 var bcrypt = require("bcryptjs");
 const User = db.user;
 const Bank = db.bank;
@@ -594,7 +593,7 @@ exports.withdraw_sum_paid = (req, res) => {
     'value',
     { where:
       {
-        status: 'aprovado',
+        status: 'concluído',
         createdAt: {
           [Op.gt]: moment(moment().format("YYYY-MM-DD")).subtract(1,'months').startOf('month').format('YYYY-MM-DD'),
           [Op.lte]: moment(moment().format("YYYY-MM-DD")).subtract(1,'months').endOf('month').format('YYYY-MM-DD')

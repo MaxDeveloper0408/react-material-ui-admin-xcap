@@ -1,10 +1,7 @@
 const moment = require('moment');
 const db = require("../models");
-const config = require("../config/auth.config");
-var bcrypt = require("bcryptjs");
 const User = db.user;
 const Contract = db.contract;
-const Case = db.case;
 
 const Deposit = db.deposit;
 
@@ -21,7 +18,7 @@ exports.all = (req, res) => {
 exports.set_approve = (req, res) => {
   console.log(req.body)
   Deposit.update(
-      {status: 'aprovado', admin_value: req.body.admin_value},
+      {status: 'concluído', admin_value: req.body.admin_value},
       {where: {id: req.body.id, status: 'pendente'}}
   )
   .then(user => {

@@ -181,7 +181,7 @@ const PlanList = props => {
                       {item.status}
                     </TableCell>
                     <TableCell>
-                      {item.status != 'aprovado' ? (
+                      {item.status != 'concluído' ? (
                         <Button variant="contained" color="secondary" onClick={handleApprove.bind(this, item.user_id, item.id, item.user_value, item.invest_type)}>
                         Aprovar
                         </Button>

@@ -21,7 +21,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       status: {
           type:   Sequelize.ENUM,
-          values: ['pendente','processando','exprired']
+          values: ['pendente','processando','concluído']
       },
     });
     return Contract;

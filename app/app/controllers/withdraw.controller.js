@@ -18,7 +18,7 @@ exports.all = (req, res) => {
 }
 exports.set_approve = (req, res) => {
   Withdraw.update(
-      {status: 'aprovado'},
+      {status: 'concluído'},
       {where: {id: req.body.id, status: 'pendente'}}
   )
   .then(user => {

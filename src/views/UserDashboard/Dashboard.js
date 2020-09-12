@@ -70,17 +70,6 @@ const Dashboard = () => {
           xl={4}
           xs={12}
         >
-          <VTotalProfit
-            UserService={UserService}
-          />
-        </Grid>
-        <Grid
-          item
-          lg={4}
-          sm={6}
-          xl={4}
-          xs={12}
-        >
           <ETotalProfit
             UserService={UserService}
             AuthService={AuthService}

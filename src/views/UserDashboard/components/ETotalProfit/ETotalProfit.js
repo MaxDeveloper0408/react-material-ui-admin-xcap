@@ -89,7 +89,7 @@ const TasksProgress = props => {
               gutterBottom
               variant="body2"
             >
-              Total Profit Amount
+               VALOR TOTAL DE LUCRO
             </Typography>
             <Typography
               color="inherit"
@@ -108,7 +108,7 @@ const TasksProgress = props => {
           className={classes.caption}
           variant="caption"
         >
-          total disponível para saque e transferência.
+          total de lucro realizado nos planos.
         </Typography>
         <LinearProgress
           className={classes.progress}

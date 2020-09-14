@@ -4,10 +4,17 @@ const config = require("../config/auth.config");
 var bcrypt = require("bcryptjs");
 const User = db.user;
 const Contract = db.contract;
+const Contract_pdf = db.contract_pdf;
 const Case = db.case;
 
 exports.all = (req, res) => {
-  Contract.findAll({include: [User]})
+  Contract.findAll({
+    include: [
+      {
+        model: User
+      }
+    ]
+  })
   .then(datas => {
     console.log(datas)
     res.status(200).send(datas)
@@ -44,6 +51,11 @@ exports.all_by_user = (req, res) => {
 }
 exports.all_by_user_it = (req, res) => {
   Contract.findAll({
+      include: [
+        {
+          model: Contract_pdf
+        }
+      ],
       where: {
         user_id: req.body.user_id,
         invest_type: req.body.invest_type

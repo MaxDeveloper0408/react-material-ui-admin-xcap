@@ -16,8 +16,10 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  TablePagination,
+  TablePagination, Typography
 } from '@material-ui/core';
+import moment from 'moment';
+import currencyFormatter from 'currency-formatter';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -46,7 +48,7 @@ const ContractList = props => {
   useEffect(() => {
     const fetchContracts = async () => {
         try {
-          const response = await UserService.getContractPDFAll({invest_type: 'FLEXIVEL'});
+          const response = await UserService.getContractPDFAll({invest_type: 'CRESCIMENTO'});
           setPlans(response.data);
         } catch (e) {
             setPlans([]);
@@ -140,8 +142,8 @@ const ContractList = props => {
         noValidate
       >
         <CardHeader
-          subheader="Lista de todos os contratos dos planos: flexível."
-          title="Flexível Contratos"
+          subheader="Lista de todos os contratos dos planos: crescimento."
+          title="Crescimento Contratos"
         />
         <Divider />
         <CardContent>
@@ -154,8 +156,11 @@ const ContractList = props => {
                 <TableRow>
                 <TableCell className="blackText" style={{color: '#212a37'}}>Nome Completo</TableCell>
                 <TableCell className="blackText" style={{color: '#212a37'}}>E-mail</TableCell>
-                <TableCell className="blackText" style={{color: '#212a37'}}>Flexível Download</TableCell>
-                <TableCell className="blackText" style={{color: '#212a37'}}>Flexível Upload</TableCell>
+                  <TableCell style={{color: '#212a37'}} className="blackText">Data de Início</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Data de Término</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Aporte</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Crescimento Download</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Crescimento Upload</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -168,14 +173,21 @@ const ContractList = props => {
                     <TableCell>{item.user.full_name}</TableCell>
                     <TableCell>{item.user.email}</TableCell>
                     <TableCell>
-                      {item.user_pdf == '' || item.user_pdf == null? (''):(
-                        <Button variant="contained" color="secondary" style={{marginLeft: '10px'}} onClick={handleDownload.bind(this, item.user_pdf)}>
+                      <div className={classes.nameContainer}>
+                        <Typography variant="body1">{moment(item.contract.start_date).format('DD/MM/YYYY')}</Typography>
+                      </div>
+                    </TableCell>
+                    <TableCell>{moment(item.contract.end_date).format('DD/MM/YYYY')}</TableCell>
+                    <TableCell>{currencyFormatter.format(item.contract.open_value, { code: 'BRL', symbol: '' })}</TableCell>
+                    <TableCell>
+                      {item.user_pdf2 == '' || item.user_pdf2 == null? (''):(
+                        <Button variant="contained" color="secondary" style={{marginLeft: '10px'}} onClick={handleDownload.bind(this, item.user_pdf2)}>
                           Download
                         </Button>
                       )}
                     </TableCell>
                     <TableCell>
-                        <Button variant="contained" color="secondary" onClick={handleUpload.bind(this, item.id, item.user_id,0)}>
+                        <Button variant="contained" color="secondary" onClick={handleUpload.bind(this, item.id, item.user_id,1)}>
                           Upload
                         </Button>
                     </TableCell>

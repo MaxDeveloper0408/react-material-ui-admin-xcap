@@ -214,131 +214,16 @@ const PlanList = props => {
       }
     })
   }
-  const handleDownload = (user_pdf) => {
-    let is_both_invest_type = false
-    let f_count = 0
-    let c_count = 0
-    plans.map(item => {
-      if(item.invest_type == 'FLEXIVEL') {
-        f_count = f_count + 1;
-      }else if(item.invest_type == 'CRESCIMENTO'){
-        c_count = c_count + 1;
+  const handleDownload = (contract_pdf_id) => {
+    alert(contract_pdf_id)
+    UserService.downloadUserContractbyCp(contract_pdf_id).then(
+      response => {
+
+      },
+      error => {
+        console.log(error)
       }
-    })
-
-    if(f_count > 0 && c_count > 0) {
-      is_both_invest_type = true
-    }
-    var select_html = ''
-    UserService.getContractPDFByUser(AuthService.getCurrentUser().id).then(cp_res => {
-      let cp_res_data = cp_res.data;
-      let is_exist = false;
-      let admin_is_exist = false;
-
-
-      if(is_both_invest_type) {
-        select_html = '<select id="swal_investment_type" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 16px;padding: .975em .625em;"><option value="FLEXIVEL">FLEXIVEL</option><option value="CRESCIMENTO">CRESCIMENTO</option></select>'
-
-        MySwal.fire({
-          allowOutsideClick: false,
-          title: 'Download Contract',
-          text: 'Entre com o aporte',
-          showCancelButton: true,
-          confirmButtonText: 'Confirmar',
-          cancelButtonText: 'Cancelar',
-          html: select_html,
-          preConfirm: (value) => {
-
-          },
-          onOpen: () => {
-
-          }
-        }).then(function (result) {
-          if (result.dismiss === MySwal.DismissReason.cancel) {
-            return
-          }else if(result.value){
-            let invest_type_value = document.getElementById('swal_investment_type').value
-            if(cp_res_data == null || cp_res_data.length == 0) {
-              admin_is_exist = false;
-            }else {
-              if(invest_type_value == "FLEXIVEL") {
-                if(!cp_res_data.admin_pdf || 0 === cp_res_data.admin_pdf.length ) {
-                  admin_is_exist = false;
-                }else {
-                  admin_is_exist = true;
-                }
-              }else {
-                if(!cp_res_data.admin_pdf2 || 0 === cp_res_data.admin_pdf2.length ) {
-                  admin_is_exist = false;
-                }else {
-                  admin_is_exist = true;
-                }
-              }
-            }
-            if(admin_is_exist) {
-              UserService.downloadUserContract(document.getElementById('swal_investment_type').value).then(
-                response => {
-
-                },
-                error => {
-                  console.log(error)
-                }
-              );
-            }else {
-              MySwal.fire({
-                title: 'Alarm',
-                text: 'Nenhum contrato disponível no momento'
-              })
-            }
-          }
-        })
-      }else {
-        let investment_type = "FLEXIVEL"
-
-        if(f_count > 0 && c_count == 0) {
-          investment_type = "FLEXIVEL"
-
-        }else if(f_count == 0 && c_count > 0){
-          investment_type = "CRESCIMENTO"
-        }
-
-        if(cp_res_data == null || cp_res_data.length == 0) {
-          admin_is_exist = false;
-        }else {
-          if(investment_type == "FLEXIVEL") {
-            if(!cp_res_data.admin_pdf || 0 === cp_res_data.admin_pdf.length ) {
-              admin_is_exist = false;
-            }else {
-              admin_is_exist = true;
-            }
-          }else {
-            if(!cp_res_data.admin_pdf2 || 0 === cp_res_data.admin_pdf2.length ) {
-              admin_is_exist = false;
-            }else {
-              admin_is_exist = true;
-            }
-          }
-        }
-        if(admin_is_exist) {
-          UserService.downloadUserContract(investment_type).then(
-            response => {
-
-            },
-            error => {
-              console.log(error)
-            }
-          );
-        }else {
-          MySwal.fire({
-            title: 'Alarm',
-            text: 'Nenhum contrato disponível no momento'
-          })
-        }
-      }
-    });
-
-
-
+    );
   }
 
   const handleAddPlan = () => {
@@ -435,9 +320,9 @@ const PlanList = props => {
           </Button> */}
           {plans.length > 0 ? (
             <div>
-              <Button variant="outlined" color="inherit" onClick={handleDownload.bind()}>
+              {/*<Button variant="outlined" color="inherit" onClick={handleDownload.bind()}>
                   Download do Contrato
-              </Button>
+              </Button>*/}
               {/* <Button variant="outlined" color="inherit" onClick={handleUpload.bind()}>
                   Upload Contrato
               </Button> */}
@@ -452,8 +337,8 @@ const PlanList = props => {
                   <TableCell className="blackText" style={{color: '#212a37'}}>Aporte</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Lucro</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Total</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Plano</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Download do Contrato</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -465,7 +350,6 @@ const PlanList = props => {
                   >
                     <TableCell>
                       <div className={classes.nameContainer}>
-
                         <Typography variant="body1">{moment(item.start_date).format('DD/MM/YYYY')}</Typography>
                       </div>
                     </TableCell>
@@ -473,9 +357,14 @@ const PlanList = props => {
                     <TableCell>{currencyFormatter.format(item.open_value, { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format(item.open_value*10/100, { code: 'BRL', symbol: '' }) : currencyFormatter.format(item.open_value*30/100, { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format((Number(item.open_value) + Number(item.open_value*10/100)), { code: 'BRL', symbol: '' }) : currencyFormatter.format((Number(item.open_value) + Number(item.open_value*30/100)), { code: 'BRL', symbol: '' })}</TableCell>
-                    <TableCell>{item.invest_type}</TableCell>
                     <TableCell>
                       {item.status}
+                    </TableCell>
+                    <TableCell>
+                      {item.contract_pdf != null && item.contract_pdf.invest_type === 'CRESCIMENTO'? (
+                      <Button variant="contained" color="secondary" onClick={handleDownload.bind(this, item.contract_pdf.id)}>
+                        Download
+                      </Button>):('')}
                     </TableCell>
                   </TableRow>
                 ))}

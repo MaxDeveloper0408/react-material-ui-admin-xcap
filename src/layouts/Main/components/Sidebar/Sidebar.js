@@ -88,19 +88,19 @@ const Sidebar = props => {
       title: 'Contrato',
       href: '/admincontract',
       icon: <InsertDriveFileIcon />,
+      subpages: [
+        {
+          title: 'Flexível',
+          href: '/admincontract',
+          icon: <ArrowForwardIosOutlinedIcon />,
+        },
+        {
+          title: 'Crescimento',
+          href: '/admincontractcresc',
+          icon: <ArrowForwardIosOutlinedIcon />,
+        }
+      ]
     },
-    // {
-    //   title: 'Extrato',
-    //   href: '/admindashboard',
-    //   icon: <PageViewIcon />,
-    //
-    // },
-    // {
-    //   title: 'Projeção',
-    //   href: '/admindashboard',
-    //   icon: <InsertChartIcon />,
-    //
-    // },
     {
       title: 'Configurações',
       href: '/userpassword',
@@ -132,28 +132,28 @@ const Sidebar = props => {
         }
       ]
     },
-    // {
-    //   title: 'Depósitos',
-    //   href: '/userdeposit',
-    //   icon: <AccountBalanceWalletOutlinedIcon />,
-    // },
-    {
-      title: 'Saques/Transferências',
-      href: '/userwithdraw',
-      icon: <LocalAtmIcon />,
-    },
     {
       title: 'Extrato',
       href: '/userincome',
       icon: <PageViewIcon />,
-
+      subpages: [
+        {
+          title: 'User Income',
+          href: '/userincome',
+          icon: <AccountBalanceWalletOutlinedIcon />,
+        },
+        {
+          title: 'Saques/Transferências',
+          href: '/userwithdraw',
+          icon: <LocalAtmIcon />,
+        },
+        {
+          title: 'Depósitos',
+          href: '/userdeposit',
+          icon: <AccountBalanceWalletOutlinedIcon />,
+        },
+      ]
     },
-    // {
-    //   title: 'Projeção',
-    //   href: '/userdashboard',
-    //   icon: <InsertChartIcon />,
-    //
-    // },
     {
       title: 'Configurações',
       href: '/userpersonal',

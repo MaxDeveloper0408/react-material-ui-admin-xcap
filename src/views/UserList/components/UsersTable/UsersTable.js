@@ -183,7 +183,6 @@ const UsersTable = props => {
         }else if(result.value){
           var formData = new FormData();
           var file = $('#swal_admin_cpf')[0].files[0];
-          console.log(file)
           formData.append("userId", userId);
           formData.append("admin_pdf", file);
           formData.append("investment_type", investment_type);

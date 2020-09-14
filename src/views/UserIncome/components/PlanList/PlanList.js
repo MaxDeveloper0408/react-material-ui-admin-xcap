@@ -385,7 +385,6 @@ const PlanList = props => {
             if (result.dismiss === MySwal.DismissReason.cancel) {
               return;
             }else if(result.value){
-
               PlanService.addPlan(
                 {
                   open_value: SimpleMaskMoney.formatToNumber(document.getElementById('swal_open_value').value),

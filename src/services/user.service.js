@@ -76,8 +76,8 @@ class UserService {
         return response.data;
     });
   }
-  getContractPDFAll() {
-    return axios.get(URL + 'contract_all', {headers: authHeader()});
+  getContractPDFAll(data) {
+    return axios.post(URL + 'contract_all', data,{headers: authHeader()});
   }
   getContractPDFByUser(user_id) {
     return axios.post(URL + 'contract_by_user',{user_id: user_id}, {headers: authHeader()});
@@ -109,6 +109,13 @@ class UserService {
             const content = resp.headers['content-type'];
             download(resp.data, "contract.pdf", content);
      });
+  }
+  downloadUserContractbyCp(contract_pdf_id) {
+    return axios.post(URL + "download_user_contract_by_cp", {'contract_pdf_id': contract_pdf_id}, {headers: authHeader(),responseType: 'blob'})
+      .then(resp => {
+        const content = resp.headers['content-type'];
+        download(resp.data, "contract.pdf", content);
+      });
   }
   check_cpf_user(cpf) {
     return axios

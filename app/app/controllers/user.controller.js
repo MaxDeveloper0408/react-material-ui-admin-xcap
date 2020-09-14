@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const moment = require('moment');
 const db = require("../models");
-var bcrypt = require("bcryptjs");
+const bcrypt = require('bcryptjs');
 const User = db.user;
 const Bank = db.bank;
 const Case = db.case;
@@ -156,7 +156,6 @@ exports.delete = (req, res) => {
     });
 }
 exports.setActive = (req, res) => {
-
   let upload = multer({ storage: storage,limits:{fileSize:'10mb'}, fileFilter: multerHelper.pdfFilter}).single('admin_pdf');
     upload(req, res, function(err) {
         if (req.fileValidationError) {
@@ -178,13 +177,13 @@ exports.setActive = (req, res) => {
                   invest_type: req.body.investment_type,
                   start_date: now.format("YYYY-MM-DD"),
                   status: 'processando',
-                  end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
+                  end_date: req.body.investment_type === 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
                 }
               )
               .then(res_data => {
                   Case.count({
                     where: {user_id: req.body.userId}}).then(count => {
-                    if(count == 0 ) {
+                    if( count === 0 ) {
                       Case.create({user_id: req.body.userId, balance: 0}).then(create_case => {
                         console.log(create_case)
                       })
@@ -206,64 +205,65 @@ exports.setActive = (req, res) => {
         }
         else if (err) {
           return res.status(200).send({ status:'fail', message: err });
-        }
-        let contract_pdf_create = {
-          user_id: req.body.userId,
-          admin_pdf: req.file.path,
-          invest_type: req.body.investment_type,
-        }
-        if(req.body.investment_type == 'FLEXIVEL') {
-          contract_pdf_create = {
-            user_id: req.body.userId,
-            admin_pdf: req.file.path,
-            invest_type: req.body.investment_type,
-          }
-        }else if(req.body.investment_type == 'CRESCIMENTO') {
-          contract_pdf_create = {
-            user_id: req.body.userId,
-            admin_pdf2: req.file.path,
-            invest_type: req.body.investment_type,
-          }
-        }
-        Contract_pdf.create(contract_pdf_create)
-
-        User.update(
-          {
-            active: req.body.active,
-          },
-          {where: {id: req.body.userId}}
-        )
-        .then(user => {
-            let now = moment();
-            Contract.create(
-              {
-                user_id: req.body.userId,
-                open_value: req.body.investment,
-                invest_type: req.body.investment_type,
-                start_date: now.format("YYYY-MM-DD"),
-                status: 'processando',
-                end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
-              }
-            )
-            .then(res_data => {
-
-                Case.count({
-                  where: {user_id: req.body.userId}}).then(count => {
-                  if(count == 0 ) {
-                    Case.create({user_id: req.body.userId, balance: 0}).then(create_case => {
-                      console.log(create_case)
-                    })
+        }else if (req.file) {
+          User.update(
+            {
+              active: req.body.active,
+            },
+            { where: { id: req.body.userId } }
+          )
+            .then(user => {
+              let now = moment();
+              Contract.create(
+                {
+                  user_id: req.body.userId,
+                  open_value: req.body.investment,
+                  invest_type: req.body.investment_type,
+                  start_date: now.format("YYYY-MM-DD"),
+                  status: 'processando',
+                  end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
+                }
+              )
+                .then(res_data => {
+                  let contract_pdf_create = {
+                    user_id: req.body.userId,
+                    admin_pdf: req.file.path,
+                    invest_type: req.body.investment_type,
                   }
+                  if (req.body.investment_type === 'FLEXIVEL') {
+                    contract_pdf_create = {
+                      user_id: req.body.userId,
+                      admin_pdf: req.file.path,
+                      invest_type: req.body.investment_type,
+                    }
+                  } else if (req.body.investment_type === 'CRESCIMENTO') {
+                    contract_pdf_create = {
+                      user_id: req.body.userId,
+                      admin_pdf2: req.file.path,
+                      invest_type: req.body.investment_type,
+                      contract_id: res_data.id
+                    }
+                  }
+                  Contract_pdf.create(contract_pdf_create)
+                  Case.count({
+                    where: { user_id: req.body.userId }
+                  }).then(count => {
+                    if (count == 0) {
+                      Case.create({ user_id: req.body.userId, balance: 0 }).then(create_case => {
+                        console.log(create_case)
+                      })
+                    }
+                  })
+                  return res.status(200).send({ status: 'success', message: "Ação realizada com sucesso!" });
                 })
-                return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+                .catch(err => {
+                  return res.status(200).send({ status: 'fail', message: err.message });
+                });
             })
             .catch(err => {
-                return res.status(200).send({ status:'fail', message: err.message });
+              return res.status(200).send({ status: 'fail', message: err.message });
             });
-        })
-        .catch(err => {
-            return res.status(200).send({ status:'fail', message: err.message });
-        });
+        }
     })
 
 }
@@ -350,7 +350,18 @@ exports.getBalance = (req, res) => {
 
 }
 exports.contract_all = (req, res) => {
-  Contract_pdf.findAll({include: [User]})
+  Contract_pdf.findAll({
+    include: [
+      {
+        model: User,
+        attributes: ['id', 'cpf', 'email', 'full_name'],
+      },
+      {
+        model: Contract
+      }
+    ],
+    where: req.body
+  })
   .then(users => {
     res.status(200).send(users)
   })
@@ -471,7 +482,13 @@ exports.download_user_contract = (req, res) => {
   })
 
 }
+exports.download_user_contract_by_cp = (req, res) => {
+  Contract_pdf.findOne({where: {id: req.body.contract_pdf_id}}).then(data => {
+    const filepath = data.admin_pdf2
+    res.download(filepath, "contract.pdf")
+  })
 
+}
 exports.check_cpf_user = (req, res) => {
   User.findOne({where: {cpf: req.body.cpf, active: 'YES'}}).then(data => {
     return res.status(200).send({cpf_user: data})

@@ -74,8 +74,11 @@ db.case_deposit.belongsTo(db.user, {foreignKey: 'user_id'})
 db.user.hasOne(db.case, {foreignKey: 'user_id'})
 db.case.belongsTo(db.user, {foreignKey: 'user_id'})
 
-db.user.hasOne(db.contract_pdf, {foreignKey: 'user_id'})
+db.user.hasMany(db.contract_pdf, {foreignKey: 'user_id'})
 db.contract_pdf.belongsTo(db.user, {foreignKey: 'user_id'})
+
+db.contract.hasOne(db.contract_pdf, {foreignKey: 'contract_id'})
+db.contract_pdf.belongsTo(db.contract, {foreignKey: 'contract_id'})
 
 db.bank_list.hasMany(db.bank, {foreignKey: 'bank_id'})
 db.bank.belongsTo(db.bank_list, {foreignKey: 'bank_id'})

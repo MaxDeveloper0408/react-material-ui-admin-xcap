@@ -82,7 +82,8 @@ const PlanList = props => {
                 '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Cliente solicitou: ' + currencyFormatter.format(user_value, { code: 'BRL', symbol: '' }) + '</h2>' +
                   '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Insira um valor (min. R$5.000,00)</h2>' +
                   '<input id="swal_open_value" type="text" min="5000" class="swal2-input" style="max-width:100%;" placeHolder="5.000,00">' +
-                  '<select id="swal_investment_type" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 16px;padding: .975em .625em;"><option value="FLEXIVEL">FLEXIVEL</option><option value="CRESCIMENTO">CRESCIMENTO</option></select>',
+                  '<select id="swal_investment_type" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 16px;padding: .975em .625em;"><option value="FLEXIVEL">FLEXIVEL</option><option value="CRESCIMENTO">CRESCIMENTO</option></select>' +
+                  '<input type="file" required="false" id="swal_admin_cpf" name="admin_pdf" class="swal2-input" style="max-width: 100%;" placeHolder="">',
             showCancelButton: true,
             preConfirm: (value) => {
               if( SimpleMaskMoney.formatToNumber(document.getElementById('swal_open_value').value) < 5000) {
@@ -91,6 +92,18 @@ const PlanList = props => {
             },
             onOpen: () => {
               $('#swal_investment_type').val(invest_type)
+              if( invest_type === "FLEXIVEL" ) {
+                $('#swal_admin_cpf').hide()
+              }else {
+                $('#swal_admin_cpf').show()
+              }
+              $('#swal_investment_type').change(function(){
+                if( $('#swal_investment_type').val() === "FLEXIVEL" ) {
+                  $('#swal_admin_cpf').hide()
+                }else {
+                  $('#swal_admin_cpf').show()
+                }
+              })
               const input = document.getElementById('swal_open_value')
               SimpleMaskMoney.setMask(input, {
                 allowNegative: false,
@@ -109,15 +122,18 @@ const PlanList = props => {
             }
           }).then(function (result) {
             if (result.dismiss === MySwal.DismissReason.cancel) {
-              return;
+
             }else if(result.value){
-              DepositService.setApprove(
-                {
-                  user_id: user_id,
-                  id: deposit_id,
-                  admin_value: SimpleMaskMoney.formatToNumber(document.getElementById('swal_open_value').value),
-                  investment_type: document.getElementById('swal_investment_type').value,
-              }).then(
+
+              let formData = new FormData();
+              let file = $('#swal_admin_cpf')[0].files[0];
+              formData.append("user_id", user_id);
+              formData.append("id", deposit_id);
+              formData.append("admin_pdf", file);
+              formData.append("admin_value", SimpleMaskMoney.formatToNumber(document.getElementById('swal_open_value').value));
+              formData.append("investment_type", document.getElementById('swal_investment_type').value);
+
+              DepositService.setApprove( formData ).then(
                 response => {
                   MySwal.fire({
                     title: 'Success',

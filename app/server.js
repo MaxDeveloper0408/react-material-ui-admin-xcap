@@ -41,7 +41,7 @@ const Bank = db.bank;
 const Case = db.case;
 const Contract = db.contract;
 
-var dailyJob = scheduler.scheduleJob('* * * * *', function(){
+const dailyJob = scheduler.scheduleJob('* * * * *', function(){
   console.log('update plan and available balance every day 00:00:00');
   //update user's available balance when update expire date and profit balance plan
   let now = moment();
@@ -83,8 +83,8 @@ var dailyJob = scheduler.scheduleJob('* * * * *', function(){
       }
   })
 });
-var lastOfMonth_rule = '0 0 1 * *';
-var monthlyJob = scheduler.scheduleJob('0 0 1 * *', function(){
+const lastOfMonth_rule = '0 0 1 * *';
+const monthlyJob = scheduler.scheduleJob('0 0 1 * *', function(){
   console.log('start monthly job');
   let now = moment();
   Case.findAll({
@@ -97,7 +97,7 @@ var monthlyJob = scheduler.scheduleJob('0 0 1 * *', function(){
     console.log(datas)
     if(datas.length > 0){
       datas.forEach(function (item, index) {
-        Contract.create(
+        (
           {
             user_id: item.user_id,
             open_value: item.balance,

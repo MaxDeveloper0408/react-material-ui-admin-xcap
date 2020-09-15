@@ -215,7 +215,6 @@ const PlanList = props => {
     })
   }
   const handleDownload = (contract_pdf_id) => {
-    alert(contract_pdf_id)
     UserService.downloadUserContractbyCp(contract_pdf_id).then(
       response => {
 

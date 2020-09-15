@@ -438,9 +438,9 @@ const PlanList = props => {
               <Button variant="outlined" color="inherit" onClick={handleDownload.bind()}>
                   Download do Contrato
               </Button>
-              {/* <Button variant="outlined" color="inherit" onClick={handleUpload.bind()}>
+               <Button variant="outlined" color="inherit" onClick={handleUpload.bind()}>
                   Upload Contrato
-              </Button> */}
+              </Button>
             </div>
           ):('')}
           </div>

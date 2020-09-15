@@ -205,7 +205,13 @@ const SignIn = props => {
       );
     }
   };
-
+  const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      event.stopPropagation();
+      handleSignIn();
+    }
+  }
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
 
@@ -322,6 +328,7 @@ const SignIn = props => {
                   type="text"
                   value={formState.values.email || ''}
                   variant="outlined"
+                  onKeyDown={handleKeydown}
                 />
                 <TextField
                   className={classes.textField}
@@ -336,10 +343,12 @@ const SignIn = props => {
                   type="password"
                   value={formState.values.password || ''}
                   variant="outlined"
+                  onKeyDown={handleKeydown}
                 />
                 <Button
                   className={classes.signInButton}
                   color="primary"
+                  focusVisible
                   disabled={!formState.isValid}
                   fullWidth
                   size="large"

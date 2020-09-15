@@ -105,7 +105,11 @@ const ContractList = props => {
         UserService.uploadAdminContract(formData).then(
           response => {
             if(response.status == 'success') {
-
+              MySwal.fire({
+                title: 'Uploaded successfully',
+                icon: 'success',
+                text: response.message
+              })
             }else if(response.status == 'fail') {
               MySwal.fire({
                 title: 'Falha',

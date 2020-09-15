@@ -194,11 +194,6 @@ exports.setActive = (req, res) => {
                       contract_id: res_data.id
                     }
                     Contract_pdf.create(contract_pdf_create)
-                    contract_pdf_create = {
-                      user_id: req.body.userId,
-                      invest_type: 'FLEXIVEL',
-                    }
-                    Contract_pdf.create(contract_pdf_create)
                   }
                   Case.count({
                     where: {user_id: req.body.userId}}).then(count => {
@@ -466,6 +461,7 @@ exports.user_upload_contract = (req, res) => {
         let update_data = {
           user_pdf: req.file.path
         }
+        let where_con = {user_id: req.userId}
         if(req.body.pdf_field == "user_pdf") {
           update_data = {
             user_pdf: req.file.path
@@ -474,10 +470,11 @@ exports.user_upload_contract = (req, res) => {
           update_data = {
             user_pdf2: req.file.path
           }
+          where_con = {user_id: req.userId, contract_id: req.body.contract_id}
         }
         Contract_pdf.update(
           update_data,
-          {where: {user_id: req.userId}}
+          {where: where_con}
         )
         .then(res_data => {
           return res.status(200).send({ status:'success', message: "upload success" });

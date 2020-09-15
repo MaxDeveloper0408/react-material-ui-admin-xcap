@@ -55,6 +55,20 @@ exports.set_approve = (req, res) => {
               }
             )
               .then(res_data => {
+                if (req.body.investment_type === 'FLEXIVEL') {
+                  let contract_pdf_create = {
+                    user_id: req.body.user_id,
+                    invest_type: req.body.investment_type,
+                  }
+                  Contract_pdf.create(contract_pdf_create)
+                }else if (req.body.investment_type === "CRESCIMENTO") {
+                  let contract_pdf_create = {
+                    user_id: req.body.user_id,
+                    invest_type: req.body.investment_type,
+                    contract_id: res_data.id
+                  }
+                  Contract_pdf.create(contract_pdf_create)
+                }
                 return res.status(200).send({ status: 'success', message: "Ação realizada com sucesso!" });
               })
               .catch(err => {
@@ -88,25 +102,12 @@ exports.set_approve = (req, res) => {
             )
               .then(res_data => {
                 if (req.body.investment_type === "CRESCIMENTO") {
-                  let contract_pdf_create = {
-                    user_id: req.body.user_id,
-                    admin_pdf: req.file.path,
-                    invest_type: req.body.investment_type,
-                  }
-                  if (req.body.investment_type === 'FLEXIVEL') {
-                    contract_pdf_create = {
-                      user_id: req.body.user_id,
-                      admin_pdf: req.file.path,
-                      invest_type: req.body.investment_type,
-                    }
-                  } else if (req.body.investment_type === 'CRESCIMENTO') {
-                    contract_pdf_create = {
+                    let contract_pdf_create = {
                       user_id: req.body.user_id,
                       admin_pdf2: req.file.path,
                       invest_type: req.body.investment_type,
                       contract_id: res_data.id
                     }
-                  }
                   Contract_pdf.create(contract_pdf_create)
                 }
                 return res.status(200).send({ status: 'success', message: "Ação realizada com sucesso!" });

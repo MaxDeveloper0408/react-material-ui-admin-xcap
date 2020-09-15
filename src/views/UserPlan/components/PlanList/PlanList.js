@@ -433,7 +433,7 @@ const PlanList = props => {
           {/* <Button variant="outlined" color="inherit" onClick={handleAddPlan.bind()}>
               Add Plan
           </Button> */}
-          {plans.length > 0 ? (
+          {/*{plans.length > 0 ? (*/}
             <div>
               <Button variant="outlined" color="inherit" onClick={handleDownload.bind()}>
                   Download do Contrato
@@ -442,7 +442,7 @@ const PlanList = props => {
                   Upload Contrato
               </Button>
             </div>
-          ):('')}
+          {/*):('')}*/}
           </div>
             <Table>
               <TableHead>

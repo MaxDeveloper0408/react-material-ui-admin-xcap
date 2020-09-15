@@ -181,6 +181,25 @@ exports.setActive = (req, res) => {
                 }
               )
               .then(res_data => {
+                  let contract_pdf_create = {
+                    user_id: req.body.userId,
+                    invest_type: req.body.investment_type,
+                  }
+                  if (req.body.investment_type === 'FLEXIVEL') {
+                    Contract_pdf.create(contract_pdf_create)
+                  } else if (req.body.investment_type === 'CRESCIMENTO') {
+                    contract_pdf_create = {
+                      user_id: req.body.userId,
+                      invest_type: req.body.investment_type,
+                      contract_id: res_data.id
+                    }
+                    Contract_pdf.create(contract_pdf_create)
+                    contract_pdf_create = {
+                      user_id: req.body.userId,
+                      invest_type: 'FLEXIVEL',
+                    }
+                    Contract_pdf.create(contract_pdf_create)
+                  }
                   Case.count({
                     where: {user_id: req.body.userId}}).then(count => {
                     if( count === 0 ) {

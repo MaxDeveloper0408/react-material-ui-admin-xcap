@@ -133,26 +133,20 @@ const Sidebar = props => {
       ]
     },
     {
-      title: 'Extrato',
-      href: '/userincome',
-      icon: <PageViewIcon />,
-      subpages: [
-        {
-          title: 'User Income',
-          href: '/userincome',
-          icon: <AccountBalanceWalletOutlinedIcon />,
-        },
-        {
-          title: 'Saques/Transferências',
-          href: '/userwithdraw',
-          icon: <LocalAtmIcon />,
-        },
-        {
-          title: 'Depósitos',
-          href: '/userdeposit',
-          icon: <AccountBalanceWalletOutlinedIcon />,
-        },
-      ]
+    title: 'Extrato',
+    href: '/userincome',
+  icon: <PageViewIcon />,
+   },
+    {
+      title: 'Saques/Transferências',
+      href: '/userwithdraw',
+      icon: <LocalAtmIcon />,
+    },
+    {
+      title: 'Depósitos',
+      href: '/userdeposit',
+      icon: <AccountBalanceWalletOutlinedIcon />,
+
     },
     {
       title: 'Configurações',

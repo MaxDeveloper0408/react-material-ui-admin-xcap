@@ -343,7 +343,9 @@ exports.bankUpdate = (req, res) => {
 
 exports.getBalance = (req, res) => {
   let now = moment();
-  if(moment().isBetween(now.date(2).format("YYYY-MM-DD"), now.endOf('month').format("YYYY-MM-DD"))) {
+  console.log('-----------get balance-------------')
+    if(moment().isBetween(now.date(2).format("YYYY-MM-DD"), now.endOf('month').format("YYYY-MM-DD"))) {
+      console.log('-----------get balance-------------')
       Case.findOne({
           include: [{
             model: User,
@@ -353,12 +355,15 @@ exports.getBalance = (req, res) => {
           }
       })
       .then(data => {
+          console.log('-----------get balance-------------')
+          console.log(data)
         res.status(200).send(data)
       })
       .catch(err => {
         res.status(200).send({status: 'fail', message: "Você não tem saldo suficiente"})
       });
   }else {
+        console.log('-----------get balance-------------')
     res.status(200).send({status: 'fail', title: 'Saque', message: 'O saque ficará disponível entre os dias 25 e 30 de cada mês.'})
   }
 

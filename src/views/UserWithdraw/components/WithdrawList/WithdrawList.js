@@ -202,8 +202,6 @@ const WithdrawList = props => {
                     '<input type="text" id="swal_withdraw_cpf" value="" class="swal2-input" style="max-width: 100%;" placeHolder="">',
               showCancelButton: true,
               preConfirm: (value) => {
-
-
                 const cpfRegex = RegExp(/[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}/)
                 if( SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) < 0
                 || SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value) == ''
@@ -225,6 +223,8 @@ const WithdrawList = props => {
               if (result.dismiss === MySwal.DismissReason.cancel) {
                 return;
               }else if(result.value){
+                const input_cpf_value = document.getElementById('swal_withdraw_cpf').value
+                const input_withdraw_value = SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value)
                 UserService.check_cpf_user(document.getElementById('swal_withdraw_cpf').value).then(cpf_response => {
                   if(cpf_response.cpf_user == null) {
                     MySwal.fire({
@@ -234,8 +234,8 @@ const WithdrawList = props => {
                     })
                   }else {
                     WithdrawService.transfer({
-                      cpf: document.getElementById('swal_withdraw_cpf').value,
-                      withdraw_value: SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value),
+                      cpf: input_cpf_value,
+                      withdraw_value: input_withdraw_value
                   }).then(
                       response => {
                         MySwal.fire({

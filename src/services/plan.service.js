@@ -10,6 +10,9 @@ class PlanService {
   getAll() {
     return axios.get(URL + 'all', {headers: authHeader()});
   }
+  getAllByInvestType(data) {
+    return axios.post(URL + 'getAllByInvestType', data, {headers: authHeader()});
+  }
   setApprove(id) {
     return axios.post(URL + 'set_approve', {id: id}, {headers: authHeader()});
   }

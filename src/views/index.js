@@ -20,6 +20,7 @@ export { default as UserIncome } from './UserIncome';
 export { default as UserDeposit } from './UserDeposit';
 export { default as UserWithdraw } from './UserWithdraw';
 export { default as AdminPlan } from './AdminPlan';
+export { default as AdminPlanCresc } from './AdminPlanCresc';
 export { default as AdminDeposit } from './AdminDeposit';
 export { default as AdminCaseDeposit } from './AdminCaseDeposit';
 export { default as AdminWithdraw } from './AdminWithdraw';

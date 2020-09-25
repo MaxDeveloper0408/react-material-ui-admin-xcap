@@ -16,14 +16,28 @@ exports.all = (req, res) => {
     ]
   })
   .then(datas => {
-    console.log(datas)
     res.status(200).send(datas)
   })
   .catch(err => {
     res.status(500).send([])
   });
 }
-
+exports.getAllByInvestType = (req, res) => {
+    Contract.findAll({
+        include: [
+            {
+                model: User
+            }
+        ],
+        where: req.body
+    })
+        .then(datas => {
+            res.status(200).send(datas)
+        })
+        .catch(err => {
+            res.status(500).send([])
+        });
+}
 exports.set_approve = (req, res) => {
   Contract.update(
       {status: 'processando'},

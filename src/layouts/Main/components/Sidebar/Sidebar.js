@@ -65,8 +65,19 @@ const Sidebar = props => {
       title: 'Planos',
       href: '/adminplan',
       icon: <Rotate90DegreesCcwIcon />,
+      subpages: [
+        {
+          title: 'Flexível',
+          href: '/adminplan',
+          icon: <ArrowForwardIosOutlinedIcon />,
+        },
+        {
+          title: 'Crescimento',
+          href: '/adminplancresc',
+          icon: <ArrowForwardIosOutlinedIcon />,
+        }
+      ]
     },
-
     {
       title: 'Depósitos',
       href: '/admindeposit',

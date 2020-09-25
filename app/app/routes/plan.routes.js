@@ -11,7 +11,8 @@ module.exports = function(app) {
     next();
   });
 
-  app.get("/api/plan/all",[authJwt.verifyToken, authJwt.isAdmin],controller.all);
+  app.post("/api/plan/all",[authJwt.verifyToken, authJwt.isAdmin],controller.all);
+  app.post("/api/plan/getAllByInvestType",[authJwt.verifyToken, authJwt.isAdmin],controller.getAllByInvestType);
   app.post("/api/plan/set_approve",[authJwt.verifyToken, authJwt.isAdmin],controller.set_approve);
   // app.post("/api/plan/one",[authJwt.verifyToken],controller.one);
 

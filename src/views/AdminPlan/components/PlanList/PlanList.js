@@ -48,7 +48,7 @@ const PlanList = props => {
   useEffect(() => {
     const fetchUsers = async () => {
         try {
-          const response = await PlanService.getAll();
+          const response = await PlanService.getAllByInvestType({invest_type: 'FLEXIVEL'});
           setPlans(response.data);
         } catch (e) {
             setPlans([]);

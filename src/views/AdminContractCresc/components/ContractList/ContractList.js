@@ -20,6 +20,7 @@ import {
 } from '@material-ui/core';
 import moment from 'moment';
 import currencyFormatter from 'currency-formatter';
+import userService from '../../../../services/user.service';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -191,7 +192,7 @@ const ContractList = props => {
                       )}
                     </TableCell>
                     <TableCell>
-                        <Button variant="contained" color="secondary" onClick={handleUpload.bind(this, item.id, item.user_id,1)}>
+                        <Button variant="contained" color="secondary" onClick={handleUpload.bind(this, item.contract_id, item.user_id,1)}>
                           Upload
                         </Button>
                     </TableCell>

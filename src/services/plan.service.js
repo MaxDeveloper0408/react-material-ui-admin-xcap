@@ -10,6 +10,9 @@ class PlanService {
   getAll() {
     return axios.get(URL + 'all', {headers: authHeader()});
   }
+  delete(data) {
+    return axios.post(URL + 'delete', data, {headers: authHeader()});
+  }
   getAllByInvestType(data) {
     return axios.post(URL + 'getAllByInvestType', data, {headers: authHeader()});
   }
@@ -28,6 +31,13 @@ class PlanService {
       .then(response => {
         return response.data;
     });
+  }
+  plan_percent_add(add_data) {
+    return axios
+        .post(URL + "plan_percent_add", add_data, {headers: authHeader()})
+        .then(response => {
+          return response.data;
+        });
   }
 }
 

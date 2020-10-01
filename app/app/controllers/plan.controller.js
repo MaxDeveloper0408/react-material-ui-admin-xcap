@@ -1,27 +1,46 @@
+const constant_config = require('../config/constant.config.js');
 const moment = require('moment');
-const db = require("../models");
-const config = require("../config/auth.config");
-var bcrypt = require("bcryptjs");
+const db = require('../models');
+const config = require('../config/auth.config');
+var bcrypt = require('bcryptjs');
 const User = db.user;
 const Contract = db.contract;
 const Contract_pdf = db.contract_pdf;
+const Contract_percent = db.contract_percent;
 const Case = db.case;
 
 exports.all = (req, res) => {
-  Contract.findAll({
-    include: [
-      {
-        model: User
-      }
-    ]
-  })
-  .then(datas => {
-    res.status(200).send(datas)
-  })
-  .catch(err => {
-    res.status(500).send([])
-  });
-}
+    Contract.findAll({
+        include: [
+            {
+                model: User
+            }
+        ]
+    })
+        .then(datas => {
+            res.status(200).send(datas);
+        })
+        .catch(err => {
+            res.status(500).send([]);
+        });
+};
+exports.delete = (req, res) => {
+    Contract.destroy(
+        { where: { id: req.body.id } }
+    )
+        .then(user => {
+            Contract_pdf.destroy(
+                { where: { contract_id: req.body.id } }
+            );
+            Contract_percent.destroy(
+                { where: { contract_id: req.body.id } }
+            );
+            return res.status(200).send({ status: 'success', message: 'Ação realizada com sucesso!' });
+        })
+        .catch(err => {
+            return res.status(500).send({ status: 'fail', message: err.message });
+        });
+};
 exports.getAllByInvestType = (req, res) => {
     Contract.findAll({
         include: [
@@ -32,78 +51,122 @@ exports.getAllByInvestType = (req, res) => {
         where: req.body
     })
         .then(datas => {
-            res.status(200).send(datas)
+            res.status(200).send(datas);
         })
         .catch(err => {
-            res.status(500).send([])
+            res.status(500).send([]);
         });
-}
+};
 exports.set_approve = (req, res) => {
-  Contract.update(
-      {status: 'processando'},
-      {where: {id: req.body.id, status: 'pendente'}}
-  )
-  .then(user => {
-      return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
-  })
-  .catch(err => {
-      return res.status(500).send({ status:'fail', message: err.message });
-  });
-}
+    Contract.update(
+        { status: 'processando' },
+        { where: { id: req.body.id, status: 'pendente' } }
+    )
+        .then(user => {
+            return res.status(200).send({ status: 'success', message: 'Ação realizada com sucesso!' });
+        })
+        .catch(err => {
+            return res.status(500).send({ status: 'fail', message: err.message });
+        });
+};
 exports.all_by_user = (req, res) => {
-  Contract.findAll({
-      where: {
-        user_id: req.body.user_id
-      }
-  })
-  .then(datas => {
-    res.status(200).send(datas)
-  })
-  .catch(err => {
-    res.status(500).send([])
-  });
-}
-exports.all_by_user_it = (req, res) => {
-  Contract.findAll({
-      include: [
-        {
-          model: Contract_pdf
+    Contract.findAll({
+        where: {
+            user_id: req.body.user_id
         }
-      ],
-      where: {
-        user_id: req.body.user_id,
-        invest_type: req.body.invest_type
-      }
-  })
-  .then(datas => {
-    res.status(200).send(datas)
-  })
-  .catch(err => {
-    res.status(500).send([])
-  });
-}
+    })
+        .then(datas => {
+            res.status(200).send(datas);
+        })
+        .catch(err => {
+            res.status(500).send([]);
+        });
+};
+exports.all_by_user_it = (req, res) => {
+    Contract.findAll({
+        include: [
+            {
+                model: Contract_pdf
+            }
+        ],
+        where: {
+            user_id: req.body.user_id,
+            invest_type: req.body.invest_type
+        }
+    })
+        .then(datas => {
+            res.status(200).send(datas);
+        })
+        .catch(err => {
+            res.status(500).send([]);
+        });
+};
 exports.add_plan = (req, res) => {
-  let now = moment();
-  Contract.create(
-    {
-      user_id: req.userId,
-      open_value: req.body.open_value,
-      invest_type: req.body.investment_type,
-      start_date: now.format("YYYY-MM-DD"),
-      status: 'processando',
-      end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
-    }
-  )
-  .then(res_data => {
-      Case.decrement(
-        {balance: req.body.open_value},
-          {where: {user_id: req.userId}}
-      )
-      return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
-  })
-  .catch(err => {
-      return res.status(500).send({ status:'fail', message: err.message });
-  });
-}
+    let now = moment();
+    Contract.create(
+        {
+            user_id: req.userId,
+            open_value: req.body.open_value,
+            invest_type: req.body.investment_type,
+            start_date: now.format('YYYY-MM-DD'),
+            status: 'processando',
+            percent: constant_config.CRESC_DEFAULT_PERCENT,
+            end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format('YYYY-MM-DD')).add(1, 'M') : moment(now.format('YYYY-MM-DD')).add(8, 'M')
+        }
+    )
+        .then(res_data => {
+            Contract_percent.create({
+                contract_id: res_data.id,
+                percent: constant_config.CRESC_DEFAULT_PERCENT
+            });
+            Case.decrement(
+                { balance: req.body.open_value },
+                { where: { user_id: req.userId } }
+            );
+            return res.status(200).send({ status: 'success', message: 'Ação realizada com sucesso!' });
+        })
+        .catch(err => {
+            return res.status(500).send({ status: 'fail', message: err.message });
+        });
+};
 
+exports.plan_percent_all = (req, res) => {
+    Contract_percent.findAll({
+        include: [
+            {
+                model: Contract
+            }
+        ]
+    })
+        .then(datas => {
+            res.status(200).send(datas);
+        })
+        .catch(err => {
+            res.status(500).send([]);
+        });
+};
+exports.plan_percent_add = (req, res) => {
+    let now = moment();
+    Contract.update(
+        {
+            percent: req.body.percent
+        },
+        {
+            where: { id: req.body.contract_id }
+        }).then((updated_data) => {
+            Contract_percent.create(
+                {
+                    contract_id: req.body.contract_id,
+                    percent: req.body.percent
+                }
+            )
+            .then(res_data => {
+                return res.status(200).send({ status: 'success', message: 'Ação realizada com sucesso!' });
+            })
+            .catch(err => {
+                return res.status(500).send({ status: 'fail', message: err.message });
+            });
+    });
+
+};
 

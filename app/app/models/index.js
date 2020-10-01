@@ -31,6 +31,7 @@ db.bank_list = require("../models/bank_list.model.js")(sequelize, Sequelize);
 db.case = require("../models/case.model.js")(sequelize, Sequelize);
 db.case_deposit = require("../models/case_deposit.model.js")(sequelize, Sequelize);
 db.contract = require("../models/contract.model.js")(sequelize, Sequelize);
+db.contract_percent = require("../models/contract_percent.model.js")(sequelize, Sequelize);
 db.contract_pdf = require("../models/contract_pdf.model.js")(sequelize, Sequelize);
 db.deposit = require("../models/deposit.model.js")(sequelize, Sequelize);
 db.plan_history = require("../models/plan_history.model.js")(sequelize, Sequelize);
@@ -79,6 +80,9 @@ db.contract_pdf.belongsTo(db.user, {foreignKey: 'user_id'})
 
 db.contract.hasOne(db.contract_pdf, {foreignKey: 'contract_id'})
 db.contract_pdf.belongsTo(db.contract, {foreignKey: 'contract_id'})
+
+db.contract.hasMany(db.contract_percent, {foreignKey: 'contract_id'})
+db.contract_percent.belongsTo(db.contract, {foreignKey: 'contract_id'})
 
 db.bank_list.hasMany(db.bank, {foreignKey: 'bank_id'})
 db.bank.belongsTo(db.bank_list, {foreignKey: 'bank_id'})

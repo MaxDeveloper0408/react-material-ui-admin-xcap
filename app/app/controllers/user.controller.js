@@ -1,3 +1,4 @@
+const constant_config = require("../config/constant.config.js");
 const Sequelize = require("sequelize");
 const moment = require('moment');
 const db = require("../models");
@@ -6,6 +7,7 @@ const User = db.user;
 const Bank = db.bank;
 const Case = db.case;
 const Contract = db.contract;
+const Contract_percent = db.contract_percent;
 const Contract_pdf = db.contract_pdf;
 const Bank_list = db.bank_list;
 const Case_deposit = db.case_deposit;
@@ -177,10 +179,12 @@ exports.setActive = (req, res) => {
                   invest_type: req.body.investment_type,
                   start_date: now.format("YYYY-MM-DD"),
                   status: 'processando',
+                  percent: constant_config.CRESC_DEFAULT_PERCENT,
                   end_date: req.body.investment_type === 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
                 }
               )
               .then(res_data => {
+
                   let contract_pdf_create = {
                     user_id: req.body.userId,
                     invest_type: req.body.investment_type,
@@ -188,12 +192,17 @@ exports.setActive = (req, res) => {
                   if (req.body.investment_type === 'FLEXIVEL') {
                     Contract_pdf.create(contract_pdf_create)
                   } else if (req.body.investment_type === 'CRESCIMENTO') {
+                    Contract_percent.create({
+                        contract_id: res_data.id,
+                        percent: constant_config.CRESC_DEFAULT_PERCENT
+                    })
                     contract_pdf_create = {
                       user_id: req.body.userId,
                       invest_type: req.body.investment_type,
                       contract_id: res_data.id
                     }
                     Contract_pdf.create(contract_pdf_create)
+
                   }
                   Case.count({
                     where: {user_id: req.body.userId}}).then(count => {
@@ -235,6 +244,7 @@ exports.setActive = (req, res) => {
                   invest_type: req.body.investment_type,
                   start_date: now.format("YYYY-MM-DD"),
                   status: 'processando',
+                  percent: constant_config.CRESC_DEFAULT_PERCENT,
                   end_date: req.body.investment_type == 'FLEXIVEL' ? moment(now.format("YYYY-MM-DD")).add(1, 'M') : moment(now.format("YYYY-MM-DD")).add(8, 'M')
                 }
               )
@@ -251,12 +261,16 @@ exports.setActive = (req, res) => {
                       invest_type: req.body.investment_type,
                     }
                   } else if (req.body.investment_type === 'CRESCIMENTO') {
-                    contract_pdf_create = {
-                      user_id: req.body.userId,
-                      admin_pdf2: req.file.path,
-                      invest_type: req.body.investment_type,
-                      contract_id: res_data.id
-                    }
+                      Contract_percent.create({
+                          contract_id: res_data.id,
+                          percent: constant_config.CRESC_DEFAULT_PERCENT
+                      })
+                      contract_pdf_create = {
+                          user_id: req.body.userId,
+                          admin_pdf2: req.file.path,
+                          invest_type: req.body.investment_type,
+                          contract_id: res_data.id
+                      }
                   }
                   Contract_pdf.create(contract_pdf_create)
                   Case.count({
@@ -438,7 +452,7 @@ exports.admin_upload_contract = (req, res) => {
         }
         Contract_pdf.update(
           update_data,
-          {where: {id: req.body.id}}
+          {where: {contract_id: req.body.id}}
         )
         .then(res_data => {
           return res.status(200).send({ status:'success', message: "upload success" });

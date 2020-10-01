@@ -179,7 +179,7 @@ const ContractList = props => {
                       )}
                     </TableCell>
                     <TableCell>
-                        <Button variant="contained" color="secondary" onClick={handleUpload.bind(this, item.id, item.user_id,0)}>
+                        <Button variant="contained" color="secondary" onClick={handleUpload.bind(this, item.contract_id, item.user_id,0)}>
                           Upload
                         </Button>
                     </TableCell>

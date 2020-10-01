@@ -3,7 +3,6 @@ const checked = (value, options) => {
     return options.message || 'precisam estar checados';
   }
 };
-
 export default {
   checked
 };

@@ -89,7 +89,6 @@ const WithdrawList = props => {
   };
   //handle action
   const  handleThrought = () => {
-
             MySwal.fire({
               title: 'Depositar para cliente',
               html:

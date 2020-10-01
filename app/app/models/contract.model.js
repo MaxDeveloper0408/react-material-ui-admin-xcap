@@ -3,6 +3,9 @@ module.exports = (sequelize, Sequelize) => {
         user_id: {
             type: Sequelize.INTEGER
         },
+        created_id: {
+            type: Sequelize.INTEGER
+        },
         invest_type: {
             type: Sequelize.ENUM,
             values: ['FLEXIVEL', 'CRESCIMENTO']

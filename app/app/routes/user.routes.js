@@ -27,6 +27,9 @@ module.exports = function(app) {
   app.post("/api/user/withdraw_sum_pending", [authJwt.verifyToken, authJwt.isAdmin], controller.withdraw_sum_pending);
   app.post("/api/user/withdraw_sum_paid", [authJwt.verifyToken, authJwt.isAdmin], controller.withdraw_sum_paid);
   app.post("/api/user/active_users_count", [authJwt.verifyToken, authJwt.isAdmin], controller.active_users_count);
+  app.post("/api/user/plan_numbers_this_month", [authJwt.verifyToken, authJwt.isAdmin], controller.plan_numbers_this_month);
+  app.post("/api/user/cresc_plan_total", [authJwt.verifyToken, authJwt.isAdmin], controller.cresc_plan_total);
+
   
 
   app.post("/api/user/bank",[authJwt.verifyToken],controller.userBank);

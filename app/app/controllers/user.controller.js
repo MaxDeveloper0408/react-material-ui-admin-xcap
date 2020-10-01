@@ -646,7 +646,7 @@ exports.withdraw_sum_paid = (req, res) => {
     { where:
       {
         status: 'concluído',
-        createdAt: {
+        updatedAt: {
           [Op.gt]: moment(moment().format("YYYY-MM-DD")).subtract(1,'months').startOf('month').format('YYYY-MM-DD'),
           [Op.lte]: moment(moment().format("YYYY-MM-DD")).subtract(1,'months').endOf('month').format('YYYY-MM-DD')
         }
@@ -673,4 +673,28 @@ exports.getExpiredProfitSumByUser = (req, res) => {
   }).catch(err => {
     return res.status(200).send({ status:'fail', message: err.message })
   })
+}
+
+exports.plan_numbers_this_month = (req, res) => {
+    Contract.count(
+        {
+            where: {
+                start_date: {
+                    [Op.gte]: moment(moment().format('YYYY-MM-DD')).subtract(0, 'months').startOf('month').format('YYYY-MM-DD'),
+                    [Op.lte]: moment(moment().format('YYYY-MM-DD')).subtract(0, 'months').endOf('month').format('YYYY-MM-DD')
+                }
+            }
+        }
+    ).then(count => {
+        return res.status(200).send({ status: 'success', sum: count });
+    }).catch(err => {
+        return res.status(200).send({ status: 'fail', message: err.message });
+    });
+};
+exports.cresc_plan_total = (req, res) => {
+    Contract.sum('open_value', { where: { invest_type: 'CRESCIMENTO' } }).then(sum => {
+        return res.status(200).send({ status:'success', sum: sum })
+    }).catch(err => {
+        return res.status(200).send({ status:'fail', message: err.message })
+    })
 }

@@ -187,6 +187,20 @@ class UserService {
       return response.data;
     });
   }
+  plan_numbers_this_month() {
+    return axios
+        .post(URL + "plan_numbers_this_month", {}, {headers: authHeader()})
+        .then(response => {
+          return response.data;
+    });
+  }
+  cresc_plan_total() {
+    return axios
+        .post(URL + "cresc_plan_total", {}, {headers: authHeader()})
+        .then(response => {
+          return response.data;
+    });
+  }
 }
 
 export default new UserService();

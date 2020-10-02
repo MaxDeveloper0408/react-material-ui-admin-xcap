@@ -5,10 +5,12 @@ import { PlanList } from './components';
 import UserService from "../../services/user.service";
 import AuthService from "../../services/auth.service";
 import PlanService from "../../services/plan.service";
+import Constants from '../../common/constants.js';
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 const MySwal = withReactContent(Swal)
+
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(4)
@@ -35,6 +37,7 @@ const AdminPlan = ({ match, location }) => {
           UserService={UserService}
           AuthService={AuthService}
           PlanService={PlanService}
+          Constants={Constants}
           />
         </Grid>
       </Grid>

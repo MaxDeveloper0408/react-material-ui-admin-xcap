@@ -1,5 +1,5 @@
 const CRESC_DEFAULT_PERCENT = 20
-const FLEX_DEFAULT_PERCENT = 8;
+const FLEX_DEFAULT_PERCENT = 10
 const CRESC_PERCENT_SELECT = {
     '20': '20%',
       '19': '19%',

@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 const PlanList = props => {
   //basic setting
   const classes = useStyles();
-  const { className, UserService, AuthService, PlanService, MySwal, ...rest } = props;
+  const { className, UserService, AuthService, PlanService, Constants, MySwal, ...rest } = props;
   //handle table
   const [plans, setPlans] = useState([]);
   useEffect(() => {
@@ -169,6 +169,39 @@ const PlanList = props => {
     });
 
   }
+  const handleEdit = (id, profit_percent) => {
+    MySwal.fire({
+      title: 'Selecione abaixo:',
+      text: '',
+      input: 'select',
+      inputOptions: Constants.FLEX_PERCENT_SELECT,
+      inputValue: profit_percent == null || profit_percent == '' ? Constants.FLEX_DEFAULT_PERCENT : profit_percent,
+      showCancelButton: true,
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (value != null) {
+            resolve();
+          }
+        });
+      }
+    }).then(function(result) {
+      if (result.dismiss === MySwal.DismissReason.cancel) {
+      } else if (result.value) {
+        PlanService.plan_percent_add({ contract_id: id, percent: result.value,investment_type: 'FLEXIVEL' }).then(
+            response => {
+              MySwal.fire({
+                title: 'Success',
+                text: response.message
+              });
+              window.location.reload();
+            },
+            error => {
+              console.log(error);
+            }
+        );
+      }
+    });
+  };
   return (
     <Card
       {...rest}
@@ -235,7 +268,19 @@ const PlanList = props => {
                         <Button variant="contained" color="secondary" onClick={handleApprove.bind(this, item.id)}>
                          Aprovar
                       </Button>
-                      ) : ('')
+                      ) : (
+                          <div>
+                            {item.status != 'concluído' ? (
+                                <div>
+                                  <Button variant="contained" color="secondary"
+                                          onClick={handleEdit.bind(this, item.id, item.percent)}>
+                                    Editar
+                                  </Button>
+                                </div>
+                            ) : ('')
+                            }
+                          </div>
+                      )
                       }
                     </TableCell>
                   </TableRow>

@@ -272,7 +272,7 @@ const PlanList = props => {
         }).then(function(result) {
             if (result.dismiss === MySwal.DismissReason.cancel) {
             } else if (result.value) {
-                PlanService.plan_percent_add({ contract_id: id, percent: result.value }).then(
+                PlanService.plan_percent_add({ contract_id: id, percent: result.value,investment_type: 'CRESCIMENTO' }).then(
                     response => {
                         MySwal.fire({
                             title: 'Success',
@@ -357,20 +357,22 @@ const PlanList = props => {
                                                     ) : (
                                                         <div>
                                                             {item.status != 'concluído' ? (
+                                                                <div>
                                                                 <Button variant="contained" color="secondary"
                                                                         onClick={handleDelete.bind(this, item.id)}>
                                                                     Excluir
                                                                 </Button>
+                                                                <Button variant="contained" color="secondary"
+                                                                        onClick={handleEdit.bind(this, item.id, item.percent)}>
+                                                                    Editar
+                                                                </Button>
+                                                                <Button variant="contained" color="secondary"
+                                                                onClick={handleUpload.bind(this, item.id, item.user.email)}>
+                                                                Upar
+                                                                </Button>
+                                                                </div>
                                                             ) : ('')
                                                             }
-                                                            <Button variant="contained" color="secondary"
-                                                                    onClick={handleEdit.bind(this, item.id, item.percent)}>
-                                                                Editar
-                                                            </Button>
-                                                            <Button variant="contained" color="secondary"
-                                                                    onClick={handleUpload.bind(this, item.id, item.user.email)}>
-                                                                Upar
-                                                            </Button>
                                                         </div>
                                                     )
                                                 }

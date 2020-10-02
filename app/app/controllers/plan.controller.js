@@ -195,18 +195,22 @@ exports.plan_percent_add = (req, res) => {
         {
             where: { id: req.body.contract_id }
         }).then((updated_data) => {
-            Contract_percent.create(
-                {
-                    contract_id: req.body.contract_id,
-                    percent: req.body.percent
-                }
-            )
-            .then(res_data => {
+            if(req.body.investment_type === 'CRESCIMENTO') {
+                Contract_percent.create(
+                    {
+                        contract_id: req.body.contract_id,
+                        percent: req.body.percent
+                    }
+                )
+                    .then(res_data => {
+                        return res.status(200).send({ status: 'success', message: 'Ação realizada com sucesso!' });
+                    })
+                    .catch(err => {
+                        return res.status(500).send({ status: 'fail', message: err.message });
+                    });
+            }else {
                 return res.status(200).send({ status: 'success', message: 'Ação realizada com sucesso!' });
-            })
-            .catch(err => {
-                return res.status(500).send({ status: 'fail', message: err.message });
-            });
+            }
     });
 
 };

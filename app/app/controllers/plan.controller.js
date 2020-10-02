@@ -186,6 +186,24 @@ exports.plan_percent_all = (req, res) => {
             res.status(500).send([]);
         });
 };
+exports.plan_percent_all_by_contract = (req, res) => {
+    Contract_percent.findAll({
+        include: [
+            {
+                model: Contract
+            }
+        ],
+        where: {
+            contract_id: req.body.contract_id
+        }
+    })
+    .then(datas => {
+        res.status(200).send(datas);
+    })
+    .catch(err => {
+        res.status(500).send([]);
+    });
+};
 exports.plan_percent_add = (req, res) => {
     let now = moment();
     Contract.update(

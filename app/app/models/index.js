@@ -30,6 +30,7 @@ db.bank = require("../models/bank.model.js")(sequelize, Sequelize);
 db.bank_list = require("../models/bank_list.model.js")(sequelize, Sequelize);
 db.case = require("../models/case.model.js")(sequelize, Sequelize);
 db.case_deposit = require("../models/case_deposit.model.js")(sequelize, Sequelize);
+db.case_contract_history = require("../models/case_contract_history.model.js")(sequelize, Sequelize);
 db.contract = require("../models/contract.model.js")(sequelize, Sequelize);
 db.contract_percent = require("../models/contract_percent.model.js")(sequelize, Sequelize);
 db.contract_pdf = require("../models/contract_pdf.model.js")(sequelize, Sequelize);

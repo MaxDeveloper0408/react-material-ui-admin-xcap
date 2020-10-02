@@ -18,6 +18,7 @@ module.exports = function(app) {
   app.post("/api/plan/set_approve",[authJwt.verifyToken, authJwt.isAdmin],controller.set_approve);
 
   app.post("/api/plan/plan_percent_all",[authJwt.verifyToken, authJwt.isAdmin],controller.plan_percent_all);
+  app.post("/api/plan/plan_percent_all_by_contract",[authJwt.verifyToken],controller.plan_percent_all_by_contract);
   app.post("/api/plan/plan_percent_add",[authJwt.verifyToken],controller.plan_percent_add);
   // app.post("/api/plan/one",[authJwt.verifyToken],controller.one);
 

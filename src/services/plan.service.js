@@ -46,6 +46,13 @@ class PlanService {
           return response.data;
         });
   }
+  plan_percent_all_by_contract(data) {
+    return axios
+        .post(URL + "plan_percent_all_by_contract", data, {headers: authHeader()})
+        .then(response => {
+          return response.data;
+        });
+  }
 }
 
 export default new PlanService();

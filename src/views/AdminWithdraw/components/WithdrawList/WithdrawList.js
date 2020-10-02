@@ -124,8 +124,38 @@ const WithdrawList = props => {
 
       }
     });
-
   }
+  const handleUserBank = (id, user) => {
+    UserService.getBank(user.id).then(
+        response => {
+          if(response.data === null || response.data === ''){
+            MySwal.fire({
+              title: '',
+              text: 'Nothing bank data for this user',
+              icon: 'warning',
+              confirmButtonText: 'Confirmar',
+            })
+          }else {
+            MySwal.fire({
+              title: user.full_name + ' Bank Info',
+              html: '<p> Bank Name : ' + response.data.bank_list.name+ '</p>' +
+                  '<p> Número da Agência  : ' + response.data.banco_agencia+ '</p>' +
+                  '<p> Número da Conta  : ' + response.data.banco_conta+ '</p>' +
+                  '<p> Tipo de Conta : ' + response.data.tipo_conta+ '</p>'
+            })
+          }
+        },
+        error => {
+          MySwal.fire({
+            title: '',
+            text: 'Something wrong',
+            icon: 'warning',
+            confirmButtonText: 'Confirmar',
+           })
+        }
+    )
+  }
+
   return (
     <Card
       {...rest}
@@ -183,8 +213,10 @@ const WithdrawList = props => {
                     </TableCell>
                     <TableCell>{item.status}</TableCell>
                     <TableCell>
-                      {
-                      item.status == 'pendente' ? (
+                      <Button variant="contained" color="secondary" onClick={handleUserBank.bind(this, item.id,item.user)}>
+                        Conta
+                      </Button>
+                      {item.status == 'pendente' ? (
                         <div>
                         <Button variant="contained" color="secondary" onClick={handleApprove.bind(this, item.id)}>
                          Aprovar

@@ -228,8 +228,9 @@ const PlanList = props => {
               <TableHead>
                 <TableRow>
                 <TableCell style={{color: '#212a37'}} className="blackText">Nome Completo</TableCell>
-                <TableCell style={{color: '#212a37'}} className="blackText">E-mail</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Total Final</TableCell>
+                <TableCell style={{color: '#212a37'}} className="blackText">Telefone</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Aporte</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Valor Final</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Plano</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Ações</TableCell>
@@ -243,12 +244,12 @@ const PlanList = props => {
                     key={item.id}
                   >
                     <TableCell>{item.user.full_name}</TableCell>
-                    <TableCell>{item.user.email}</TableCell>
+                    <TableCell>{item.user.cellphone}</TableCell>
+                    <TableCell>{currencyFormatter.format(item.open_value, { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>
-                      <div className={classes.nameContainer}>
-
-                        <Typography variant="body1">{moment(item.start_date).format('DD/MM/YYYY')}</Typography>
-                      </div>
+                    <div className={classes.nameContainer}>
+                        <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format((Number(item.open_value) + Number(item.open_value*10/100)), { code: 'BRL', symbol: '' }) : currencyFormatter.format((Number(item.open_value) + Number(item.open_value*30/100)), { code: 'BRL', symbol: '' })}</TableCell>
+                    </div>
                     </TableCell>
                         <TableCell>{item.invest_type}</TableCell>
                     <TableCell>

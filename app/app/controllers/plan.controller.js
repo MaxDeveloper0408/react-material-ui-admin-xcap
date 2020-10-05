@@ -103,44 +103,95 @@ exports.all_by_user_it = (req, res) => {
 };
 exports.add_plan_admin = (req, res) => {
     let now = moment();
-    Contract.create(
-        {
-            user_id: req.body.user_id,
-            open_value: req.body.open_value,
-            invest_type: req.body.investment_type,
-            start_date: now.format('YYYY-MM-DD'),
-            status: 'processando',
-            percent: req.body.percent,
-            end_date: req.body.investment_type === 'FLEXIVEL' ? moment(now.format('YYYY-MM-DD')).add(1, 'M') : moment(now.format('YYYY-MM-DD')).add(8, 'M')
-        }
-    )
-    .then(res_data => {
-        if (req.body.investment_type === 'FLEXIVEL') {
-            let contract_pdf_create = {
+    if(req.body.investment_type === 'FLEXIVEL') {
+        Contract.count({where: {user_id: req.body.user_id, invest_type: 'FLEXIVEL'}}).then(count => {
+            if(count == 0 ) {
+                Contract.create(
+                    {
+                        user_id: req.body.user_id,
+                        open_value: req.body.open_value,
+                        invest_type: req.body.investment_type,
+                        start_date: now.format('YYYY-MM-DD'),
+                        status: 'processando',
+                        percent: req.body.percent,
+                        end_date: req.body.investment_type === 'FLEXIVEL' ? moment(now.format('YYYY-MM-DD')).add(1, 'M') : moment(now.format('YYYY-MM-DD')).add(8, 'M')
+                    }
+                )
+                    .then(res_data => {
+                        if (req.body.investment_type === 'FLEXIVEL') {
+                            let contract_pdf_create = {
+                                user_id: req.body.user_id,
+                                invest_type: req.body.investment_type
+                            };
+                            Contract_pdf.create(contract_pdf_create);
+                        } else if (req.body.investment_type === 'CRESCIMENTO') {
+                            Contract_percent.create({
+                                contract_id: res_data.id,
+                                percent: req.body.percent
+                            });
+                            let contract_pdf_create = {
+                                user_id: req.body.user_id,
+                                invest_type: req.body.investment_type,
+                                contract_id: res_data.id
+                            };
+                            Contract_pdf.create(contract_pdf_create);
+                        }
+                        return res.status(200).send({
+                            status: 'success',
+                            message: 'Ação realizada com sucesso!'
+                        });
+                    })
+                    .catch(err => {
+                        return res.status(500).send({ status: 'fail', message: err.message });
+                    });
+            }else if(count > 0) {
+                return res.status(200).send({
+                    status: 'fail',
+                    message: 'User already have flexible plan running'
+                });
+            }
+        })
+    }else {
+        Contract.create(
+            {
                 user_id: req.body.user_id,
-                invest_type: req.body.investment_type
-            };
-            Contract_pdf.create(contract_pdf_create);
-        } else if (req.body.investment_type === 'CRESCIMENTO') {
-            Contract_percent.create({
-                contract_id: res_data.id,
-                percent: req.body.percent
-            });
-            let contract_pdf_create = {
-                user_id: req.body.user_id,
+                open_value: req.body.open_value,
                 invest_type: req.body.investment_type,
-                contract_id: res_data.id
-            };
-            Contract_pdf.create(contract_pdf_create);
-        }
-        return res.status(200).send({
-            status: 'success',
-            message: 'Ação realizada com sucesso!'
-        });
-    })
-    .catch(err => {
-        return res.status(500).send({ status: 'fail', message: err.message });
-    });
+                start_date: now.format('YYYY-MM-DD'),
+                status: 'processando',
+                percent: req.body.percent,
+                end_date: req.body.investment_type === 'FLEXIVEL' ? moment(now.format('YYYY-MM-DD')).add(1, 'M') : moment(now.format('YYYY-MM-DD')).add(8, 'M')
+            }
+        )
+            .then(res_data => {
+                if (req.body.investment_type === 'FLEXIVEL') {
+                    let contract_pdf_create = {
+                        user_id: req.body.user_id,
+                        invest_type: req.body.investment_type
+                    };
+                    Contract_pdf.create(contract_pdf_create);
+                } else if (req.body.investment_type === 'CRESCIMENTO') {
+                    Contract_percent.create({
+                        contract_id: res_data.id,
+                        percent: req.body.percent
+                    });
+                    let contract_pdf_create = {
+                        user_id: req.body.user_id,
+                        invest_type: req.body.investment_type,
+                        contract_id: res_data.id
+                    };
+                    Contract_pdf.create(contract_pdf_create);
+                }
+                return res.status(200).send({
+                    status: 'success',
+                    message: 'Ação realizada com sucesso!'
+                });
+            })
+            .catch(err => {
+                return res.status(500).send({ status: 'fail', message: err.message });
+            });
+    }
+
 }
 exports.add_plan = (req, res) => {
     let now = moment();

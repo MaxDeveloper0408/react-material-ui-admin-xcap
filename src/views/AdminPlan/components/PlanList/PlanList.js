@@ -124,11 +124,19 @@ const PlanList = props => {
               percent: document.getElementById('swal_percent').value
             }).then(
                 response => {
-                  MySwal.fire({
-                    title: 'Success',
-                    text: response.message
-                  })
-                  window.location.reload();
+                  if (response.status === 'success') {
+                    MySwal.fire({
+                      title: 'Success',
+                      text: response.message
+                    });
+                    window.location.reload();
+                  } else {
+                    MySwal.fire({
+                      title: 'Fail',
+                      text: response.message,
+                      icon: 'warning'
+                    });
+                  }
                 },
                 error => {
                   console.log(error)
@@ -202,6 +210,34 @@ const PlanList = props => {
       }
     });
   };
+  const handleDelete = (plan_id) => {
+    MySwal.fire({
+      title: 'Confirma a exclusão permanentemente?',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar'
+    })
+        .then((result) => {
+          if (result.value) {
+            PlanService.delete({ id: plan_id }).then(
+                response => {
+                  MySwal.fire({
+                    title: 'Success',
+                    text: response.message
+                  });
+                  window.location.reload();
+                },
+                error => {
+                  console.log(error);
+                }
+            );
+          } else if (result.dismiss === MySwal.DismissReason.cancel) {
+
+          }
+        });
+  };
   return (
     <Card
       {...rest}
@@ -264,6 +300,10 @@ const PlanList = props => {
                                   <Button variant="contained" color="secondary"
                                           onClick={handleEdit.bind(this, item.id, item.percent)}>
                                     Editar
+                                  </Button>
+                                  <Button variant="contained" color="secondary"
+                                          onClick={handleDelete.bind(this, item.id)}>
+                                    Excluir
                                   </Button>
                                 </div>
                             ) : ('')

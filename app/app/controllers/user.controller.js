@@ -679,6 +679,8 @@ exports.plan_numbers_this_month = (req, res) => {
     Contract.count(
         {
             where: {
+                invest_type: 'CRESCIMENTO',
+                status: 'processando',
                 start_date: {
                     [Op.gte]: moment(moment().format('YYYY-MM-DD')).subtract(0, 'months').startOf('month').format('YYYY-MM-DD'),
                     [Op.lte]: moment(moment().format('YYYY-MM-DD')).subtract(0, 'months').endOf('month').format('YYYY-MM-DD')
@@ -692,9 +694,46 @@ exports.plan_numbers_this_month = (req, res) => {
     });
 };
 exports.cresc_plan_total = (req, res) => {
+/*    Contract.findAll({
+        attributes: [
+            [Sequelize.literal('SUM(open_value + 8 * open_value * percent / 100)'), 'totalsum']
+        ],
+        where: {
+            invest_type: 'CRESCIMENTO',
+            status: 'processando'
+        }
+    }).then(result => {
+        return res.status(200).send({ status:'success', sum: result })
+    }).catch(err => {
+        return res.status(200).send({ status:'fail', message: err.message })
+    })
     Contract.sum('open_value', { where: { invest_type: 'CRESCIMENTO' } }).then(sum => {
         return res.status(200).send({ status:'success', sum: sum })
     }).catch(err => {
         return res.status(200).send({ status:'fail', message: err.message })
-    })
+    })*/
+
+
+    Contract.findAll(
+        {
+            where: { status: 'processando', invest_type: 'CRESCIMENTO' },
+            raw: true
+        }
+    ).then((expired_datas) => {
+            var total_sum = 0;
+            if (expired_datas.length > 0) {
+                expired_datas.forEach(function(item, index) {
+                    var item_total_sum = Number(item.open_value)
+                    for(let i = 1; i <= 8; i++){
+                        item_total_sum = item_total_sum*item.percent + item_total_sum
+                    }
+                    total_sum = total_sum + item_total_sum
+                });
+                return res.status(200).send({ status:'success', sum: total_sum})
+            }else {
+                return res.status(200).send({ status:'success', sum: 0 })
+            }
+        }).catch(err => {
+            return res.status(200).send({ status:'fail', message: err.message })
+        });
 }

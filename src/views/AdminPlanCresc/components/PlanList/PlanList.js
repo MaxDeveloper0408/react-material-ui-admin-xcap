@@ -320,6 +320,7 @@ const PlanList = props => {
                                         <TableCell className="blackText" style={{ color: '#212a37' }}>Data de
                                             Término</TableCell>
                                           <TableCell className="blackText" style={{ color: '#212a37' }}>Aporte</TableCell>
+                                        <TableCell className="blackText" style={{ color: '#212a37' }}>Profit</TableCell>
                                         <TableCell className="blackText" style={{ color: '#212a37' }}>Status</TableCell>
                                         <TableCell className="blackText" style={{ color: '#212a37' }}>Ações</TableCell>
                                     </TableRow>
@@ -344,6 +345,9 @@ const PlanList = props => {
                                                 code: 'BRL',
                                                 symbol: ''
                                             })}</TableCell>
+                                            <TableCell>
+                                                {item.percent + '%'}
+                                            </TableCell>
                                             <TableCell>
                                                 {item.status}
                                             </TableCell>

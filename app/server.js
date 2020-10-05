@@ -71,7 +71,10 @@ const dailyJob = scheduler.scheduleJob('* * * * *', function() {
                         }).then((contract_percent_datas) => {
                             console.log(contract_percent_datas)
                         })
-                        added_value = (Number(item.open_value) + Number(item.open_value * 8 * item.percent == null ? 20 : item.percent / 100));
+                        added_value = item.open_value;
+                        for(let i = 1; i <= 8; i++){
+                            added_value = added_value*item.percent + added_value
+                        }
                     }
                     expired_profit_value = Number(added_value) - Number(item.open_value);
                     Contract.update(

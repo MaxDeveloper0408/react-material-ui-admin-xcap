@@ -246,12 +246,8 @@ const PlanList = props => {
                     <TableCell>{item.user.full_name}</TableCell>
                     <TableCell>{item.user.cellphone}</TableCell>
                     <TableCell>{currencyFormatter.format(item.open_value, { code: 'BRL', symbol: '' })}</TableCell>
-                    <TableCell>
-                    <div className={classes.nameContainer}>
-                        <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format((Number(item.open_value) + Number(item.open_value*10/100)), { code: 'BRL', symbol: '' }) : currencyFormatter.format((Number(item.open_value) + Number(item.open_value*30/100)), { code: 'BRL', symbol: '' })}</TableCell>
-                    </div>
-                    </TableCell>
-                        <TableCell>{item.invest_type}</TableCell>
+                    <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format((Number(item.open_value) + Number(item.open_value*10/100)), { code: 'BRL', symbol: '' }) : currencyFormatter.format((Number(item.open_value) + Number(item.open_value*30/100)), { code: 'BRL', symbol: '' })}</TableCell>
+                    <TableCell>{item.invest_type}</TableCell>
                     <TableCell>
                       {item.status}
                     </TableCell>

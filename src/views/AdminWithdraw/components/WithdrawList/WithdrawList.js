@@ -137,11 +137,11 @@ const WithdrawList = props => {
             })
           }else {
             MySwal.fire({
-              title: user.full_name + ' Info',
-              html: '<p> Banco : ' + response.data.bank_list.name+ '</p>' +
-                  '<p> Agência  : ' + response.data.banco_agencia+ '</p>' +
-                  '<p> Conta  : ' + response.data.banco_conta+ '</p>' +
-                  '<p> Tipo de Conta : ' + response.data.tipo_conta+ '</p>'
+              title: user.full_name + ' ',
+              html: '<p> Banco: ' + response.data.bank_list.name+ '</p>' +
+                  '<p> Agência: ' + response.data.banco_agencia+ '</p>' +
+                  '<p> Conta: ' + response.data.banco_conta+ '</p>' +
+                  '<p> Tipo de Conta: ' + response.data.tipo_conta+ '</p>'
             })
           }
         },

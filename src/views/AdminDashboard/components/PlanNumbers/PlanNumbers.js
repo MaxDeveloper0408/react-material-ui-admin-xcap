@@ -89,7 +89,7 @@ const PlanNumbers = props => {
               gutterBottom
               variant="body2"
             >
-              Numbers of plans due
+              PLANOS DE CRESCIMENTO
             </Typography>
             <Typography
               color="inherit"

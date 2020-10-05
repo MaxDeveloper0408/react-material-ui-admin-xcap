@@ -131,16 +131,16 @@ const WithdrawList = props => {
           if(response.data === null || response.data === ''){
             MySwal.fire({
               title: '',
-              text: 'Nothing bank data for this user',
+              text: 'Não possui dados bancários cadastrados',
               icon: 'warning',
               confirmButtonText: 'Confirmar',
             })
           }else {
             MySwal.fire({
-              title: user.full_name + ' Bank Info',
-              html: '<p> Bank Name : ' + response.data.bank_list.name+ '</p>' +
-                  '<p> Número da Agência  : ' + response.data.banco_agencia+ '</p>' +
-                  '<p> Número da Conta  : ' + response.data.banco_conta+ '</p>' +
+              title: user.full_name + ' Info',
+              html: '<p> Banco : ' + response.data.bank_list.name+ '</p>' +
+                  '<p> Agência  : ' + response.data.banco_agencia+ '</p>' +
+                  '<p> Conta  : ' + response.data.banco_conta+ '</p>' +
                   '<p> Tipo de Conta : ' + response.data.tipo_conta+ '</p>'
             })
           }
@@ -148,7 +148,7 @@ const WithdrawList = props => {
         error => {
           MySwal.fire({
             title: '',
-            text: 'Something wrong',
+            text: 'Erro ocorreu',
             icon: 'warning',
             confirmButtonText: 'Confirmar',
            })

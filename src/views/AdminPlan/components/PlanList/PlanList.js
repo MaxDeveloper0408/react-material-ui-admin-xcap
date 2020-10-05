@@ -69,13 +69,13 @@ const PlanList = props => {
   //handle action
   const handleAdd = () => {
     MySwal.fire({
-      title: 'Add Flexible plan',
+      title: 'Adicionar Flexível',
       html:
           '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Mínimo de: '+currencyFormatter.format(5000, { code: 'BRL', symbol: '' })+'</h2>' +
           '<input type="text" id="swal_plan_value" value="" class="swal2-input" style="max-width: 100%;" placeHolder="5,000">' +
           '<input type="text" id="swal_user_cpf" value="" class="swal2-input" style="max-width: 100%;" placeHolder="CPF">' +
           '<select id="swal_percent" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 1.125em;padding: .975em .625em;">' +
-          '<option value="10%">10</option><option value="8%">8</option><option value="15%">15</option><option value="18%">18</option><option value="19%">19</option><option value="20%">20</option>' +
+          '<option value="10%">10%</option><option value="8%">8%</option><option value="15%">15%</option><option value="18%">18%</option><option value="19%">19%</option><option value="20%">20%</option>' +
           '</select>',
       showCancelButton: true,
       preConfirm: (value) => {
@@ -221,7 +221,7 @@ const PlanList = props => {
           <div className={classes.inner}>
           <div className={classes.margin}>
             <Button variant="outlined" color="inherit" onClick={handleAdd.bind()}>
-              Add Plan
+              Adicionar Plano
             </Button>
           </div>
             <Table>
@@ -229,11 +229,7 @@ const PlanList = props => {
                 <TableRow>
                 <TableCell style={{color: '#212a37'}} className="blackText">Nome Completo</TableCell>
                 <TableCell style={{color: '#212a37'}} className="blackText">E-mail</TableCell>
-                  <TableCell style={{color: '#212a37'}} className="blackText">Data de Início</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Data de Término</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Aporte</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Lucro</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Total</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Total Final</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Plano</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Ações</TableCell>
@@ -254,11 +250,7 @@ const PlanList = props => {
                         <Typography variant="body1">{moment(item.start_date).format('DD/MM/YYYY')}</Typography>
                       </div>
                     </TableCell>
-                    <TableCell>{moment(item.end_date).format('DD/MM/YYYY')}</TableCell>
-                    <TableCell>{currencyFormatter.format(item.open_value, { code: 'BRL', symbol: '' })}</TableCell>
-                    <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format(item.open_value*10/100, { code: 'BRL', symbol: '' }) : currencyFormatter.format(item.open_value*30/100, { code: 'BRL', symbol: '' })}</TableCell>
-                    <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format((Number(item.open_value) + Number(item.open_value*10/100)), { code: 'BRL', symbol: '' }) : currencyFormatter.format((Number(item.open_value) + Number(item.open_value*30/100)), { code: 'BRL', symbol: '' })}</TableCell>
-                    <TableCell>{item.invest_type}</TableCell>
+                        <TableCell>{item.invest_type}</TableCell>
                     <TableCell>
                       {item.status}
                     </TableCell>

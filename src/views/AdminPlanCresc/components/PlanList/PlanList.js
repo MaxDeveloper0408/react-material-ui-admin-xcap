@@ -71,7 +71,7 @@ const PlanList = props => {
     //handle action
     const handleAdd = () => {
         MySwal.fire({
-            title: 'Add Cresc plan',
+            title: 'Adicionar Crescimento',
             html:
                 '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Mínimo de: '+currencyFormatter.format(5000, { code: 'BRL', symbol: '' })+'</h2>' +
                 '<input type="text" id="swal_plan_value" value="" class="swal2-input" style="max-width: 100%;" placeHolder="5,000">' +
@@ -306,7 +306,7 @@ const PlanList = props => {
                         <div className={classes.inner}>
                             <div className={classes.margin}>
                                 <Button variant="outlined" color="inherit" onClick={handleAdd.bind()}>
-                                    Add Plan
+                                    Adicionar Plano
                                 </Button>
                             </div>
                             <Table>
@@ -314,13 +314,13 @@ const PlanList = props => {
                                     <TableRow>
                                         <TableCell style={{ color: '#212a37' }} className="blackText">Nome
                                             Completo</TableCell>
-                                        <TableCell style={{ color: '#212a37' }} className="blackText">E-mail</TableCell>
+                                          <TableCell style={{ color: '#212a37' }} className="blackText">Telefone</TableCell>
                                         <TableCell style={{ color: '#212a37' }} className="blackText">Data de
                                             Início</TableCell>
                                         <TableCell className="blackText" style={{ color: '#212a37' }}>Data de
                                             Término</TableCell>
-                                        <TableCell className="blackText" style={{ color: '#212a37' }}>Aporte</TableCell>
-                                        <TableCell className="blackText" style={{ color: '#212a37' }}>Lucro</TableCell>
+                                          <TableCell className="blackText" style={{ color: '#212a37' }}>Aporte</TableCell>
+                                        <TableCell className="blackText" style={{ color: '#212a37' }}>Status</TableCell>
                                         <TableCell className="blackText" style={{ color: '#212a37' }}>Ações</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -332,7 +332,7 @@ const PlanList = props => {
                                             key={item.id}
                                         >
                                             <TableCell>{item.user.full_name}</TableCell>
-                                            <TableCell>{item.user.email}</TableCell>
+                                            <TableCell>{item.user.cellphone}</TableCell>
                                             <TableCell>
                                                 <div className={classes.nameContainer}>
                                                     <Typography

@@ -147,7 +147,7 @@ exports.add_plan_admin = (req, res) => {
             }else if(count > 0) {
                 return res.status(200).send({
                     status: 'fail',
-                    message: 'User already have flexible plan running'
+                    message: 'Este cliente já tem um plano flexível.'
                 });
             }
         })
@@ -283,4 +283,3 @@ exports.plan_percent_add = (req, res) => {
     });
 
 };
-

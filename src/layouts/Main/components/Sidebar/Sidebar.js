@@ -84,11 +84,11 @@ const Sidebar = props => {
       icon: <AccountBalanceWalletOutlinedIcon />,
     },
 
-    {
-      title: 'Depositar',
-      href: '/admincasedeposit',
-      icon: <AccountBalanceWalletOutlinedIcon />,
-    },
+    // {
+    //   title: 'Depositar',
+    //   href: '/admincasedeposit',
+    //   icon: <AccountBalanceWalletOutlinedIcon />,
+    // },
 
     {
       title: 'Saques/Transferências',

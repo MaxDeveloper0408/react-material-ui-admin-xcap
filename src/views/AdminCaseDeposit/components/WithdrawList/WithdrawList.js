@@ -117,6 +117,8 @@ const WithdrawList = props => {
               if (result.dismiss === MySwal.DismissReason.cancel) {
                 return;
               }else if(result.value){
+                const swql_withdraw_value1 = document.getElementById('swal_withdraw_value1').value
+                const swal_withdraw_cpf = document.getElementById('swal_withdraw_cpf').value
                 UserService.check_cpf_user(document.getElementById('swal_withdraw_cpf').value).then(cpf_response => {
                   if(cpf_response.cpf_user == null) {
                     MySwal.fire({
@@ -127,8 +129,8 @@ const WithdrawList = props => {
                   }else {
                     UserService.addFund({
                       user_id: cpf_response.cpf_user.id,
-                      cpf: document.getElementById('swal_withdraw_cpf').value,
-                      amount: SimpleMaskMoney.formatToNumber(document.getElementById('swal_withdraw_value1').value),
+                      cpf: swal_withdraw_cpf,
+                      amount: SimpleMaskMoney.formatToNumber(swql_withdraw_value1),
                   }).then(
                       response => {
                         MySwal.fire({

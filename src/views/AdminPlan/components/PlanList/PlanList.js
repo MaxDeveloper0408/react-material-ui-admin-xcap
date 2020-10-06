@@ -109,6 +109,8 @@ const PlanList = props => {
       if (result.dismiss === MySwal.DismissReason.cancel) {
         return;
       }else if(result.value){
+        const swal_plan_value = document.getElementById('swal_plan_value').value
+        const swal_percent = document.getElementById('swal_percent').value
         UserService.check_cpf_user(document.getElementById('swal_user_cpf').value).then(cpf_response => {
           if(cpf_response.cpf_user == null) {
             MySwal.fire({
@@ -119,9 +121,9 @@ const PlanList = props => {
           }else{
             PlanService.addPlanAdmin({
               user_id: cpf_response.cpf_user.id,
-              open_value: SimpleMaskMoney.formatToNumber(document.getElementById('swal_plan_value').value),
+              open_value: SimpleMaskMoney.formatToNumber(swal_plan_value),
               investment_type: 'FLEXIVEL',
-              percent: document.getElementById('swal_percent').value
+              percent: swal_percent
             }).then(
                 response => {
                   if (response.status === 'success') {

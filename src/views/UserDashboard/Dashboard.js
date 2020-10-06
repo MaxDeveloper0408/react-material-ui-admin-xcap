@@ -9,7 +9,6 @@ import {
   TotalProfit,
   CTotalProfit,
   FTotalProfit,
-  VTotalProfit,
   AvaliableBalance,
   ETotalProfit,
 } from './components';

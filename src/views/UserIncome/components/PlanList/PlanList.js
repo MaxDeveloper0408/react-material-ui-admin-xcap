@@ -13,10 +13,6 @@ import {
   CardContent,
   CardActions,
   Divider,
-  Grid,
-  Button,
-  TextField,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
@@ -77,9 +73,9 @@ const PlanList = props => {
     let f_count = 0
     let c_count = 0
     plans.map(item => {
-      if(item.invest_type == 'FLEXIVEL') {
+      if(item.invest_type === 'FLEXIVEL') {
         f_count = f_count + 1;
-      }else if(item.invest_type == 'CRESCIMENTO'){
+      }else if(item.invest_type === 'CRESCIMENTO'){
         c_count = c_count + 1;
       }
     })

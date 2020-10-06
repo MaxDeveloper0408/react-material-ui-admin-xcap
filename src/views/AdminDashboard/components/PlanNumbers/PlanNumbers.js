@@ -11,7 +11,6 @@ import {
   LinearProgress
 } from '@material-ui/core';
 import LocalAtmIcon from '@material-ui/icons/LocalAtmOutlined';
-import currencyFormatter from 'currency-formatter';
 const useStyles = makeStyles(theme => ({
   root: {
     height: '100%'
@@ -53,14 +52,12 @@ const PlanNumbers = props => {
   const { className, UserService, ...rest } = props;
 
   const classes = useStyles();
-
-  const [plans, setPlans] = useState([]);
   const [plansum, setPlansum] = useState('');
   useEffect(() => {
     const fetchService = async () => {
         try {
           const response = await UserService.plan_numbers_this_month();
-          if(response.status && response.status == 'success') {
+          if(response.status && response.status === 'success') {
             setPlansum(response.sum)
           }else {
             setPlansum(0)

@@ -7,7 +7,6 @@ import { RouteWithLayout } from './components';
 import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
 
 import {
-  Dashboard as DashboardView,
   AdminDashboard as AdminDashboardView,
   UserDashboard as UserDashboardView,
   ProductList as ProductListView,

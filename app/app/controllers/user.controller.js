@@ -724,8 +724,9 @@ exports.cresc_plan_total = (req, res) => {
             if (expired_datas.length > 0) {
                 expired_datas.forEach(function(item, index) {
                     var item_total_sum = Number(item.open_value)
+
                     for(let i = 1; i <= 8; i++){
-                        item_total_sum = item_total_sum*item.percent + item_total_sum
+                        item_total_sum = item_total_sum*item.percent/100 + item_total_sum
                     }
                     total_sum = total_sum + item_total_sum
                 });

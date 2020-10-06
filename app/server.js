@@ -73,7 +73,7 @@ const dailyJob = scheduler.scheduleJob('* * * * *', function() {
                         })
                         added_value = item.open_value;
                         for(let i = 1; i <= 8; i++){
-                            added_value = added_value*item.percent + added_value
+                            added_value = added_value*item.percent/100 + added_value
                         }
                     }
                     expired_profit_value = Number(added_value) - Number(item.open_value);

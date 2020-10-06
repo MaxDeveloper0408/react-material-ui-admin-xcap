@@ -318,7 +318,7 @@ const UsersTable = props => {
                     <TableCell>{user.cpf}</TableCell>
                     <TableCell>{user.cellphone}</TableCell>
                     <TableCell>
-                      {user.investment_type} - ( {user.profit_percent} )
+                      {user.investment_type}
                     </TableCell>
                     <TableCell>
                       {user.investment}
@@ -327,11 +327,11 @@ const UsersTable = props => {
                       {moment(user.createdAt).format('DD/MM/YYYY')}
                     </TableCell> */}
                     <TableCell>
-                      {user.investment_type == 'CRESCIMENTO'? (
-                         <Button variant="contained" color="secondary" onClick={handleProfit.bind(this, user.id, user.profit_percent)}>
-                           Lucro %
-                         </Button>
-                      ):('')}
+                      {/*{user.investment_type == 'CRESCIMENTO'? (*/}
+                      {/*   <Button variant="contained" color="secondary" onClick={handleProfit.bind(this, user.id, user.profit_percent)}>*/}
+                      {/*     Lucro %*/}
+                      {/*   </Button>*/}
+                      {/*):('')}*/}
                       <Button variant="contained" color="secondary" onClick={handleEdit.bind(this, user.id)}>
                           Editar
                       </Button>

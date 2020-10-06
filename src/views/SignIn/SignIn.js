@@ -131,6 +131,14 @@ const useStyles = makeStyles(theme => ({
       color: 'rgb(206, 191, 191)!important',
       backgroundColor: 'rgb(107, 110, 128)!important'
     }
+  },
+  label: {
+    '&$focused': {
+      color: '#FFFFFF'
+    },
+  },
+  focused: {
+    color: 'white'
   }
 }));
 
@@ -329,6 +337,12 @@ const SignIn = props => {
                   value={formState.values.email || ''}
                   variant="outlined"
                   onKeyDown={handleKeydown}
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.label,
+                      focused: classes.focused
+                    },
+                  }}
                 />
                 <TextField
                   className={classes.textField}
@@ -343,6 +357,12 @@ const SignIn = props => {
                   type="password"
                   value={formState.values.password || ''}
                   variant="outlined"
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.label,
+                      focused: classes.focused
+                    },
+                  }}
                   onKeyDown={handleKeydown}
                 />
                 <Button

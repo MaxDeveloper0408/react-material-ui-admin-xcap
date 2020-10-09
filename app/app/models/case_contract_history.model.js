@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Case_contract_history = sequelize.define('cases', {
+    const Case_contract_history = sequelize.define('case_contract_histories', {
         contract_id: {
             type: Sequelize.INTEGER
         },

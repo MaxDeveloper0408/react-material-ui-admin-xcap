@@ -55,7 +55,20 @@ const PlanList = props => {
     const fetchUsers = async () => {
         try {
           const response = await PlanService.getPlanByUserIT(AuthService.getCurrentUser().id, 'CRESCIMENTO');
-          setPlans(response.data);
+          const response_data = response.data;
+          let item_total_sum = 0;
+          response_data.forEach(function(item, index) {
+            if(item.invest_type === 'FLEXIVEL') {
+              item_total_sum = Number(item.open_value) + Number(item.open_value) * Number(item.percent) / 100;
+            } else {
+              item_total_sum = Number(item.open_value)
+              for(let i = 1; i <= 8; i++){
+                item_total_sum = item_total_sum*item.percent/100 + item_total_sum
+              }
+            }
+            item.profit_value = item_total_sum;
+          });
+          setPlans(response_data);
 
         } catch (e) {
             setPlans([]);
@@ -241,103 +254,94 @@ const PlanList = props => {
       }
     )
   }
-  return (
-    <Card
-      {...rest}
-      className={clsx(classes.root, className)}
+  return <Card
+    {...rest}
+    className={clsx(classes.root, className)}
+  >
+    <form
+      autoComplete="off"
+      noValidate
     >
-      <form
-        autoComplete="off"
-        noValidate
-      >
-        <CardHeader
-          subheader="Histórico de planos ativos e expirados."
-          title="Plano de Crescimento"
+      <CardHeader
+        subheader="Histórico de planos ativos e expirados."
+        title="Plano de Crescimento"
+      />
+      <Divider />
+      <CardContent>
+        <PerfectScrollbar>
+        <div className={classes.inner}>
+        <div className={classes.margin}>
+        {/* <Button variant="outlined" color="inherit" onClick={handleAddPlan.bind()}>
+            Add Plan
+        </Button> */}
+        {plans.length > 0 ? <div>
+            {/*<Button variant="outlined" color="inherit" onClick={handleDownload.bind()}>
+                Download do Contrato
+            </Button>*/}
+            {/* <Button variant="outlined" color="inherit" onClick={handleUpload.bind()}>
+                Upload Contrato
+            </Button> */}
+          </div>:''}
+        </div>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell style={{color: '#212a37'}} className="blackText">Data de Início</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Data de Término</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Aporte</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Total</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Upload do Contrato</TableCell>
+                <TableCell className="blackText" style={{color: '#212a37'}}>Download do Contrato</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {plans.slice(page * rowsPerPage, (page + 1) * rowsPerPage).map(item => <TableRow
+                className={classes.tableRow}
+                hover
+                key={item.id}
+              >
+                <TableCell>
+                  <div className={classes.nameContainer}>
+                    <Typography variant="body1">{moment(item.start_date).format('DD/MM/YYYY')}</Typography>
+                  </div>
+                </TableCell>
+                <TableCell>{moment(item.end_date).format('DD/MM/YYYY')}</TableCell>
+                <TableCell>{currencyFormatter.format(item.open_value, { code: 'BRL', symbol: '' })}</TableCell>
+                <TableCell>{currencyFormatter.format(Number(item.profit_value), { code: 'BRL', symbol: '' })}</TableCell>
+                <TableCell>
+                  {item.status}
+                </TableCell>
+                <TableCell>
+                  <Button variant="contained" color="secondary" onClick={handleUpload.bind(this, item.contract_pdf.id)}>
+                    Upload
+                  </Button>
+                </TableCell>
+                <TableCell>
+                  {item.contract_pdf != null && item.contract_pdf.invest_type === 'CRESCIMENTO'? <Button variant="contained" color="secondary" onClick={handleDownload.bind(this, item.contract_pdf.id)}>
+                    Download
+                  </Button>:''}
+                </TableCell>
+              </TableRow>)}
+            </TableBody>
+          </Table>
+        </div>
+      </PerfectScrollbar>
+      </CardContent>
+      <Divider />
+      <CardActions>
+        <TablePagination
+          component="div"
+          count={plans.length}
+          onChangePage={handlePageChange}
+          onChangeRowsPerPage={handleRowsPerPageChange}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={[5, 10, 25]}
         />
-        <Divider />
-        <CardContent>
-          <PerfectScrollbar>
-          <div className={classes.inner}>
-          <div className={classes.margin}>
-          {/* <Button variant="outlined" color="inherit" onClick={handleAddPlan.bind()}>
-              Add Plan
-          </Button> */}
-          {plans.length > 0 ? (
-            <div>
-              {/*<Button variant="outlined" color="inherit" onClick={handleDownload.bind()}>
-                  Download do Contrato
-              </Button>*/}
-              {/* <Button variant="outlined" color="inherit" onClick={handleUpload.bind()}>
-                  Upload Contrato
-              </Button> */}
-            </div>
-          ):('')}
-          </div>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell style={{color: '#212a37'}} className="blackText">Data de Início</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Data de Término</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Aporte</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Lucro</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Total</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Upload do Contrato</TableCell>
-                  <TableCell className="blackText" style={{color: '#212a37'}}>Download do Contrato</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {plans.slice((page) * rowsPerPage, (page + 1) * rowsPerPage).map(item => (
-                  <TableRow
-                    className={classes.tableRow}
-                    hover
-                    key={item.id}
-                  >
-                    <TableCell>
-                      <div className={classes.nameContainer}>
-                        <Typography variant="body1">{moment(item.start_date).format('DD/MM/YYYY')}</Typography>
-                      </div>
-                    </TableCell>
-                    <TableCell>{moment(item.end_date).format('DD/MM/YYYY')}</TableCell>
-                    <TableCell>{currencyFormatter.format(item.open_value, { code: 'BRL', symbol: '' })}</TableCell>
-                    <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format(item.open_value*10/100, { code: 'BRL', symbol: '' }) : currencyFormatter.format(item.open_value*30/100, { code: 'BRL', symbol: '' })}</TableCell>
-                    <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format((Number(item.open_value) + Number(item.open_value*10/100)), { code: 'BRL', symbol: '' }) : currencyFormatter.format((Number(item.open_value) + Number(item.open_value*30/100)), { code: 'BRL', symbol: '' })}</TableCell>
-                    <TableCell>
-                      {item.status}
-                    </TableCell>
-                    <TableCell>
-                      <Button variant="contained" color="secondary" onClick={handleUpload.bind(this, item.contract_pdf.id)}>
-                        Upload
-                      </Button>
-                    </TableCell>
-                    <TableCell>
-                      {item.contract_pdf != null && item.contract_pdf.invest_type === 'CRESCIMENTO'? (
-                      <Button variant="contained" color="secondary" onClick={handleDownload.bind(this, item.contract_pdf.id)}>
-                        Download
-                      </Button>):('')}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </PerfectScrollbar>
-        </CardContent>
-        <Divider />
-        <CardActions>
-          <TablePagination
-            component="div"
-            count={plans.length}
-            onChangePage={handlePageChange}
-            onChangeRowsPerPage={handleRowsPerPageChange}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            rowsPerPageOptions={[5, 10, 25]}
-          />
-        </CardActions>
-      </form>
-    </Card>
-  );
+      </CardActions>
+    </form>
+  </Card>;
 };
 
 PlanList.propTypes = {

@@ -75,7 +75,7 @@ const PlanList = props => {
           '<input type="text" id="swal_plan_value" value="" class="swal2-input" style="max-width: 100%;" placeHolder="5,000">' +
           '<input type="text" id="swal_user_cpf" value="" class="swal2-input" style="max-width: 100%;" placeHolder="CPF">' +
           '<select id="swal_percent" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 1.125em;padding: .975em .625em;">' +
-          '<option value="10">10%</option><option value="8">8%</option><option value="15">15%</option><option value="18">18%</option><option value="19">19%</option><option value="20">20%</option>' +
+          '<option value="10">10%</option><option value="5">5%</option><option value="6">6%</option><option value="7">7%</option><option value="8">8%</option><option value="15">15%</option><option value="18">18%</option><option value="19">19%</option><option value="20">20%</option>' +
           '</select>',
       showCancelButton: true,
       preConfirm: (value) => {
@@ -287,11 +287,15 @@ const PlanList = props => {
                     <TableCell>{currencyFormatter.format(item.open_value, { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format((Number(item.open_value) + Number(item.open_value*10/100)), { code: 'BRL', symbol: '' }) : currencyFormatter.format((Number(item.open_value) + Number(item.open_value*30/100)), { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>{item.invest_type}</TableCell>
-                    <TableCell>{item.percent}</TableCell>
+                    <TableCell>{item.percent}%</TableCell>
                     <TableCell>
                       {item.status}
                     </TableCell>
                     <TableCell>
+                      <Button variant="contained" color="secondary"
+                              onClick={handleDelete.bind(this, item.id)}>
+                        Excluir
+                      </Button>
                       {
                       item.status == 'pendente' ? (
                         <Button variant="contained" color="secondary" onClick={handleApprove.bind(this, item.id)}>
@@ -304,10 +308,6 @@ const PlanList = props => {
                                   <Button variant="contained" color="secondary"
                                           onClick={handleEdit.bind(this, item.id, item.percent)}>
                                     Editar
-                                  </Button>
-                                  <Button variant="contained" color="secondary"
-                                          onClick={handleDelete.bind(this, item.id)}>
-                                    Excluir
                                   </Button>
                                 </div>
                             ) : ('')

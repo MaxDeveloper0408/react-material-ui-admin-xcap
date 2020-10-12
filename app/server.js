@@ -64,13 +64,13 @@ if(environment === 'test') {
                         }else if(item.invest_type === 'CRESCIMENTO'){
                             Contract_percent.findAll({
                                 where: {
-                                    contract_id: item.contract_id
+                                    contract_id: item.id
                                 }
                             }).then((contract_percent_datas) => {
                             })
-                            added_value = item.open_value;
+                            added_value = Number(item.open_value);
                             for(let i = 1; i <= 8; i++){
-                                added_value = added_value*item.percent/100 + added_value
+                                added_value = added_value*Number(item.percent/100) + added_value
                             }
                         }
                         expired_profit_value = Number(added_value) - Number(item.open_value);
@@ -83,6 +83,9 @@ if(environment === 'test') {
                                 where: { id: item.id }
                             }).then((updated_data) => {
                             console.log('Successfully expired');
+                            console.log('-------------------');
+                            console.log(added_value);
+                            console.log('-------------------');
                             Case.increment(
                                 { balance: added_value },
                                 { where: { user_id: item.user_id } }
@@ -126,14 +129,14 @@ if(environment === 'test') {
                         }else if(item.invest_type === 'CRESCIMENTO'){
                             Contract_percent.findAll({
                                 where: {
-                                    contract_id: item.contract_id
+                                    contract_id: item.id
                                 }
                             }).then((contract_percent_datas) => {
                                 console.log(contract_percent_datas)
                             })
-                            added_value = item.open_value;
+                            added_value = Number(item.open_value);
                             for(let i = 1; i <= 8; i++){
-                                added_value = added_value*item.percent/100 + added_value
+                                added_value = added_value*Number(item.percent/100) + added_value
                             }
                         }
                         expired_profit_value = Number(added_value) - Number(item.open_value);

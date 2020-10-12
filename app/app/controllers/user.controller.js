@@ -594,9 +594,9 @@ exports.setProfit = (req, res) => {
 }
 
 exports.getPlanSum = (req, res) => {
-  let param = { where: { invest_type: req.body.invest_type } };
+  let param = { where: { invest_type: req.body.invest_type, status: 'processando' } };
   if(req.body.invest_type == '' || req.body.invest_type == null) {
-    param = {};
+    param = {where: {status: 'processando'}};
   }
   Contract.sum('open_value', param).then(sum => {
     return res.status(200).send({ status:'success', sum: sum })
@@ -605,11 +605,11 @@ exports.getPlanSum = (req, res) => {
   })
 }
 exports.getPlanSumByUser = (req, res) => {
-  console.log(req.userId)
-  let param = { where: { invest_type: req.body.invest_type, user_id: req.userId } };
+  let param = { where: { invest_type: req.body.invest_type, user_id: req.userId, status: 'processando' } };
   if(req.body.invest_type == '' || req.body.invest_type == null) {
-    param = { where: { user_id: req.userId } };
+    param = { where: { user_id: req.userId, status: 'processando' } };
   }
+
   Contract.sum('open_value', param).then(sum => {
     Contract.max('end_date', param).then(max => {
       return res.status(200).send({ status:'success', sum: sum, max: max })
@@ -668,11 +668,36 @@ exports.active_users_count = (req, res) => {
 }
 
 exports.getExpiredProfitSumByUser = (req, res) => {
-  Contract.sum('profit_value', { where: { status: 'concluído', user_id: req.userId } }).then(sum => {
-    return res.status(200).send({ status:'success', sum: sum })
-  }).catch(err => {
-    return res.status(200).send({ status:'fail', message: err.message })
-  })
+    Contract.findAll(
+        {
+            where: { status: 'concluído', user_id: req.userId },
+            raw: true
+        }
+    ).then((expired_datas) => {
+        var total_sum = 0;
+        var flexible_total_sum = 0;
+        var item_total_sum = 0;
+        if (expired_datas.length > 0) {
+            expired_datas.forEach(function(item, index) {
+                if(item.invest_type === 'CRESCIMENTO') {
+                    item_total_sum = Number(item.open_value)
+                    for(let i = 1; i <= 8; i++){
+                        item_total_sum = item_total_sum*item.percent/100 + item_total_sum
+                    }
+                    total_sum = total_sum + item_total_sum
+                }else {
+                    item_total_sum = Number(item.open_value)
+                    item_total_sum = item_total_sum*item.percent/100 + item_total_sum
+                    flexible_total_sum = flexible_total_sum + item_total_sum
+                }
+            });
+            return res.status(200).send({ status: 'success', sum: total_sum + flexible_total_sum });
+        }else {
+            return res.status(200).send({ status:'fail', sum: 0 })
+        }
+    }).catch(err => {
+        return res.status(200).send({ status:'fail', message: err.message })
+    });
 }
 
 exports.plan_numbers_this_month = (req, res) => {

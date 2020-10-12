@@ -51,8 +51,20 @@ const PlanList = props => {
     const fetchUsers = async () => {
         try {
           const response = await PlanService.getPlanByUser(AuthService.getCurrentUser().id);
-          setPlans(response.data);
-
+          const response_data = response.data;
+          let item_total_sum = 0;
+          response_data.forEach(function(item, index) {
+            if(item.invest_type === 'FLEXIVEL') {
+              item_total_sum = Number(item.open_value) + Number(item.open_value) * Number(item.percent) / 100;
+            } else {
+              item_total_sum = Number(item.open_value)
+              for(let i = 1; i <= 8; i++){
+                item_total_sum = item_total_sum*item.percent/100 + item_total_sum
+              }
+            }
+            item.profit_value = item_total_sum;
+          });
+          setPlans(response_data);
         } catch (e) {
             setPlans([]);
         }
@@ -466,8 +478,8 @@ const PlanList = props => {
                     </TableCell>
                     <TableCell>{moment(item.end_date).format('DD/MM/YYYY')}</TableCell>
                     <TableCell>{currencyFormatter.format(item.open_value, { code: 'BRL', symbol: '' })}</TableCell>
-                    <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format(item.open_value*10/100, { code: 'BRL', symbol: '' }) : currencyFormatter.format(item.open_value*30/100, { code: 'BRL', symbol: '' })}</TableCell>
-                    <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format((Number(item.open_value) + Number(item.open_value*10/100)), { code: 'BRL', symbol: '' }) : currencyFormatter.format((Number(item.open_value) + Number(item.open_value*30/100)), { code: 'BRL', symbol: '' })}</TableCell>
+                    <TableCell>{currencyFormatter.format(item.profit_value-item.open_value, { code: 'BRL', symbol: '' })}</TableCell>
+                    <TableCell>{currencyFormatter.format(item.profit_value, { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>{item.invest_type}</TableCell>
                     <TableCell>
                       {item.status}

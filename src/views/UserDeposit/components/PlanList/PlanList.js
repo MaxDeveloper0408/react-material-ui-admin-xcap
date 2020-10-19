@@ -85,7 +85,7 @@ const PlanList = props => {
             showCancelButton: true,
             preConfirm: (value) => {
               if( SimpleMaskMoney.formatToNumber(document.getElementById('swal_open_value').value) < 5000) {
-                MySwal.showValidationMessage('You should put more than 5.000')
+                MySwal.showValidationMessage('Mínimo de 5.000,00')
               }
             },
             onOpen: () => {

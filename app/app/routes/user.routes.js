@@ -23,6 +23,8 @@ module.exports = function(app) {
   app.get("/api/user/all_case_deposit", [authJwt.verifyToken, authJwt.isAdmin], controller.all_case_deposit);
   app.post("/api/user/add_fund", [authJwt.verifyToken, authJwt.isAdmin], controller.add_fund);
   app.post("/api/user/getPlanSum", [authJwt.verifyToken, authJwt.isAdmin], controller.getPlanSum);
+  app.post("/api/user/admin_deposit_to_user", [authJwt.verifyToken, authJwt.isAdmin], controller.admin_deposit_to_user);
+
   
   app.post("/api/user/withdraw_sum_pending", [authJwt.verifyToken, authJwt.isAdmin], controller.withdraw_sum_pending);
   app.post("/api/user/withdraw_sum_paid", [authJwt.verifyToken, authJwt.isAdmin], controller.withdraw_sum_paid);

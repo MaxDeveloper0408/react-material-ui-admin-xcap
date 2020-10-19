@@ -201,6 +201,13 @@ class UserService {
           return response.data;
     });
   }
+  admin_deposit_to_user(data){
+    return axios
+        .post(URL + "admin_deposit_to_user", data, {headers: authHeader()})
+        .then(response => {
+          return response.data;
+        });
+  }
 }
 
 export default new UserService();

@@ -763,3 +763,113 @@ exports.cresc_plan_total = (req, res) => {
             return res.status(200).send({ status:'fail', message: err.message })
         });
 }
+
+exports.admin_deposit_to_user = (req, res) => {
+    let params = req.body;
+    let now = moment();
+    if(params.invest_type === 'FLEXIVEL') {
+        Contract.findAll(
+            {
+                where: { invest_type: 'FLEXIVEL', user_id: params.user_id },
+                raw: true
+            }
+        ).then((flexible_datas) => {
+            if (flexible_datas.length == 0) {
+                Contract.create(
+                    {
+                        user_id: params.user_id,
+                        open_value: params.open_value,
+                        invest_type: 'FLEXIVEL',
+                        start_date: now.format("YYYY-MM-DD"),
+                        status: 'processando',
+                        percent: constant_config.FLEX_DEFAULT_PERCENT,
+                        end_date: moment(now.format("YYYY-MM-DD")).add(1, 'M')
+                    }
+                ).then(res_data => {
+                    let contract_pdf_create = {
+                        user_id: params.user_id,
+                        invest_type: 'FLEXIVEL'
+                    }
+                    Contract_pdf.create(contract_pdf_create)
+                    return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+                })
+                .catch(err => {
+                    return res.status(200).send({ status:'fail', message: err.message });
+                });
+            }else if (flexible_datas.length > 0) {
+                Contract.findOne(
+                    {
+                        where: { invest_type: 'FLEXIVEL', user_id: params.user_id, status: 'processando' },
+                        raw: true
+                    }
+                ).then((flex_pending_data) => {
+                    if(flex_pending_data) {
+                        Contract.update(
+                            { open_value: Number(flex_pending_data.open_value) + Number(params.open_value) },
+                            { where: { id: flex_pending_data.id } }
+                        )
+                            .then(user => {
+                                return res.status(200).send({ status: 'success', message: 'Ação realizada com sucesso!' });
+                            })
+                            .catch(err => {
+                                return res.status(500).send({ status: 'fail', message: err.message });
+                            });
+                    }else {
+                        Contract.create(
+                            {
+                                user_id: params.user_id,
+                                open_value: params.open_value,
+                                invest_type: 'FLEXIVEL',
+                                start_date: now.format("YYYY-MM-DD"),
+                                status: 'processando',
+                                percent: constant_config.FLEX_DEFAULT_PERCENT,
+                                end_date: moment(now.format("YYYY-MM-DD")).add(1, 'M')
+                            }
+                        ).then(res_data => {
+                            let contract_pdf_create = {
+                                user_id: params.user_id,
+                                invest_type: 'FLEXIVEL'
+                            }
+                            Contract_pdf.create(contract_pdf_create)
+                            return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+                        })
+                            .catch(err => {
+                                return res.status(200).send({ status:'fail', message: err.message });
+                            });
+                    }
+                })
+            }
+        })
+
+    }else if(params.invest_type === 'CRESCIMENTO'){
+        Contract.create(
+            {
+                user_id: params.user_id,
+                open_value: params.open_value,
+                invest_type: 'CRESCIMENTO',
+                start_date: now.format("YYYY-MM-DD"),
+                status: 'processando',
+                percent: constant_config.CRESC_DEFAULT_PERCENT,
+                end_date: moment(now.format("YYYY-MM-DD")).add(8, 'M')
+            }
+        )
+        .then(res_data => {
+             Contract_percent.create({
+                contract_id: res_data.id,
+                percent: constant_config.CRESC_DEFAULT_PERCENT
+            })
+            let contract_pdf_create = {
+                user_id: params.user_id,
+                invest_type: 'CRESCIMENTO',
+                contract_id: res_data.id
+            }
+            Contract_pdf.create(contract_pdf_create)
+            return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
+        })
+        .catch(err => {
+            return res.status(200).send({ status:'fail', message: err.message });
+        });
+    }else {
+        return res.status(200).send({ status: 'fail', message: 'fail' });
+    }
+};

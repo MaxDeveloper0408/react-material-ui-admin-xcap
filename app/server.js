@@ -10,7 +10,8 @@ app.use(express.static(path.join(__dirname, './public/')));
 var corsOptions = {
     origin: 'http://localhost:3000'
 };
-const environment = 'test';
+const environment = 'real';
+// const environment = 'test';
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());

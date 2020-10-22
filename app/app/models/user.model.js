@@ -55,6 +55,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.ENUM,
         values: ['0', '1']
       },
+      super_admin: {
+        type: Sequelize.ENUM,
+        values: ['0', '1']
+      },
       first_access: {
         type: Sequelize.ENUM,
         values: ['0', '1']

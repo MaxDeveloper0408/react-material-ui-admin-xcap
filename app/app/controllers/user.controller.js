@@ -52,6 +52,19 @@ exports.userAll = (req, res) => {
       res.status(500).send([])
     });
 }
+exports.adminAll = (req, res) => {
+    User.findAll({
+        where: {
+            admin: '1'
+        }
+    })
+        .then(users => {
+            res.status(200).send(users)
+        })
+        .catch(err => {
+            res.status(500).send([])
+        });
+}
 exports.userActiveAll = (req, res) => {
   User.findAll({
       where: {
@@ -872,4 +885,22 @@ exports.admin_deposit_to_user = (req, res) => {
     }else {
         return res.status(200).send({ status: 'fail', message: 'fail' });
     }
+};
+
+exports.admin_create = (req, res) => {
+    // Save User to Database
+    let create_data = req.body;
+    create_data.password = bcrypt.hashSync(req.body.password, 8);
+    delete create_data.confirm;
+    create_data.admin = 1;
+    create_data.client_type = 'ADMIN';
+    User.create(create_data)
+        .then(user => {
+                user.setRoles([2]).then(() => {
+                    res.send({ status: 'success', message: "Ação realizada com sucesso!" });
+                });
+         })
+        .catch(err => {
+            res.status(500).send({ stauts: 'fail', message: err.message });
+        });
 };

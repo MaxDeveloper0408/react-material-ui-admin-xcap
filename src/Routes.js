@@ -35,6 +35,9 @@ import {
   SignUp as SignUpView,
   SignIn as SignInView,
   NotFound as NotFoundView,
+  AdminList as AdminListView,
+  AdminCreate as AdminCreateView,
+  AdminEdit as AdminEditView
   
 } from './views';
 
@@ -103,6 +106,14 @@ class Routes extends Component {
           layout={MainLayout}
           path="/admindashboard"
         />
+        )}
+        {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
+            <RouteWithLayout
+                component={AdminListView}
+                exact
+                layout={MainLayout}
+                path="/admins"
+            />
         )}
         {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
         <RouteWithLayout
@@ -183,6 +194,22 @@ class Routes extends Component {
           layout={MainLayout}
           path="/useredit/:userId"
         />
+        )}
+        {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
+            <RouteWithLayout
+                component={AdminEditView}
+                exact
+                layout={MainLayout}
+                path="/adminedit/:userId"
+            />
+        )}
+        {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
+            <RouteWithLayout
+                component={AdminCreateView}
+                exact
+                layout={MainLayout}
+                path="/admincreate"
+            />
         )}
         {AuthService.getCurrentUser() && (
         <RouteWithLayout

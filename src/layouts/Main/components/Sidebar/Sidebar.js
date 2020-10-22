@@ -44,7 +44,78 @@ const Sidebar = props => {
   const { open, AuthService, variant, onClose, className, ...rest } = props;
 
   const classes = useStyles();
+  const super_admin_pages = [
+    {
+      title: 'Dashboard',
+      href: '/admindashboard',
+      icon: <DashboardIcon />,
+    },
+    {
+      title: 'Criação de Conta',
+      href: '/admins',
+      icon: <AccountBoxIcon />,
+    },
+    {
+      title: 'Aprovação de novos usuários',
+      href: '/users',
+      icon: <AccountBoxIcon />,
+    },
+    {
+      title: 'Lista de clientes',
+      href: '/active_users',
+      icon: <AccountBoxIcon />,
+    },
+    {
+      title: 'Planos',
+      href: '/adminplan',
+      icon: <Rotate90DegreesCcwIcon />,
+      subpages: [
+        {
+          title: 'Flexível',
+          href: '/adminplan',
+          icon: <ArrowForwardIosOutlinedIcon />,
+        },
+        {
+          title: 'Crescimento',
+          href: '/adminplancresc',
+          icon: <ArrowForwardIosOutlinedIcon />,
+        }
+      ]
+    },
+    {
+      title: 'Depósitos',
+      href: '/admindeposit',
+      icon: <AccountBalanceWalletOutlinedIcon />,
+    },
+    {
+      title: 'Saques/Transferências',
+      href: '/adminwithdraw',
+      icon: <LocalAtmIcon />,
+    },
+    {
+      title: 'Contrato',
+      href: '/admincontract',
+      icon: <InsertDriveFileIcon />,
+      subpages: [
+        {
+          title: 'Flexível',
+          href: '/admincontract',
+          icon: <ArrowForwardIosOutlinedIcon />,
+        },
+        {
+          title: 'Crescimento',
+          href: '/admincontractcresc',
+          icon: <ArrowForwardIosOutlinedIcon />,
+        }
+      ]
+    },
+    {
+      title: 'Configurações',
+      href: '/userpassword',
+      icon: <SettingsIcon />,
 
+    }
+  ];
   const pages = [
     {
       title: 'Dashboard',
@@ -83,13 +154,6 @@ const Sidebar = props => {
       href: '/admindeposit',
       icon: <AccountBalanceWalletOutlinedIcon />,
     },
-
-    // {
-    //   title: 'Depositar',
-    //   href: '/admincasedeposit',
-    //   icon: <AccountBalanceWalletOutlinedIcon />,
-    // },
-
     {
       title: 'Saques/Transferências',
       href: '/adminwithdraw',
@@ -197,8 +261,11 @@ const Sidebar = props => {
       >
         <SidebarNav
           className={classes.nav}
-          pages={AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") ? pages : user_pages}
+          pages={
+            AuthService.getCurrentUser().super_admin == '1' ? super_admin_pages : AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") & AuthService.getCurrentUser().super_admin == '0'? pages : user_pages
+          }
         />
+
       </div>
     </Drawer>
   );

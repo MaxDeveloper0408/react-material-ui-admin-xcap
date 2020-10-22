@@ -24,6 +24,9 @@ class UserService {
   getDeactiveUsers() {
     return axios.get(URL + 'deactiveall', {headers: authHeader()});
   }
+  getAdmins() {
+    return axios.get(URL + 'adminall', {headers: authHeader()});
+  }
   getActiveUsers() {
     return axios.get(URL + 'activeall', {headers: authHeader()});
   }
@@ -207,6 +210,9 @@ class UserService {
         .then(response => {
           return response.data;
         });
+  }
+  admin_create(register_data) {
+    return axios.post(URL + "admin_create", register_data, {headers: authHeader()});
   }
 }
 

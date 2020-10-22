@@ -31,7 +31,7 @@ exports.signup = (req, res) => {
       } else {
         // user role = 1
         user.setRoles([1]).then(() => {
-          res.send({ message: "O formulário de solicitação cadastral foi enviado. Aguarde contato." });
+          res.send({ message: "" });
         });
       }
     })
@@ -78,7 +78,8 @@ exports.signin = (req, res) => {
           full_name: user.full_name,
           email: user.email,
           roles: authorities,
-          accessToken: token
+          accessToken: token,
+            super_admin: user.super_admin
         });
       });
     })

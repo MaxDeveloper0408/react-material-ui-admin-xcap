@@ -51,11 +51,6 @@ const Sidebar = props => {
       icon: <DashboardIcon />,
     },
     {
-      title: 'Criação de Conta',
-      href: '/admins',
-      icon: <AccountBoxIcon />,
-    },
-    {
       title: 'Aprovação de novos usuários',
       href: '/users',
       icon: <AccountBoxIcon />,
@@ -108,6 +103,11 @@ const Sidebar = props => {
           icon: <ArrowForwardIosOutlinedIcon />,
         }
       ]
+    },
+    {
+      title: 'Criação de Conta',
+      href: '/admins',
+      icon: <AccountBoxIcon />,
     },
     {
       title: 'Configurações',

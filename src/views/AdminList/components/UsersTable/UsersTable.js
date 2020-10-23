@@ -264,11 +264,13 @@ const UsersTable = props => {
       <CardContent className={classes.content}>
         <PerfectScrollbar>
           <div className={classes.inner}>
+              </br>
             <div className={classes.margin}>
               <Button variant="outlined" color="inherit" onClick={handleAdd.bind()}>
-                Add Admin
+                Criar Admin
               </Button>
             </div>
+            </br>
             <Table>
               <TableHead>
                 <TableRow>

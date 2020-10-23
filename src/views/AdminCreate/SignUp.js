@@ -403,7 +403,7 @@ const SignUp = () => {
             title: 'Success',
             text: response.data.message
           });
-         // history.push("/admins");
+          history.push("/admins");
         },
         error => {
           const resMessage =

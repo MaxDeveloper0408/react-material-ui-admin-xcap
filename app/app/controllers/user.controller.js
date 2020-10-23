@@ -892,8 +892,9 @@ exports.admin_create = (req, res) => {
     let create_data = req.body;
     create_data.password = bcrypt.hashSync(req.body.password, 8);
     delete create_data.confirm;
-    create_data.admin = 1;
+    create_data.admin = '1';
     create_data.client_type = 'ADMIN';
+    console.log(create_data);
     User.create(create_data)
         .then(user => {
                 user.setRoles([2]).then(() => {

@@ -389,7 +389,7 @@ const SignUp = () => {
   const submit = () => {
     if(!isError) {
       setLoading(true);
-      fields['admin'] = 1;
+      fields['admin'] = '1';
       fields['client_type'] = 'ADMIN';
       fields['active'] = 'YES';
       UserService.admin_create(
@@ -403,7 +403,7 @@ const SignUp = () => {
             title: 'Success',
             text: response.data.message
           });
-          history.push("/admins");
+         // history.push("/admins");
         },
         error => {
           const resMessage =

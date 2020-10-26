@@ -6,7 +6,7 @@ const Contract = db.contract;
 const Deposit = db.deposit;
 const Contract_pdf = db.contract_pdf;
 const Contract_percent = db.contract_percent;
-
+const Contract_history = db.contract_history;
 const multer = require('multer');
 const path = require('path');
 const multerHelper = require('./multer.helper');
@@ -62,6 +62,15 @@ exports.set_approve = (req, res) => {
                             }
                         )
                             .then(res_data => {
+                                Contract_history.create(
+                                    {
+                                        user_id: res_data.user_id,
+                                        value: res_data.open_value,
+                                        contract_id: res_data.id,
+                                        action_type: 0,
+                                        invest_type: res_data.invest_type
+                                    }
+                                )
                                 if (req.body.investment_type === 'FLEXIVEL') {
                                     let contract_pdf_create = {
                                         user_id: req.body.user_id,
@@ -116,6 +125,15 @@ exports.set_approve = (req, res) => {
                             }
                         )
                             .then(res_data => {
+                                Contract_history.create(
+                                    {
+                                        user_id: res_data.user_id,
+                                        value: res_data.open_value,
+                                        contract_id: res_data.id,
+                                        action_type: 0,
+                                        invest_type: res_data.invest_type
+                                    }
+                                );
                                 if (req.body.investment_type === 'CRESCIMENTO') {
                                     Contract_percent.create({
                                         contract_id: res_data.id,
@@ -162,12 +180,21 @@ exports.set_approve = (req, res) => {
                         }
                     )
                         .then(res_data => {
+                            Contract_history.create(
+                                {
+                                    user_id: res_data.user_id,
+                                    value: res_data.open_value,
+                                    contract_id: res_data.id,
+                                    action_type: 0,
+                                    invest_type: res_data.invest_type
+                                }
+                            )
                             return res.status(200).send({ status: 'success', message: 'Ação realizada com sucesso!' });
                         })
                         .catch(err => {
                             return res.status(500).send({ status: 'fail', message: err.message });
                         });
-                    return res.status(200).send({ status: 'success', message: 'Ação realizada com sucesso!' });
+                    // return res.status(200).send({ status: 'success', message: 'Ação realizada com sucesso!' });
                 })
                 .catch(err => {
                     return res.status(500).send({ status: 'fail', message: err.message });
@@ -189,6 +216,18 @@ exports.all_by_user = (req, res) => {
             res.status(500).send([]);
         });
 };
+exports.get_deposit = (req, res) => {
+    Deposit.findAll({
+        where: req.body
+    })
+        .then(datas => {
+            res.status(200).send(datas);
+        })
+        .catch(err => {
+            res.status(500).send([]);
+        });
+};
+
 exports.add = (req, res) => {
     Deposit.create(
         {

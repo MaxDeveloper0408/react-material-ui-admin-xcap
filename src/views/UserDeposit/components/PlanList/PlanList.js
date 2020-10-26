@@ -160,7 +160,7 @@ const PlanList = props => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {plans.slice(0, rowsPerPage).map(item => (
+                {plans.slice((page) * rowsPerPage, (page + 1) * rowsPerPage).map(item => (
                   <TableRow
                     className={classes.tableRow}
                     hover

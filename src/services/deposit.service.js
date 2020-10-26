@@ -14,6 +14,9 @@ class DepositService {
   getDepositByUser(userId) {
     return axios.post(URL + 'all_by_user', {user_id: userId}, {headers: authHeader()});
   }
+  get_deposit(data) {
+    return axios.post(URL + 'get_deposit', data, {headers: authHeader()});
+  }
   addDeposit(add_data) {
     return axios
       .post(URL + "add", add_data, {headers: authHeader()})

@@ -12,6 +12,7 @@ const Contract_pdf = db.contract_pdf;
 const Bank_list = db.bank_list;
 const Case_deposit = db.case_deposit;
 const Withdraw = db.withdraw;
+const Contract_history = db.contract_history;
 
 const multer = require('multer');
 const path = require('path');
@@ -197,7 +198,15 @@ exports.setActive = (req, res) => {
                 }
               )
               .then(res_data => {
-
+                  Contract_history.create(
+                      {
+                          user_id: res_data.user_id,
+                          value: res_data.open_value,
+                          contract_id: res_data.id,
+                          action_type: 0,
+                          invest_type: res_data.invest_type
+                      }
+                  )
                   let contract_pdf_create = {
                     user_id: req.body.userId,
                     invest_type: req.body.investment_type,
@@ -262,6 +271,15 @@ exports.setActive = (req, res) => {
                 }
               )
                 .then(res_data => {
+                    Contract_history.create(
+                        {
+                            user_id: res_data.user_id,
+                            value: res_data.open_value,
+                            contract_id: res_data.id,
+                            action_type: 0,
+                            invest_type: res_data.invest_type
+                        }
+                    )
                   let contract_pdf_create = {
                     user_id: req.body.userId,
                     admin_pdf: req.file.path,
@@ -799,6 +817,15 @@ exports.admin_deposit_to_user = (req, res) => {
                         end_date: moment(now.format("YYYY-MM-DD")).add(1, 'M')
                     }
                 ).then(res_data => {
+                    Contract_history.create(
+                        {
+                            user_id: res_data.user_id,
+                            value: res_data.open_value,
+                            contract_id: res_data.id,
+                            action_type: 0,
+                            invest_type: res_data.invest_type
+                        }
+                    )
                     let contract_pdf_create = {
                         user_id: params.user_id,
                         invest_type: 'FLEXIVEL'
@@ -839,6 +866,15 @@ exports.admin_deposit_to_user = (req, res) => {
                                 end_date: moment(now.format("YYYY-MM-DD")).add(1, 'M')
                             }
                         ).then(res_data => {
+                            Contract_history.create(
+                                {
+                                    user_id: res_data.user_id,
+                                    value: res_data.open_value,
+                                    contract_id: res_data.id,
+                                    action_type: 0,
+                                    invest_type: res_data.invest_type
+                                }
+                            )
                             let contract_pdf_create = {
                                 user_id: params.user_id,
                                 invest_type: 'FLEXIVEL'
@@ -867,6 +903,15 @@ exports.admin_deposit_to_user = (req, res) => {
             }
         )
         .then(res_data => {
+            Contract_history.create(
+                {
+                    user_id: res_data.user_id,
+                    value: res_data.open_value,
+                    contract_id: res_data.id,
+                    action_type: 0,
+                    invest_type: res_data.invest_type
+                }
+            )
              Contract_percent.create({
                 contract_id: res_data.id,
                 percent: constant_config.CRESC_DEFAULT_PERCENT

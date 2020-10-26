@@ -30,3 +30,4 @@ export { default as AdminContract } from './AdminContract';
 export { default as AdminContractCresc } from './AdminContractCresc';
 export { default as UserPassword } from './UserPassword';
 export { default as AdminList } from './AdminList';
+export { default as UserHistory } from './UserHistory';

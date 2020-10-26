@@ -196,6 +196,15 @@ const monthlyJob = scheduler.scheduleJob('0 0 1 * *', function() {
                         end_date: moment(now.format('YYYY-MM-DD')).add(1, 'M')
                     }).then((updated_data) => {
                     console.log('create new plan each start day of month');
+                    Contract_history.create(
+                        {
+                            user_id: updated_data.user_id,
+                            value: updated_data.open_value,
+                            contract_id: updated_data.id,
+                            action_type: 0,
+                            invest_type: updated_data.invest_type
+                        }
+                    )
                     Case.decrement(
                         { balance: item.balance },
                         { where: { user_id: item.user_id } }

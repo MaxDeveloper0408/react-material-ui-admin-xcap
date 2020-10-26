@@ -12,8 +12,10 @@ module.exports = function(app) {
   });
 
   app.get("/api/deposit/all",[authJwt.verifyToken, authJwt.isAdmin],controller.all);
+
   app.post("/api/deposit/set_approve",[authJwt.verifyToken, authJwt.isAdmin],controller.set_approve);
 
+  app.post("/api/deposit/get_deposit",[authJwt.verifyToken],controller.get_deposit);
   app.post("/api/deposit/all_by_user",[authJwt.verifyToken],controller.all_by_user);
   app.post("/api/deposit/add",[authJwt.verifyToken],controller.add);
   

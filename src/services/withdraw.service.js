@@ -20,6 +20,9 @@ class WithdrawService {
   getPlanByUser(userId) {
     return axios.post(URL + 'all_by_user', {user_id: userId}, {headers: authHeader()});
   }
+  get_withdraw(data) {
+    return axios.post(URL + 'get_withdraw', data, {headers: authHeader()});
+  }
   add(add_data) {
     return axios
       .post(URL + "add", add_data, {headers: authHeader()})

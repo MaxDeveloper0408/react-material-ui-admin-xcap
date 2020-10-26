@@ -37,6 +37,7 @@ db.contract_pdf = require("../models/contract_pdf.model.js")(sequelize, Sequeliz
 db.deposit = require("../models/deposit.model.js")(sequelize, Sequelize);
 db.plan_history = require("../models/plan_history.model.js")(sequelize, Sequelize);
 db.withdraw = require("../models/withdraw.model.js")(sequelize, Sequelize);
+db.contract_history = require("../models/contract_history.model.js")(sequelize, Sequelize);
 
 
 db.role.belongsToMany(db.user, {

@@ -57,6 +57,17 @@ exports.all_by_user = (req, res) => {
     res.status(500).send([])
   });
 }
+exports.get_withdraw = (req, res) => {
+    Withdraw.findAll({
+        where: req.body
+    })
+        .then(datas => {
+            res.status(200).send(datas)
+        })
+        .catch(err => {
+            res.status(500).send([])
+        });
+}
 exports.add = (req, res) => {
   let now = moment();
   Withdraw.create(

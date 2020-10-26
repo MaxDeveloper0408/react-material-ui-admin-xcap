@@ -10,6 +10,9 @@ class PlanService {
   getAll() {
     return axios.get(URL + 'all', {headers: authHeader()});
   }
+  get_history(data) {
+    return axios.post(URL + 'get_history', data, {headers: authHeader()});
+  }
   delete(data) {
     return axios.post(URL + 'delete', data, {headers: authHeader()});
   }

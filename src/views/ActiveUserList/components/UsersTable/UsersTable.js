@@ -116,7 +116,9 @@ const UsersTable = props => {
   const handleRowsPerPageChange = event => {
     setRowsPerPage(event.target.value);
   };
-
+  const handleHistory = (user) => {
+    history.push("/userhistory/" + user.id);
+  }
   const handleActive = (userId, active, investment) => {
     if(active == "NO") {
       MySwal.fire({
@@ -389,6 +391,9 @@ const UsersTable = props => {
                       </Button>
                       <Button variant="contained" color="secondary" onClick={handleDeposit.bind(this, user)}>
                         Depositar
+                      </Button>
+                      <Button variant="contained" color="secondary" onClick={handleHistory.bind(this, user)}>
+                        Extrato
                       </Button>
                     </TableCell>
                   </TableRow>

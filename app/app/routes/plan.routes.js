@@ -12,6 +12,7 @@ module.exports = function(app) {
   });
 
   app.post("/api/plan/all",[authJwt.verifyToken, authJwt.isAdmin],controller.all);
+
   app.post("/api/plan/add_plan_admin",[authJwt.verifyToken, authJwt.isAdmin],controller.add_plan_admin);
   app.post("/api/plan/delete",[authJwt.verifyToken, authJwt.isAdmin],controller.delete);
   app.post("/api/plan/getAllByInvestType",[authJwt.verifyToken, authJwt.isAdmin],controller.getAllByInvestType);
@@ -25,6 +26,7 @@ module.exports = function(app) {
   app.post("/api/plan/all_by_user",[authJwt.verifyToken],controller.all_by_user);
   app.post("/api/plan/all_by_user_it",[authJwt.verifyToken],controller.all_by_user_it);
   app.post("/api/plan/add_plan",[authJwt.verifyToken],controller.add_plan);
+  app.post("/api/plan/get_history",[authJwt.verifyToken],controller.get_history);
 
 
   

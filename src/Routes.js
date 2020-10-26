@@ -37,8 +37,9 @@ import {
   NotFound as NotFoundView,
   AdminList as AdminListView,
   AdminCreate as AdminCreateView,
-  AdminEdit as AdminEditView
-  
+  AdminEdit as AdminEditView,
+  UserHistory as UserHistoryView
+
 } from './views';
 
 
@@ -194,6 +195,14 @@ class Routes extends Component {
           layout={MainLayout}
           path="/useredit/:userId"
         />
+        )}
+        {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
+            <RouteWithLayout
+                component={UserHistoryView}
+                exact
+                layout={MainLayout}
+                path="/userhistory/:userId"
+            />
         )}
         {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
             <RouteWithLayout

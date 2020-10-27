@@ -108,7 +108,6 @@ const DepositList = props => {
                       <TableCell className="blackText" style={{color: '#212a37'}}>Data de Aprovação</TableCell>
                       <TableCell className="blackText" style={{color: '#212a37'}}>Valor</TableCell>
                       <TableCell className="blackText" style={{color: '#212a37'}}>Plano</TableCell>
-                      <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                       <TableCell className="blackText" style={{color: '#212a37'}}>Tipo de ação</TableCell>
                     </TableRow>
                   </TableHead>
@@ -126,8 +125,7 @@ const DepositList = props => {
                           </TableCell>
                           <TableCell>{currencyFormatter.format(item.admin_value, { code: 'BRL', symbol: '' })}</TableCell>
                           <TableCell>{item.invest_type}</TableCell>
-                          <TableCell>{item.status == 'concluído' ? 'Aprovação' : 'Solicitação' }</TableCell>
-                          <TableCell>Depósitos</TableCell>
+                          <TableCell>{ item.status == 'concluído' ? 'Aprovação de Depósitos' : 'Solicitação de Depósitos'  }</TableCell>
                         </TableRow>
                     ))}
                   </TableBody>

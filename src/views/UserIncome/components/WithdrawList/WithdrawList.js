@@ -130,7 +130,7 @@ const WithdrawList = props => {
                     </TableCell>
                     <TableCell>{currencyFormatter.format(item.value, { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>{item.cpf}</TableCell>
-                    <TableCell>{item.status}</TableCell>
+                    <TableCell>{item.status == 'concluído' ? 'Aprovação' : item.status == 'cancelado' ? 'Cancelado ' : 'Solicitação' }</TableCell>
                     <TableCell>
                       {item.cpf == "" || item.cpf == null ? ' Saque':' Transfer'}
                     </TableCell>

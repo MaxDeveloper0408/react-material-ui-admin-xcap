@@ -54,7 +54,7 @@ const DepositList = props => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await DepositService.get_deposit({user_id: userId, status: 'concluído' });
+        const response = await DepositService.get_deposit({user_id: userId });
         setPlans(response.data);
       } catch (e) {
         setPlans([]);
@@ -108,6 +108,7 @@ const DepositList = props => {
                       <TableCell className="blackText" style={{color: '#212a37'}}>Data de Aprovação</TableCell>
                       <TableCell className="blackText" style={{color: '#212a37'}}>Valor</TableCell>
                       <TableCell className="blackText" style={{color: '#212a37'}}>Plano</TableCell>
+                      <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                       <TableCell className="blackText" style={{color: '#212a37'}}>Tipo de ação</TableCell>
                     </TableRow>
                   </TableHead>
@@ -125,6 +126,7 @@ const DepositList = props => {
                           </TableCell>
                           <TableCell>{currencyFormatter.format(item.admin_value, { code: 'BRL', symbol: '' })}</TableCell>
                           <TableCell>{item.invest_type}</TableCell>
+                          <TableCell>{item.status == 'concluído' ? 'Aprovação' : 'Solicitação' }</TableCell>
                           <TableCell>Depósitos</TableCell>
                         </TableRow>
                     ))}

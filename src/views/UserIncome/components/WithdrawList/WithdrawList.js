@@ -112,6 +112,7 @@ const WithdrawList = props => {
                   <TableCell className="blackText" style={{color: '#212a37'}}>Data de Aprovação</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Valor</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>CPF do Destinatário</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Tipo de ação</TableCell>
                 </TableRow>
               </TableHead>
@@ -128,7 +129,8 @@ const WithdrawList = props => {
                       </div>
                     </TableCell>
                     <TableCell>{currencyFormatter.format(item.value, { code: 'BRL', symbol: '' })}</TableCell>
-                    <TableCell>{item.cpf}</TableCell>
+                    <TableCell>{item.cpf == "" || item.cpf == null ? '-' : item.cpf}</TableCell>
+                    <TableCell>{item.status}</TableCell>
                     <TableCell>
                       {item.cpf == "" || item.cpf == null ?
                           item.status == 'concluído' ? 'Aprovação de Saque' : item.status == 'cancelado' ? 'Saque Cancelado ' : 'Solicitação de Saque'

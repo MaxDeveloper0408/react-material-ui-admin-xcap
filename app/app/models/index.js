@@ -89,6 +89,8 @@ db.contract_percent.belongsTo(db.contract, {foreignKey: 'contract_id'})
 db.bank_list.hasMany(db.bank, {foreignKey: 'bank_id'})
 db.bank.belongsTo(db.bank_list, {foreignKey: 'bank_id'})
 
+db.user.hasOne(db.bank, {foreignKey: 'user_id'})
+db.bank.belongsTo(db.user, {foreignKey: 'user_id'})
 
 
 db.ROLES = ["user", "admin"];

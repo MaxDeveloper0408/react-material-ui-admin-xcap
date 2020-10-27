@@ -331,7 +331,7 @@ exports.setActive = (req, res) => {
 exports.userBank = (req, res) => {
   Bank.findOne({
       include: [{
-        model: Bank_list,
+        model: Bank_list, User
       }],
       where: {
           user_id: req.body.user_id

@@ -71,7 +71,7 @@ const WithdrawList = props => {
   useEffect(() => {
     const fetchUsers = async () => {
         try {
-          const response = await WithdrawService.get_withdraw({user_id: userId, status: 'concluído' });
+          const response = await WithdrawService.get_withdraw({user_id: userId });
           setPlans(response.data);
         } catch (e) {
             setPlans([]);
@@ -102,8 +102,7 @@ const WithdrawList = props => {
   const handleRowsPerPageChange = event => {
     setRowsPerPage(event.target.value);
   };
-
-  return (
+  return plans.length > 0 ? (
     <Card
       {...rest}
       className={clsx(classes.root, className)}
@@ -129,6 +128,7 @@ const WithdrawList = props => {
                   <TableCell className="blackText" style={{color: '#212a37'}}>Data de Aprovação</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Valor</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>CPF do Destinatário</TableCell>
+                  <TableCell className="blackText" style={{color: '#212a37'}}>Status</TableCell>
                   <TableCell className="blackText" style={{color: '#212a37'}}>Tipo de ação</TableCell>
                 </TableRow>
               </TableHead>
@@ -146,8 +146,9 @@ const WithdrawList = props => {
                     </TableCell>
                     <TableCell>{currencyFormatter.format(item.value, { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>{item.cpf}</TableCell>
+                    <TableCell>{item.status}</TableCell>
                     <TableCell>
-                      {item.cpf == "" || item.cpf == null ? 'Saque':'Transfer'}
+                      {item.cpf == "" || item.cpf == null ? ' Saque':' Transfer'}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -170,7 +171,7 @@ const WithdrawList = props => {
         </CardActions>
       </form>
     </Card>
-  );
+  ): ('');
 };
 
 WithdrawList.propTypes = {

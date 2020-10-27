@@ -162,7 +162,6 @@ if(environment === 'test') {
                                 })
                                 console.log('Successfully added to case. Now avaliable balance is' + added_value);
                             });
-
                         });
                     });
                 }

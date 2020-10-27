@@ -85,7 +85,7 @@ const PlanList = props => {
     setRowsPerPage(event.target.value);
   };
 
-  return (
+  return plans.length > 0 ? (
       <Card
           {...rest}
           className={clsx(classes.root, className)}
@@ -147,7 +147,7 @@ const PlanList = props => {
           </CardActions>
         </form>
       </Card>
-  );
+  ): ('');
 };
 
 PlanList.propTypes = {

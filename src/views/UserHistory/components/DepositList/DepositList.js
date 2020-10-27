@@ -85,7 +85,7 @@ const DepositList = props => {
     setRowsPerPage(event.target.value);
   };
 
-  return (
+  return plans.length > 0 ? (
       <Card
           {...rest}
           className={clsx(classes.root, className)}
@@ -147,7 +147,7 @@ const DepositList = props => {
           </CardActions>
         </form>
       </Card>
-  );
+  ):('');
 };
 
 DepositList.propTypes = {

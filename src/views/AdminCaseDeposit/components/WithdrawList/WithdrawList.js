@@ -197,7 +197,7 @@ const WithdrawList = props => {
                       </div>
                     </TableCell>
                     <TableCell>{currencyFormatter.format(item.amount, { code: 'BRL', symbol: '' })}</TableCell>
-                    <TableCell>{item.user.cpf}</TableCell>
+                    <TableCell>{item.user?item.user.cpf:''}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

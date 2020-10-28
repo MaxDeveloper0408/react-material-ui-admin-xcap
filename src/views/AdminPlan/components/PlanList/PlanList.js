@@ -282,8 +282,8 @@ const PlanList = props => {
                     hover
                     key={item.id}
                   >
-                    <TableCell>{item.user.full_name}</TableCell>
-                    <TableCell>{item.user.cellphone}</TableCell>
+                    <TableCell>{item.user? item.user.full_name:''}</TableCell>
+                    <TableCell>{item.user? item.user.cellphone:''}</TableCell>
                     <TableCell>{currencyFormatter.format(item.open_value, { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>{item.invest_type=='FLEXIVEL' ? currencyFormatter.format((Number(item.open_value) + Number(item.open_value*10/100)), { code: 'BRL', symbol: '' }) : currencyFormatter.format((Number(item.open_value) + Number(item.open_value*30/100)), { code: 'BRL', symbol: '' })}</TableCell>
                     <TableCell>{item.invest_type}</TableCell>

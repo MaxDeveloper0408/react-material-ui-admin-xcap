@@ -175,8 +175,8 @@ const ContractList = props => {
                     hover
                     key={item.id}
                   >
-                    <TableCell>{item.user.full_name}</TableCell>
-                    <TableCell>{item.user.email}</TableCell>
+                    <TableCell>{item.user? item.user.full_name : ''}</TableCell>
+                    <TableCell>{item.user? item.user.email : ''}</TableCell>
                     <TableCell>
                       <div className={classes.nameContainer}>
                         <Typography variant="body1">{moment(item.contract.start_date).format('DD/MM/YYYY')}</Typography>

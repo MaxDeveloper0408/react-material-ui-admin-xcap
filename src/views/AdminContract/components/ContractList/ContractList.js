@@ -169,10 +169,10 @@ const ContractList = props => {
                     hover
                     key={item.id}
                   >
-                    <TableCell>{item.user.full_name}</TableCell>
-                    <TableCell>{item.user.email}</TableCell>
+                    <TableCell>{item.user? item.user.full_name: ''}</TableCell>
+                    <TableCell>{item.user? item.user.email: ''}</TableCell>
                     <TableCell>
-                      {item.user_pdf == '' || item.user_pdf == null? (''):(
+                      { !item.user || item.user_pdf == '' || item.user_pdf == null? (''):(
                         <Button variant="contained" color="secondary" style={{marginLeft: '10px'}} onClick={handleDownload.bind(this, item.user_pdf)}>
                           Download
                         </Button>

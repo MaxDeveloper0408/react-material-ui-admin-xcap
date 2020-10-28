@@ -152,7 +152,6 @@ const WithdrawList = props => {
         }
     )
   }
-
   return (
     <Card
       {...rest}
@@ -192,7 +191,7 @@ const WithdrawList = props => {
                     hover
                     key={item.id}
                   >
-                    <TableCell>{item.user.full_name}</TableCell>
+                    <TableCell>{item.user ? item.user.full_name:''}</TableCell>
                     <TableCell>
                       <div className={classes.nameContainer}>
                         <Typography variant="body1">{moment(item.createdAt).format('DD/MM/YYYY')}</Typography>

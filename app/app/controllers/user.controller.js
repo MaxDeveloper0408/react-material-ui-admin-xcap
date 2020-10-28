@@ -13,6 +13,7 @@ const Bank_list = db.bank_list;
 const Case_deposit = db.case_deposit;
 const Withdraw = db.withdraw;
 const Contract_history = db.contract_history;
+const Deposit = db.deposit;
 
 const multer = require('multer');
 const path = require('path');
@@ -165,6 +166,27 @@ exports.delete = (req, res) => {
         {where: {id: req.body.id}}
     )
     .then(user => {
+        Deposit.destroy(
+            {where: {user_id: req.body.id}}
+        )
+        Withdraw.destroy(
+            {where: {user_id: req.body.id}}
+        )
+        Contract_history.destroy(
+            {where: {user_id: req.body.id}}
+        )
+        Contract.destroy(
+            {where: {user_id: req.body.id}}
+        )
+        Case.destroy(
+            {where: {user_id: req.body.id}}
+        )
+        Contract_pdf.destroy(
+            {where: {user_id: req.body.id}}
+        )
+        Case_deposit.destroy(
+            {where: {user_id: req.body.id}}
+        )
         return res.status(200).send({ status:'success', message: "Ação realizada com sucesso!" });
     })
     .catch(err => {

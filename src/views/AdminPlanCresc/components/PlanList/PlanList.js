@@ -334,8 +334,8 @@ const PlanList = props => {
                                             hover
                                             key={item.id}
                                         >
-                                            <TableCell>{item.user.full_name}</TableCell>
-                                            <TableCell>{item.user.cellphone}</TableCell>
+                                            <TableCell>{item.user ? item.user.full_name : ''}</TableCell>
+                                            <TableCell>{item.user ? item.user.cellphone : ''}</TableCell>
                                             <TableCell>
                                                 <div className={classes.nameContainer}>
                                                     <Typography
@@ -372,10 +372,10 @@ const PlanList = props => {
                                                                         onClick={handleEdit.bind(this, item.id, item.percent)}>
                                                                     Editar
                                                                 </Button>
-                                                                <Button variant="contained" color="secondary"
-                                                                onClick={handleUpload.bind(this, item.id, item.user.email)}>
-                                                                Upar
-                                                                </Button>
+                                                                    {item.user? (<Button variant="contained" color="secondary"
+                                                                                         onClick={handleUpload.bind(this, item.id, item.user.email)}>
+                                                                        Upar
+                                                                    </Button>):('')}
                                                                 </div>
                                                             ) : ('')
                                                             }

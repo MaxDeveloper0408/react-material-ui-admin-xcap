@@ -127,7 +127,7 @@ const DepositList = props => {
                           <TableCell>{currencyFormatter.format(item.admin_value, { code: 'BRL', symbol: '' })}</TableCell>
                           <TableCell>{item.invest_type}</TableCell>
                           <TableCell>{item.status}</TableCell>
-                          <TableCell>{ item.status == 'concluído' ? 'Aprovação de Depósitos' : 'Solicitação de Depósitos'  }</TableCell>
+                          <TableCell>{ item.type == 0 ? item.status == 'concluído' ? 'Aprovação de Depósitos' : 'Solicitação de Depósitos' : 'Depósito por Admin'  }</TableCell>
                         </TableRow>
                     ))}
                   </TableBody>

@@ -13,6 +13,7 @@ import {
   UserList as UserListView,
   ActiveUserList as ActiveUserListView,
   UserEdit as UserEditView,
+  AdminUserDeposit as AdminUserDepositView,
   UserPersonal as UserPersonalView,
   UserBank as UserBankView,
   UserPlan as UserPlanView,
@@ -195,6 +196,14 @@ class Routes extends Component {
           layout={MainLayout}
           path="/useredit/:userId"
         />
+        )}
+        {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
+            <RouteWithLayout
+                component={AdminUserDepositView}
+                exact
+                layout={MainLayout}
+                path="/adminuserdeposit/:userId"
+            />
         )}
         {AuthService.getCurrentUser() && AuthService.getCurrentUser().roles.includes("ROLE_ADMIN") && (
             <RouteWithLayout

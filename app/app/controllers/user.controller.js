@@ -820,6 +820,16 @@ exports.cresc_plan_total = (req, res) => {
 exports.admin_deposit_to_user = (req, res) => {
     let params = req.body;
     let now = moment();
+    Deposit.create(
+        {
+            admin_value: params.open_value,
+            invest_type: params.invest_type,
+            user_id: params.user_id,
+            status: 'concluído',
+            admin_id: req.userId,
+            type: 1
+        }
+    );
     if(params.invest_type === 'FLEXIVEL') {
         Contract.findAll(
             {

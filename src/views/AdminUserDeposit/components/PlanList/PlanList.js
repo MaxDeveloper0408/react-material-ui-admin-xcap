@@ -84,7 +84,7 @@ const PlanList = props => {
                 '<select id="swal_percent" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 1.125em;padding: .975em .625em;">' +
                 '<option value="10">10%</option><option value="5">5%</option><option value="6">6%</option><option value="7">7%</option><option value="8">8%</option><option value="15">15%</option><option value="16">16%</option><option value="17">17%</option><option value="18">18%</option><option value="19">19%</option><option value="20">20%</option>' +
                 '</select>',
-            title: 'Aprovar Depósito',
+            title: 'Depositar',
             showCancelButton: true,
             preConfirm: (value) => {
                 if (SimpleMaskMoney.formatToNumber(document.getElementById('swal_open_value').value) < 5000) {

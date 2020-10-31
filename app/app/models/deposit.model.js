@@ -9,6 +9,9 @@ module.exports = (sequelize, Sequelize) => {
         type: {
             type: Sequelize.INTEGER
         },
+        percent: {
+            type: Sequelize.DECIMAL
+        },
         invest_type: {
             type: Sequelize.ENUM,
             values: ['FLEXIVEL', 'CRESCIMENTO']

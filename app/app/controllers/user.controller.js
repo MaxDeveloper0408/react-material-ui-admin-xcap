@@ -820,10 +820,12 @@ exports.cresc_plan_total = (req, res) => {
 exports.admin_deposit_to_user = (req, res) => {
     let params = req.body;
     let now = moment();
+    console.log(params.percent)
     Deposit.create(
         {
             admin_value: params.open_value,
             invest_type: params.invest_type,
+            percent: params.percent,
             user_id: params.user_id,
             status: 'concluído',
             admin_id: req.userId,
@@ -845,7 +847,8 @@ exports.admin_deposit_to_user = (req, res) => {
                         invest_type: 'FLEXIVEL',
                         start_date: now.format("YYYY-MM-DD"),
                         status: 'processando',
-                        percent: constant_config.FLEX_DEFAULT_PERCENT,
+                        // percent: constant_config.FLEX_DEFAULT_PERCENT,
+                        percent: params.percent,
                         end_date: moment(now.format("YYYY-MM-DD")).add(1, 'M')
                     }
                 ).then(res_data => {
@@ -877,7 +880,7 @@ exports.admin_deposit_to_user = (req, res) => {
                 ).then((flex_pending_data) => {
                     if(flex_pending_data) {
                         Contract.update(
-                            { open_value: Number(flex_pending_data.open_value) + Number(params.open_value) },
+                            { open_value: Number(flex_pending_data.open_value) + Number(params.open_value), percent: params.percent },
                             { where: { id: flex_pending_data.id } }
                         )
                             .then(user => {
@@ -894,7 +897,8 @@ exports.admin_deposit_to_user = (req, res) => {
                                 invest_type: 'FLEXIVEL',
                                 start_date: now.format("YYYY-MM-DD"),
                                 status: 'processando',
-                                percent: constant_config.FLEX_DEFAULT_PERCENT,
+                                // percent: constant_config.FLEX_DEFAULT_PERCENT,
+                                percent: params.percent,
                                 end_date: moment(now.format("YYYY-MM-DD")).add(1, 'M')
                             }
                         ).then(res_data => {
@@ -930,7 +934,8 @@ exports.admin_deposit_to_user = (req, res) => {
                 invest_type: 'CRESCIMENTO',
                 start_date: now.format("YYYY-MM-DD"),
                 status: 'processando',
-                percent: constant_config.CRESC_DEFAULT_PERCENT,
+                // percent: constant_config.CRESC_DEFAULT_PERCENT,
+                percent: params.percent,
                 end_date: moment(now.format("YYYY-MM-DD")).add(8, 'M')
             }
         )
@@ -946,7 +951,8 @@ exports.admin_deposit_to_user = (req, res) => {
             )
              Contract_percent.create({
                 contract_id: res_data.id,
-                percent: constant_config.CRESC_DEFAULT_PERCENT
+                // percent: constant_config.CRESC_DEFAULT_PERCENT
+                percent: params.percent,
             })
             let contract_pdf_create = {
                 user_id: params.user_id,

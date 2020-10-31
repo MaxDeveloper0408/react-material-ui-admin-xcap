@@ -268,9 +268,67 @@ const UsersTable = props => {
       }
     });
   }
+  // const handleDeposit = (user) => {
+  //   history.push("/adminuserdeposit/" + user.id);
+  // }
   const handleDeposit = (user) => {
-    history.push("/adminuserdeposit/" + user.id);
-  }
+    MySwal.fire({
+      html:
+          '<h2 class="swal2-title" id="swal2-title" style="margin-bottom: 1.5em; font-size: 1.4em">Insira um valor (min. R$5.000,00)</h2>' +
+          '<input id="swal_open_value" type="text" min="5000" class="swal2-input" style="max-width:100%;" placeHolder="5.000,00">' +
+          '<select id="swal_investment_type" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 16px;padding: .975em .625em;"><option value="FLEXIVEL">FLEXIVEL</option><option value="CRESCIMENTO">CRESCIMENTO</option></select>' +
+          '<select id="swal_percent" class="swal2-select" style="border-color: #d9d9d9;display: flex;width: 100%; font-size: 1.125em;padding: .975em .625em;">' +
+          '<option value="10">10%</option><option value="5">5%</option><option value="6">6%</option><option value="7">7%</option><option value="8">8%</option><option value="15">15%</option><option value="16">16%</option><option value="17">17%</option><option value="18">18%</option><option value="19">19%</option><option value="20">20%</option>' +
+          '</select>',
+      title: 'Depositar',
+      showCancelButton: true,
+      preConfirm: (value) => {
+        if (SimpleMaskMoney.formatToNumber(document.getElementById('swal_open_value').value) < 5000) {
+          MySwal.showValidationMessage('Mínimo de 5.000,00');
+        }
+      },
+      onOpen: () => {
+        const input = document.getElementById('swal_open_value');
+        SimpleMaskMoney.setMask(input, {
+          allowNegative: false,
+          negativeSignAfter: false,
+          prefix: '',
+          suffix: '',
+          fixed: true,
+          fractionDigits: 2,
+          decimalSeparator: ',',
+          thousandsSeparator: '.',
+          cursor: 'move'
+        });
+        input.oninput = () => {
+        };
+      }
+    }).then(function(result) {
+      if (result.dismiss === MySwal.DismissReason.cancel) {
+
+      } else if (result.value) {
+        let params = {
+          user_id: user.id,
+          invest_type:  document.getElementById('swal_investment_type').value,
+          percent: document.getElementById('swal_percent').value,
+          open_value: SimpleMaskMoney.formatToNumber(document.getElementById('swal_open_value').value)
+        };
+        userService.admin_deposit_to_user(params).then(
+            response => {
+              MySwal.fire({
+                title: 'Success',
+                text: response.message
+              });
+            },
+            error => {
+              console.log(error);
+            }
+        );
+      }
+    });
+  };
+
+
   return (
     <Card
       {...rest}

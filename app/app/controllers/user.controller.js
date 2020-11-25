@@ -846,11 +846,12 @@ exports.admin_deposit_to_user = (req, res) => {
                         open_value: params.open_value,
                         invest_type: 'FLEXIVEL',
                         // start_date: now.format("YYYY-MM-DD"),
+                        // end_date: moment(now.format("YYYY-MM-DD")).add(1, 'M'),
+                        end_date: moment(moment(params.start_date).format("YYYY-MM-DD")).add(1, 'M'),
                         start_date: moment(params.start_date).format("YYYY-MM-DD"),
                         status: 'processando',
                         // percent: constant_config.FLEX_DEFAULT_PERCENT,
-                        percent: params.percent,
-                        end_date: moment(now.format("YYYY-MM-DD")).add(1, 'M')
+                        percent: params.percent
                     }
                 ).then(res_data => {
                     Contract_history.create(
@@ -897,11 +898,12 @@ exports.admin_deposit_to_user = (req, res) => {
                                 open_value: params.open_value,
                                 invest_type: 'FLEXIVEL',
                                 // start_date: now.format("YYYY-MM-DD"),
+                                // end_date: moment(now.format("YYYY-MM-DD")).add(1, 'M'),
+                                end_date: moment(moment(params.start_date).format("YYYY-MM-DD")).add(1, 'M'),
                                 start_date: moment(params.start_date).format("YYYY-MM-DD"),
                                 status: 'processando',
                                 // percent: constant_config.FLEX_DEFAULT_PERCENT,
-                                percent: params.percent,
-                                end_date: moment(now.format("YYYY-MM-DD")).add(1, 'M')
+                                percent: params.percent
                             }
                         ).then(res_data => {
                             Contract_history.create(
@@ -935,11 +937,12 @@ exports.admin_deposit_to_user = (req, res) => {
                 open_value: params.open_value,
                 invest_type: 'CRESCIMENTO',
                 // start_date: now.format("YYYY-MM-DD"),
+                // end_date: moment(now.format("YYYY-MM-DD")).add(8, 'M'),
+                end_date: moment(moment(params.start_date).format("YYYY-MM-DD")).add(8, 'M'),
                 start_date: moment(params.start_date).format("YYYY-MM-DD"),
                 status: 'processando',
                 // percent: constant_config.CRESC_DEFAULT_PERCENT,
-                percent: params.percent,
-                end_date: moment(now.format("YYYY-MM-DD")).add(8, 'M')
+                percent: params.percent
             }
         )
         .then(res_data => {
